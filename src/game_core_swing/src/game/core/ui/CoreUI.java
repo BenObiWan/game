@@ -57,29 +57,29 @@ public final class CoreUI extends JFrame implements ActionListener
 	 */
 	private static final Logger LOGGER = Logger.getLogger(CoreUI.class);
 
-	/**
-	 * Valid icon.
-	 */
-	public static final ImageIcon VALID_ICON = new ImageIcon(
-			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/valid.png");
-
-	/**
-	 * Invalid icon.
-	 */
-	public static final ImageIcon INVALID_ICON = new ImageIcon(
-			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/invalid.png");
-
-	/**
-	 * Locked icon.
-	 */
-	public static final ImageIcon LOCKED_ICON = new ImageIcon(
-			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/locked.png");
-
-	/**
-	 * Unlocked icon.
-	 */
-	public static final ImageIcon UNLOCKED_ICON = new ImageIcon(
-			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/unlocked.png");
+//	/**
+//	 * Valid icon.
+//	 */
+//	public static final ImageIcon VALID_ICON = new ImageIcon(
+//			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/valid.png");
+//
+//	/**
+//	 * Invalid icon.
+//	 */
+//	public static final ImageIcon INVALID_ICON = new ImageIcon(
+//			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/invalid.png");
+//
+//	/**
+//	 * Locked icon.
+//	 */
+//	public static final ImageIcon LOCKED_ICON = new ImageIcon(
+//			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/locked.png");
+//
+//	/**
+//	 * Unlocked icon.
+//	 */
+//	public static final ImageIcon UNLOCKED_ICON = new ImageIcon(
+//			"/home/benobiwan/eclipse_workspace/game_core_gui/src/icons/unlocked.png");
 
 	/**
 	 * Action command for the show log command.
