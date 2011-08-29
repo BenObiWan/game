@@ -30,7 +30,7 @@ public interface IServerSidePlayer<PLAYER_CONF extends IPlayerConfiguration>
 	 * @return the {@link IServerSideGame} where this {@link IServerSidePlayer}
 	 *         is playing.
 	 */
-	IServerSideGame<?, ?, ?> getGame();
+	IServerSideGame<?, ?, ?, ?> getGame();
 
 	/**
 	 * Get the {@link IServerGameCreator} which this {@link IServerSidePlayer}

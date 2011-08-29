@@ -5,6 +5,7 @@ import game.communication.event.ICommonGameEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 
 /**
  * An interface representing the game on the client side.
@@ -16,9 +17,11 @@ import game.config.IGameConfiguration;
  * @param <CONF_TYPE>
  *            the type of {@link IGameConfiguration} used to configure this
  *            game.
+ * @param <PLAYER_CONF>
+ *            the type of {@link IPlayerConfiguration}.
  */
-public interface IClientSideGame<EVENT_TYPE extends IGameEvent, CONF_TYPE extends IGameConfiguration>
-		extends Comparable<IClientSideGame<?, ?>>
+public interface IClientSideGame<EVENT_TYPE extends IGameEvent, PLAYER_CONF extends IPlayerConfiguration, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>>
+		extends Comparable<IClientSideGame<?, ?, ?>>
 {
 	/**
 	 * Get the id of this game.

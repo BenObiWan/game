@@ -6,6 +6,7 @@ import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 
 /**
  * Object used on the client side to create a game when joined.
@@ -20,8 +21,10 @@ import game.config.IGameConfiguration;
  *            the type of {@link IGameEvent} handled by the game.
  * @param <PLAYER_TYPE>
  *            the type of {@link IClientSidePlayer} playing this game.
+ * @param <PLAYER_CONF>
+ *            the type of player {@link IPlayerConfiguration}.
  */
-public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, CONF_TYPE>, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE>>
+public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>>
 {
 	/**
 	 * Create a game of the specified type and the specified server.

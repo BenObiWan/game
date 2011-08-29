@@ -15,6 +15,7 @@ import game.gameclient.IClientGameCreator;
  * Object used on the server side to create a game at the request of a client.
  * 
  * @author benobiwan
+ * 
  * @param <PLAYER_CONF>
  *            the type of {@link IPlayerConfiguration} of this game.
  * @param <ACTION_TYPE>
@@ -26,7 +27,7 @@ import game.gameclient.IClientGameCreator;
  * @param <PLAYER_TYPE>
  *            the type of {@link IServerSidePlayer} used in this game.
  */
-public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, PLAYER_TYPE extends IServerSidePlayer<PLAYER_CONF>, SERVER_GAME_TYPE extends IServerSideGame<ACTION_TYPE, CONF_TYPE, PLAYER_TYPE>>
+public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, PLAYER_TYPE extends IServerSidePlayer<PLAYER_CONF>, SERVER_GAME_TYPE extends IServerSideGame<ACTION_TYPE, CONF_TYPE, PLAYER_CONF, PLAYER_TYPE>>
 {
 	/**
 	 * Create a game of the specified type.
@@ -86,7 +87,7 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 * @return the {@link IClientGameCreator} associated with this
 	 *         {@link IServerGameCreator}.
 	 */
-	IClientGameCreator<?, ?, ?, ?> getClientGameCreator();
+	IClientGameCreator<?, ?, ?, ?, ?> getClientGameCreator();
 
 	/**
 	 * Get the creator of this game.

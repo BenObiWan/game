@@ -7,6 +7,7 @@ import game.communication.event.IGameCtrlEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 
 /**
  * An interface describing a Player on the client side.
@@ -19,9 +20,11 @@ import game.config.IGameConfiguration;
  *            the type of {@link IGameConfiguration} used to configure the game.
  * @param <EVENT_TYPE>
  *            the type of {@link IGameEvent} handled by the game.
+ * @param <PLAYER_CONF>
+ *            the type of player configuration.
  */
-public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, CONF_TYPE>>
-		extends IPlayer
+public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration>
+		extends IPlayer<PLAYER_CONF>
 {
 	/**
 	 * Get the {@link IClientSideGame} where this {@link IClientSidePlayer} is
@@ -30,7 +33,7 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration, EVENT_T
 	 * @return the {@link IClientSideGame} where this {@link IClientSidePlayer}
 	 *         is playing.
 	 */
-	IClientSideGame<?, ?> getGame();
+	IClientSideGame<?, ?, ?> getGame();
 
 	/**
 	 * Get the {@link IClientGameCreator} which this {@link IClientSidePlayer}
@@ -39,7 +42,7 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration, EVENT_T
 	 * @return the {@link IClientGameCreator} which this
 	 *         {@link IClientSidePlayer} is joining.
 	 */
-	IClientGameCreator<?, ?, ?, ?> getGameCreator();
+	IClientGameCreator<?, ?, ?, ?, ?> getGameCreator();
 
 	/**
 	 * Handle an {@link IGameCreationEvent}.

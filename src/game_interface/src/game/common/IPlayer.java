@@ -7,9 +7,9 @@ import game.config.IPlayerConfiguration;
  * An interface describing a Player.
  * 
  * @author benobiwan
+ * 
  * @param <PLAYER_CONF>
  *            the type of player configuration.
- * 
  */
 public interface IPlayer<PLAYER_CONF extends IPlayerConfiguration>
 {

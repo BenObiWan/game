@@ -12,5 +12,5 @@ import common.config.IConfigurationNode;
  */
 public interface IPlayerConfiguration extends Serializable, IConfigurationNode
 {
-
+	// TODO code of IPlayerConfiguration
 }

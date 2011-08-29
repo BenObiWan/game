@@ -53,7 +53,7 @@ public interface IGameClient extends Comparable<IGameClient>
 	 *            id of the player.
 	 * @return the {@link IServerSidePlayer} corresponding to the given id.
 	 */
-	IServerSidePlayer getServerSidePlayer(final int iPlayerId);
+	IServerSidePlayer<?> getServerSidePlayer(final int iPlayerId);
 
 	/**
 	 * Add a player to this client. Should only be called from an
@@ -62,7 +62,7 @@ public interface IGameClient extends Comparable<IGameClient>
 	 * @param player
 	 *            the player to add.
 	 */
-	void addServerSidePlayer(IServerSidePlayer player);
+	void addServerSidePlayer(IServerSidePlayer<?> player);
 
 	/**
 	 * Remove a player from this client. Should only be called from an
@@ -71,7 +71,7 @@ public interface IGameClient extends Comparable<IGameClient>
 	 * @param player
 	 *            the player to remove.
 	 */
-	void removeServerSidePlayer(IServerSidePlayer player);
+	void removeServerSidePlayer(IServerSidePlayer<?> player);
 
 	/**
 	 * Check whether the client contain the specified player.
@@ -80,5 +80,5 @@ public interface IGameClient extends Comparable<IGameClient>
 	 *            the player to look for.
 	 * @return true if the client contain the specified player.
 	 */
-	boolean containServerSidePlayer(IServerSidePlayer player);
+	boolean containServerSidePlayer(IServerSidePlayer<?> player);
 }
