@@ -15,6 +15,7 @@ import game.communication.event.gamectrl.GameLeftCrEvent;
 import game.communication.event.gamectrl.KickedFromGameCrEvent;
 import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 
 /**
  * Abstract implementation of the {@link IClientSidePlayer} interface.
@@ -30,9 +31,12 @@ import game.config.IGameConfiguration;
  *            the type of {@link IGameEvent} handled by the game.
  * @param <CLIENT_TYPE>
  *            the type of client.
+ * @param <PLAYER_CONF>
+ *            the type of {@link IPlayerConfiguration}.
  */
-public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE>>
-		implements IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE>
+public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>, PLAYER_CONF extends IPlayerConfiguration>
+		implements
+		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>
 {
 	/**
 	 * Id of the player.
@@ -52,7 +56,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	/**
 	 * The game in creation the client joined.
 	 */
-	protected IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, CLIENT_TYPE> _gameCreator;
+	protected IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE> _gameCreator;
 
 	/**
 	 * The configuration of the game.
@@ -110,7 +114,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	}
 
 	@Override
-	public IClientSideGame<?, ?> getGame()
+	public IClientSideGame<?, ?, ?> getGame()
 	{
 		synchronized (_lock)
 		{
@@ -119,7 +123,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	}
 
 	@Override
-	public IClientGameCreator<?, ?, ?, ?> getGameCreator()
+	public IClientGameCreator<?, ?, ?, ?, ?> getGameCreator()
 	{
 		synchronized (_lock)
 		{
@@ -262,7 +266,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	private void handleConfigurationUpdateCrEvent(
 			final ConfigurationUpdateCrEvent evt)
 	{
-		final IGameConfiguration conf = evt.getGameConfiguration();
+		final IGameConfiguration<?> conf = evt.getGameConfiguration();
 		try
 		{
 			synchronized (_lock)
@@ -282,9 +286,10 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	 * @param evt
 	 *            the event to handle.
 	 */
+	@SuppressWarnings("unused")
 	private void handlePlayerListUpdateCrEvent(final PlayerListUpdateCrEvent evt)
 	{
-
+		// TODO handlePlayerListUpdateCrEvent
 	}
 
 	/**

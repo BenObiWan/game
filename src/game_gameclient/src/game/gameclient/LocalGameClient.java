@@ -55,12 +55,12 @@ public final class LocalGameClient extends Observable implements IGameClient
 	/**
 	 * List of server side player on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, IServerSidePlayer> _serverSidePlayerList = new ConcurrentSkipListMap<Integer, IServerSidePlayer>();
+	private final ConcurrentSkipListMap<Integer, IServerSidePlayer<?>> _serverSidePlayerList = new ConcurrentSkipListMap<Integer, IServerSidePlayer<?>>();
 
 	/**
 	 * List of client side player on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?>> _clientSidePlayerList = new ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?>>();
+	private final ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?>> _clientSidePlayerList = new ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?>>();
 
 	/**
 	 * Creates a new LocalGameClient.
@@ -90,7 +90,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		else if (evt instanceof IGameCreationEvent)
 		{
 			final IGameCreationEvent event = (IGameCreationEvent) evt;
-			final IClientSidePlayer<?, ?, ?> player = _clientSidePlayerList
+			final IClientSidePlayer<?, ?, ?, ?> player = _clientSidePlayerList
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)
 			{
@@ -117,7 +117,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		else if (evt instanceof IGameEvent)
 		{
 			final IGameEvent event = (IGameEvent) evt;
-			final IClientSidePlayer<?, ?, ?> player = _clientSidePlayerList
+			final IClientSidePlayer<?, ?, ?, ?> player = _clientSidePlayerList
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)
 			{
@@ -262,11 +262,11 @@ public final class LocalGameClient extends Observable implements IGameClient
 	private void handleControlEvent(final IGameServer server,
 			final GameJoinedCtrlEvent evt)
 	{
-		final IClientGameCreator<?, ?, ?, ?> gameCreator = evt
+		final IClientGameCreator<?, ?, ?, ?, ?> gameCreator = evt
 				.getClientGameCreator();
 		gameCreator.initialize(true, this, server, evt.getGameId());
-		final IClientSidePlayer<?, ?, ?> player = gameCreator.createPlayer(evt
-				.getPlayerId());
+		final IClientSidePlayer<?, ?, ?, ?> player = gameCreator
+				.createPlayer(evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
 		setChanged();
 		notifyObservers();
@@ -284,11 +284,11 @@ public final class LocalGameClient extends Observable implements IGameClient
 	private void handleControlEvent(final IGameServer server,
 			final GameCreationStartedCtrlEvent evt)
 	{
-		final IClientGameCreator<?, ?, ?, ?> gameCreator = evt
+		final IClientGameCreator<?, ?, ?, ?, ?> gameCreator = evt
 				.getClientGameCreator();
 		gameCreator.initialize(true, this, server, evt.getGameId());
-		final IClientSidePlayer<?, ?, ?> player = gameCreator.createPlayer(evt
-				.getPlayerId());
+		final IClientSidePlayer<?, ?, ?, ?> player = gameCreator
+				.createPlayer(evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
 		setChanged();
 		notifyObservers();
@@ -373,25 +373,25 @@ public final class LocalGameClient extends Observable implements IGameClient
 	}
 
 	@Override
-	public IServerSidePlayer getServerSidePlayer(final int iPlayerId)
+	public IServerSidePlayer<?> getServerSidePlayer(final int iPlayerId)
 	{
 		return _serverSidePlayerList.get(Integer.valueOf(iPlayerId));
 	}
 
 	@Override
-	public void addServerSidePlayer(final IServerSidePlayer player)
+	public void addServerSidePlayer(final IServerSidePlayer<?> player)
 	{
 		_serverSidePlayerList.put(Integer.valueOf(player.getId()), player);
 	}
 
 	@Override
-	public void removeServerSidePlayer(final IServerSidePlayer player)
+	public void removeServerSidePlayer(final IServerSidePlayer<?> player)
 	{
 		_serverSidePlayerList.remove(Integer.valueOf(player.getId()));
 	}
 
 	@Override
-	public boolean containServerSidePlayer(final IServerSidePlayer player)
+	public boolean containServerSidePlayer(final IServerSidePlayer<?> player)
 	{
 		return _serverSidePlayerList
 				.containsKey(Integer.valueOf(player.getId()));
@@ -403,7 +403,8 @@ public final class LocalGameClient extends Observable implements IGameClient
 	 * @param player
 	 *            the {@link IClientSidePlayer} to remove.
 	 */
-	public void removeClientSidePlayer(final IClientSidePlayer<?, ?, ?> player)
+	public void removeClientSidePlayer(
+			final IClientSidePlayer<?, ?, ?, ?> player)
 	{
 		_clientSidePlayerList.remove(Integer.valueOf(player.getId()));
 		setChanged();

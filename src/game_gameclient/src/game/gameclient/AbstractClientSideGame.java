@@ -12,6 +12,7 @@ import game.communication.event.game.UnauthorizedActionCmnEvent;
 import game.communication.event.game.UnsupportedActionCmnEvent;
 import game.communication.event.game.YourTurnCmnEvent;
 import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 
 /**
  * Abstract implementation of the {@link IClientSideGame} interface.
@@ -23,9 +24,11 @@ import game.config.IGameConfiguration;
  * @param <CONF_TYPE>
  *            the type of {@link IGameConfiguration} used to configure this
  *            game.
+ * @param <PLAYER_CONF>
+ *            the type of {@link IPlayerConfiguration}.
  */
-public abstract class AbstractClientSideGame<EVENT_TYPE extends IGameEvent, CONF_TYPE extends IGameConfiguration>
-		implements IClientSideGame<EVENT_TYPE, CONF_TYPE>
+public abstract class AbstractClientSideGame<EVENT_TYPE extends IGameEvent, PLAYER_CONF extends IPlayerConfiguration, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>>
+		implements IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>
 {
 	/**
 	 * The local game client.
@@ -61,7 +64,7 @@ public abstract class AbstractClientSideGame<EVENT_TYPE extends IGameEvent, CONF
 	}
 
 	@Override
-	public int compareTo(final IClientSideGame<?, ?> o)
+	public int compareTo(final IClientSideGame<?, ?, ?> o)
 	{
 		int iComp = getGameServer().compareTo(o.getGameServer());
 		if (iComp == 0)
@@ -97,7 +100,7 @@ public abstract class AbstractClientSideGame<EVENT_TYPE extends IGameEvent, CONF
 		{
 			return false;
 		}
-		final AbstractClientSideGame<?, ?> other = (AbstractClientSideGame<?, ?>) obj;
+		final AbstractClientSideGame<?, ?, ?> other = (AbstractClientSideGame<?, ?, ?>) obj;
 		if (_gameServer == null)
 		{
 			if (other._gameServer != null)

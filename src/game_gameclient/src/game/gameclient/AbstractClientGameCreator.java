@@ -6,6 +6,7 @@ import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 
 import java.util.Observable;
 
@@ -23,11 +24,13 @@ import java.util.Observable;
  *            the type of {@link IGameEvent} handled by the game.
  * @param <PLAYER_TYPE>
  *            the type of {@link IClientSidePlayer} playing this game.
+ * @param <PLAYER_CONF>
+ *            the type of player configuration.
  */
-public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfiguration, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, CONF_TYPE>, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE>>
+public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>>
 		extends Observable
 		implements
-		IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_TYPE>
+		IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, PLAYER_TYPE>
 {
 	/**
 	 * Lock to protect the access to the other parameters of the object.
