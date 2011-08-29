@@ -20,7 +20,7 @@ public final class ConfigurationUpdateCrEvent extends AbstractGameCreationEvent
 	/**
 	 * The updated {@link IGameConfiguration}.
 	 */
-	private final IGameConfiguration _gameConfiguration;
+	private final IGameConfiguration<?> _gameConfiguration;
 
 	/**
 	 * creates a new ConfigurationUpdateCrEvent.
@@ -33,7 +33,7 @@ public final class ConfigurationUpdateCrEvent extends AbstractGameCreationEvent
 	 *            the updated {@link IGameConfiguration}.
 	 */
 	public ConfigurationUpdateCrEvent(final int iGameId, final int iPlayerId,
-			final IGameConfiguration gameConfiguration)
+			final IGameConfiguration<?> gameConfiguration)
 	{
 		super(iGameId, iPlayerId, GameCreationEventType.CONFIGURATION_UPDATE);
 		_gameConfiguration = gameConfiguration;
@@ -44,7 +44,7 @@ public final class ConfigurationUpdateCrEvent extends AbstractGameCreationEvent
 	 * 
 	 * @return the updated {@link IGameConfiguration}.
 	 */
-	public IGameConfiguration getGameConfiguration()
+	public IGameConfiguration<?> getGameConfiguration()
 	{
 		return _gameConfiguration;
 	}

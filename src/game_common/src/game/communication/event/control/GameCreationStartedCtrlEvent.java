@@ -20,7 +20,7 @@ public final class GameCreationStartedCtrlEvent extends AbstractControlEvent
 	/**
 	 * The game creator to use on the client.
 	 */
-	private final IClientGameCreator<?, ?, ?, ?> _clientCreator;
+	private final IClientGameCreator<?, ?, ?, ?, ?> _clientCreator;
 
 	/**
 	 * The id of created game.
@@ -44,7 +44,7 @@ public final class GameCreationStartedCtrlEvent extends AbstractControlEvent
 	 *            the game creator to use.
 	 */
 	public GameCreationStartedCtrlEvent(final int iGameId, final int iPlayerId,
-			final IClientGameCreator<?, ?, ?, ?> clientCreator)
+			final IClientGameCreator<?, ?, ?, ?, ?> clientCreator)
 	{
 		super(ControlEventType.GAME_CREATION_STARTED);
 		_clientCreator = clientCreator;
@@ -57,7 +57,7 @@ public final class GameCreationStartedCtrlEvent extends AbstractControlEvent
 	 * 
 	 * @return the game creator to use on the client.
 	 */
-	public IClientGameCreator<?, ?, ?, ?> getClientGameCreator()
+	public IClientGameCreator<?, ?, ?, ?, ?> getClientGameCreator()
 	{
 		return _clientCreator;
 	}
