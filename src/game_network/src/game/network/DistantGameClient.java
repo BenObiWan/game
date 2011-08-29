@@ -39,7 +39,7 @@ public final class DistantGameClient extends DistantPeer implements IGameClient
 	/**
 	 * List of server side player on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, IServerSidePlayer> _serverSidePlayerList = new ConcurrentSkipListMap<Integer, IServerSidePlayer>();
+	private final ConcurrentSkipListMap<Integer, IServerSidePlayer<?>> _serverSidePlayerList = new ConcurrentSkipListMap<Integer, IServerSidePlayer<?>>();
 
 	/**
 	 * Create a new unregistered client.
@@ -204,25 +204,25 @@ public final class DistantGameClient extends DistantPeer implements IGameClient
 	}
 
 	@Override
-	public IServerSidePlayer getServerSidePlayer(final int iPlayerId)
+	public IServerSidePlayer<?> getServerSidePlayer(final int iPlayerId)
 	{
 		return _serverSidePlayerList.get(Integer.valueOf(iPlayerId));
 	}
 
 	@Override
-	public void addServerSidePlayer(final IServerSidePlayer player)
+	public void addServerSidePlayer(final IServerSidePlayer<?> player)
 	{
 		_serverSidePlayerList.put(Integer.valueOf(player.getId()), player);
 	}
 
 	@Override
-	public void removeServerSidePlayer(final IServerSidePlayer player)
+	public void removeServerSidePlayer(final IServerSidePlayer<?> player)
 	{
 		_serverSidePlayerList.remove(Integer.valueOf(player.getId()));
 	}
 
 	@Override
-	public boolean containServerSidePlayer(final IServerSidePlayer player)
+	public boolean containServerSidePlayer(final IServerSidePlayer<?> player)
 	{
 		return _serverSidePlayerList
 				.containsKey(Integer.valueOf(player.getId()));
