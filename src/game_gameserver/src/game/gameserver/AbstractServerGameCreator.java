@@ -466,7 +466,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			else
 			{
 				final PLAYER_TYPE player = createAI(client, act.getAIId(),
-						act.getName(), act.getPlayerConfiguration());
+						act.getName());
 				addPlayer(player, client);
 				evt = new GameJoinedCtrlEvent(_iGameId, act.getAIId(),
 						getClientGameCreator());

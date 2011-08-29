@@ -143,12 +143,10 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 *            the id of the player.
 	 * @param strPlayerName
 	 *            the name of the player.
-	 * @param conf
-	 *            the configuration of the player.
 	 * @return the newly created {@link IServerSidePlayer}.
 	 */
 	PLAYER_TYPE createAI(IGameClient hostingClient, int iPlayerId,
-			String strPlayerName, IPlayerConfiguration conf);
+			String strPlayerName);
 
 	/**
 	 * Initialize the game. Should only be called on the server.
@@ -165,4 +163,12 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 */
 	void initialize(IGameServer gameServer, int iGameId,
 			IGameClient creatorClient, int iCreatorPlayerId);
+
+	/**
+	 * Creates a new {@link IPlayerConfiguration} for one of the player of this
+	 * game.
+	 * 
+	 * @return the new {@link IPlayerConfiguration}.
+	 */
+	PLAYER_CONF createPlayerConfiguration();
 }
