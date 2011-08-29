@@ -47,7 +47,7 @@ public final class LocalGameServer implements IGameServer
 	/**
 	 * Map off all current games.
 	 */
-	private final ConcurrentSkipListMap<Integer, IServerSideGame<?, ?, ?>> _gameList = new ConcurrentSkipListMap<Integer, IServerSideGame<?, ?, ?>>();
+	private final ConcurrentSkipListMap<Integer, IServerSideGame<?, ?, ?, ?>> _gameList = new ConcurrentSkipListMap<Integer, IServerSideGame<?, ?, ?, ?>>();
 
 	/**
 	 * Map off all game currently in creation.
@@ -110,11 +110,11 @@ public final class LocalGameServer implements IGameServer
 			final IGameCtrlAction action = (IGameCtrlAction) act;
 			final IServerGameCreator<?, ?, ?, ?, ?> gameCreator = _gameInCreationList
 					.get(Integer.valueOf(action.getGameId()));
-			final IServerSideGame<?, ?, ?> game = _gameList.get(Integer
+			final IServerSideGame<?, ?, ?, ?> game = _gameList.get(Integer
 					.valueOf(action.getGameId()));
 			if (gameCreator == null && game == null)
 			{
-
+				// TODO error in handleAction
 			}
 			else if (gameCreator != null)
 			{
@@ -122,7 +122,7 @@ public final class LocalGameServer implements IGameServer
 			}
 			else
 			{
-
+				// TODO error in handleAction
 			}
 		}
 		else if (act instanceof IGameCreationAction)
@@ -146,10 +146,10 @@ public final class LocalGameServer implements IGameServer
 		else if (act instanceof IGameAction)
 		{
 			final IGameAction action = (IGameAction) act;
-			final IServerSideGame<?, ?, ?> game = _gameList.get(Integer
+			final IServerSideGame<?, ?, ?, ?> game = _gameList.get(Integer
 					.valueOf(action.getGameId()));
-			final IServerSidePlayer player = client.getServerSidePlayer(action
-					.getPlayerId());
+			final IServerSidePlayer<?> player = client
+					.getServerSidePlayer(action.getPlayerId());
 			if (game == null)
 			{
 				LOGGER.error("Received a message from Client '"
@@ -192,7 +192,7 @@ public final class LocalGameServer implements IGameServer
 	 * @param g
 	 *            the Game to remove.
 	 */
-	public void unregisterGame(final IServerSideGame<?, ?, ?> g)
+	public void unregisterGame(final IServerSideGame<?, ?, ?, ?> g)
 	{
 		_gameList.remove(Integer.valueOf(g.getGameId()));
 	}
@@ -368,7 +368,7 @@ public final class LocalGameServer implements IGameServer
 		final TreeSet<IGameDescription> setDescription = new TreeSet<IGameDescription>();
 		if (act.isOnlyJoinableGames())
 		{
-			for (final IServerSideGame<?, ?, ?> game : _gameList.values())
+			for (final IServerSideGame<?, ?, ?, ?> game : _gameList.values())
 			{
 				if (game.isJoinable())
 				{
@@ -378,7 +378,7 @@ public final class LocalGameServer implements IGameServer
 		}
 		else
 		{
-			for (final IServerSideGame<?, ?, ?> game : _gameList.values())
+			for (final IServerSideGame<?, ?, ?, ?> game : _gameList.values())
 			{
 				setDescription.add(game.getDescription());
 			}
@@ -414,7 +414,8 @@ public final class LocalGameServer implements IGameServer
 	 * @return the newly created and scheduled task.
 	 */
 	public TimerTask scheduleTask(final int iDelay,
-			final IServerSideGame<?, ?, ?> game, final IServerSidePlayer player)
+			final IServerSideGame<?, ?, ?, ?> game,
+			final IServerSidePlayer<?> player)
 	{
 		final TimerTask task = new TimeoutTask(_timeOutExecutor, iDelay, game,
 				player);

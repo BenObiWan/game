@@ -10,9 +10,9 @@ import game.config.IPlayerConfiguration;
  * Description of a player on the server side.
  * 
  * @author benobiwan
+ * 
  * @param <PLAYER_CONF>
  *            the type of player configuration.
- * 
  */
 public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfiguration>
 		implements IServerSidePlayer<PLAYER_CONF>
@@ -30,7 +30,7 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	/**
 	 * The game where this player is playing.
 	 */
-	protected IServerSideGame<?, ?, ?> _serverSideGame;
+	protected IServerSideGame<?, ?, ?, ?> _serverSideGame;
 
 	/**
 	 * The game creator this player is joining.
@@ -119,7 +119,7 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	}
 
 	@Override
-	public IServerSideGame<?, ?, ?> getGame()
+	public IServerSideGame<?, ?, ?, ?> getGame()
 	{
 		return _serverSideGame;
 	}

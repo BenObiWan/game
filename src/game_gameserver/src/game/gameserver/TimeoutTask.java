@@ -25,12 +25,12 @@ public final class TimeoutTask extends TimerTask
 	/**
 	 * Game to which this timeout task is related.
 	 */
-	protected final IServerSideGame<?, ?, ?> _game;
+	protected final IServerSideGame<?, ?, ?, ?> _game;
 
 	/**
 	 * The acting player.
 	 */
-	protected final IServerSidePlayer _player;
+	protected final IServerSidePlayer<?> _player;
 
 	/**
 	 * 
@@ -44,7 +44,8 @@ public final class TimeoutTask extends TimerTask
 	 *            the acting player.
 	 */
 	public TimeoutTask(final ExecutorService timeOutExecutor, final int iDelay,
-			final IServerSideGame<?, ?, ?> game, final IServerSidePlayer player)
+			final IServerSideGame<?, ?, ?, ?> game,
+			final IServerSidePlayer<?> player)
 	{
 		_iDelay = iDelay;
 		_game = game;

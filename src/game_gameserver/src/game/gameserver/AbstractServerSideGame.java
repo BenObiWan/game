@@ -7,6 +7,7 @@ import game.communication.action.IGameAction;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.game.EndTurnCmnAction;
 import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -22,9 +23,12 @@ import java.util.concurrent.ConcurrentSkipListSet;
  *            game.
  * @param <PLAYER_TYPE>
  *            the type of {@link IServerSidePlayer} used in this game.
+ * @param <PLAYER_CONF>
+ *            the type of {@link IPlayerConfiguration}.
  */
-public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration, PLAYER_TYPE extends IServerSidePlayer>
-		implements IServerSideGame<ACTION_TYPE, CONF_TYPE, PLAYER_TYPE>
+public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IServerSidePlayer<PLAYER_CONF>>
+		implements
+		IServerSideGame<ACTION_TYPE, CONF_TYPE, PLAYER_CONF, PLAYER_TYPE>
 {
 	/**
 	 * Id of the game.
@@ -63,7 +67,7 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 	}
 
 	@Override
-	public int compareTo(final IServerSideGame<?, ?, ?> o)
+	public int compareTo(final IServerSideGame<?, ?, ?, ?> o)
 	{
 		return getGameId() - o.getGameId();
 	}
@@ -92,7 +96,7 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 		{
 			return false;
 		}
-		final AbstractServerSideGame<?, ?, ?> other = (AbstractServerSideGame<?, ?, ?>) obj;
+		final AbstractServerSideGame<?, ?, ?, ?> other = (AbstractServerSideGame<?, ?, ?, ?>) obj;
 		if (_iGameId != other._iGameId)
 		{
 			return false;
@@ -107,7 +111,7 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 	}
 
 	@Override
-	public void handleCommonGameAction(final IServerSidePlayer player,
+	public void handleCommonGameAction(final IServerSidePlayer<?> player,
 			final ICommonGameAction act) throws InconsistentActionTypeException
 	{
 		switch (act.getType())
@@ -137,7 +141,7 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 	 */
 	@SuppressWarnings("unused")
 	protected void handleUnsupportedCommonAction(
-			final IServerSidePlayer player, final ICommonGameAction act)
+			final IServerSidePlayer<?> player, final ICommonGameAction act)
 	{
 		// TODO AbstractServerSideGame handleUnsupportedCommonAction
 	}
@@ -150,11 +154,11 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 	 * @param act
 	 *            the action to handle.
 	 */
-	public abstract void handleAction(final IServerSidePlayer player,
+	public abstract void handleAction(final IServerSidePlayer<?> player,
 			final EndTurnCmnAction act);
 
 	@Override
-	public boolean isInThisGame(final IServerSidePlayer player)
+	public boolean isInThisGame(final IServerSidePlayer<?> player)
 	{
 		return _playerList.contains(player);
 	}

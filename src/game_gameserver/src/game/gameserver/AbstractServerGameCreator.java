@@ -35,8 +35,9 @@ import org.apache.log4j.Logger;
  * Abstract implementation of the {@link IServerGameCreator}.
  * 
  * @author benobiwan
- * @param <PLAYER_CONF>
  * 
+ * @param <PLAYER_CONF>
+ *            the type of {@link IPlayerConfiguration} of this game.
  * @param <ACTION_TYPE>
  *            the type of {@link IGameAction} handled by the game.
  * @param <SERVER_GAME_TYPE>
@@ -46,7 +47,7 @@ import org.apache.log4j.Logger;
  * @param <PLAYER_TYPE>
  *            the type of {@link IServerSidePlayer} used in this game.
  */
-public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, PLAYER_TYPE extends IServerSidePlayer<PLAYER_CONF>, SERVER_GAME_TYPE extends IServerSideGame<ACTION_TYPE, CONF_TYPE, PLAYER_TYPE>>
+public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, PLAYER_TYPE extends IServerSidePlayer<PLAYER_CONF>, SERVER_GAME_TYPE extends IServerSideGame<ACTION_TYPE, CONF_TYPE, PLAYER_CONF, PLAYER_TYPE>>
 		implements
 		IServerGameCreator<PLAYER_CONF, ACTION_TYPE, CONF_TYPE, PLAYER_TYPE, SERVER_GAME_TYPE>
 {
@@ -175,13 +176,13 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	 * @param client
 	 *            the client from which the player is coming.
 	 */
-	private void removePlayer(final IServerSidePlayer player,
+	private void removePlayer(final IServerSidePlayer<?> player,
 			final IGameClient client)
 	{
 		boolean bKeepClient = false;
 		_playerList.remove(player);
 		client.removeServerSidePlayer(player);
-		for (final IServerSidePlayer pList : _playerList)
+		for (final IServerSidePlayer<?> pList : _playerList)
 		{
 			bKeepClient |= client.containServerSidePlayer(pList);
 		}
@@ -211,6 +212,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	/**
 	 * Send a {@link ConfigurationUpdateCrEvent} to every player.
 	 */
+	@SuppressWarnings("unused")
 	private void sendConfigurationUpdate()
 	{
 		for (final PLAYER_TYPE player : _playerList)
@@ -381,7 +383,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		IEvent evt = null;
 		synchronized (_lock)
 		{
-			final IServerSidePlayer player = client.getServerSidePlayer(act
+			final IServerSidePlayer<?> player = client.getServerSidePlayer(act
 					.getPlayerId());
 			if (player != null)
 			{
@@ -438,10 +440,11 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	 * @param act
 	 *            the action to handle.
 	 */
+	@SuppressWarnings("unused")
 	private void handleKickPlayerGameCrAction(final IGameClient client,
 			final KickPlayerCrAction act)
 	{
-
+		// TODO handleKickPlayerGameCrAction
 	}
 
 	/**
