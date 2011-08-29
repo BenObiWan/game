@@ -40,8 +40,8 @@ public final class PlayerDescriptionPanel extends JPanel
 		final JCheckBox readyCheckBox = new JCheckBox();
 		readyCheckBox.setSelected(description.isReady());
 		readyCheckBox.setEnabled(false);
-//		readyCheckBox.setDisabledSelectedIcon(CoreUI.VALID_ICON);
-//		readyCheckBox.setDisabledIcon(CoreUI.INVALID_ICON);
+		// readyCheckBox.setDisabledSelectedIcon(CoreUI.VALID_ICON);
+		// readyCheckBox.setDisabledIcon(CoreUI.INVALID_ICON);
 		add(readyCheckBox);
 	}
 }
