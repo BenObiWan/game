@@ -8,7 +8,7 @@ import game.gameserver.IServerGameCreator;
  * @author benobiwan
  * 
  */
-public interface IGameListDescription
+public interface IGameListDescription extends Comparable<IGameListDescription>
 {
 	/**
 	 * Get the name of the game.
