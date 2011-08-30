@@ -32,12 +32,12 @@ public final class GameStarterPanel extends JPanel
 	/**
 	 * Combo box for choosing the server.
 	 */
-	private final JComboBox _comboServer = new JComboBox();
+	private final JComboBox<IGameServer> _comboServer = new JComboBox<IGameServer>();
 
 	/**
 	 * Combo box for choosing the type of game.
 	 */
-	private final JComboBox _comboGameType = new JComboBox();
+	private final JComboBox<IGameListDescription> _comboGameType = new JComboBox<IGameListDescription>();
 
 	/**
 	 * List of all connections.
@@ -109,14 +109,11 @@ public final class GameStarterPanel extends JPanel
 	public void updateGameList()
 	{
 		_comboGameType.removeAllItems();
-		final Object selected = _comboServer.getSelectedItem();
-		if (selected instanceof IGameServer)
+		final IGameServer server = _comboServer.getItemAt(_comboServer
+				.getSelectedIndex());
+		for (final IGameListDescription desc : server.getAvailableGames())
 		{
-			final IGameServer server = (IGameServer) selected;
-			for (final IGameListDescription desc : server.getAvailableGames())
-			{
-				_comboGameType.addItem(desc);
-			}
+			_comboGameType.addItem(desc);
 		}
 	}
 
@@ -125,27 +122,16 @@ public final class GameStarterPanel extends JPanel
 	 */
 	protected void createGame()
 	{
-		final Object selectedServer = _comboServer.getSelectedItem();
-		final Object selectedGame = _comboGameType.getSelectedItem();
+		final IGameServer selectedServer = _comboServer.getItemAt(_comboServer
+				.getSelectedIndex());
+		final IGameListDescription selectedGame = _comboGameType
+				.getItemAt(_comboGameType.getSelectedIndex());
+
 		if (selectedServer != null && selectedGame != null)
 		{
-			if (selectedServer instanceof IGameServer)
-			{
-				if (selectedGame instanceof IGameListDescription)
-				{
-					final IGameServer server = (IGameServer) selectedServer;
-					final IGameListDescription gameDescription = (IGameListDescription) selectedGame;
-					_localGameClient.sendCreateGame(gameDescription, server);
-				}
-				else
-				{
-					// TODO
-				}
-			}
-			else
-			{
-				// TODO
-			}
+			final IGameServer server = selectedServer;
+			final IGameListDescription gameDescription = selectedGame;
+			_localGameClient.sendCreateGame(gameDescription, server);
 		}
 	}
 
