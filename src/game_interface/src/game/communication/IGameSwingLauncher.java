@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
  * @author benobiwan
  * 
  */
-public interface IGameSwingLauncher
+public interface IGameSwingLauncher extends Comparable<IGameSwingLauncher>
 {
 	/**
 	 * Create an {@link IServerGameCreator} for this game.
