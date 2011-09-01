@@ -1,5 +1,6 @@
 package game.launcher;
 
+import game.communication.IGameSwingLauncher;
 import game.core.ApplicationCore;
 import game.core.ui.CoreUI;
 import game.launcher.config.ILauncherConfiguration;
@@ -9,6 +10,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -79,18 +81,22 @@ public final class LauncherFrame extends JFrame implements ActionListener
 	 *            the {@link ILauncherConfiguration} of this program.
 	 * @param appCore
 	 *            the application core.
+	 * @param gameLauncherSet
+	 *            set of all loaded {@link IGameSwingLauncher}.
 	 * @throws HeadlessException
 	 *             Thrown when code that is dependent on a keyboard, display, or
 	 *             mouse is called in an environment that does not support a
 	 *             keyboard, display, or mouse.
 	 */
 	public LauncherFrame(final ILauncherConfiguration launcherConf,
-			final ApplicationCore appCore) throws HeadlessException
+			final ApplicationCore appCore,
+			final Set<IGameSwingLauncher> gameLauncherSet)
+			throws HeadlessException
 	{
 		super("Launcher");
 		_launcherConf = launcherConf;
 		_appCore = appCore;
-		_coreUI = new CoreUI(_appCore);
+		_coreUI = new CoreUI(_appCore, gameLauncherSet);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

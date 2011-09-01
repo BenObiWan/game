@@ -10,7 +10,6 @@ import game.network.config.NetworkXMLFileConfigurationLoader;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * The application core.
@@ -38,12 +37,14 @@ public final class ApplicationCore
 
 	/**
 	 * Creates a new ApplicationCore.
+	 * 
+	 * @param gameDescriptionSet
+	 *            set of game description loaded while launching the
+	 *            application.
 	 */
-	public ApplicationCore()
+	public ApplicationCore(final Set<IGameListDescription> gameDescriptionSet)
 	{
-		final Set<IGameListDescription> gameDescription = new TreeSet<IGameListDescription>();
-
-		_locGameServer = new LocalGameServer(gameDescription);
+		_locGameServer = new LocalGameServer(gameDescriptionSet);
 		// TODO read name in configuration file
 		_locGameClient = new LocalGameClient("loc");
 		_locGameServer.registerGameClient(_locGameClient);

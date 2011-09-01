@@ -2,6 +2,8 @@ package game.core.ui;
 
 import game.communication.IGameListDescription;
 import game.communication.IGameServer;
+import game.communication.IGameSwingLauncher;
+import game.gameclient.IClientGameCreator;
 import game.gameclient.LocalGameClient;
 import game.network.ConnectionList;
 
@@ -9,6 +11,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,7 +42,7 @@ public final class GameStarterPanel extends JPanel
 	/**
 	 * Combo box for choosing the type of game.
 	 */
-	private final JComboBox<IGameListDescription> _comboGameType = new JComboBox<IGameListDescription>();
+	private final JComboBox<IGameSwingLauncher> _comboGameType = new JComboBox<IGameSwingLauncher>();
 
 	/**
 	 * List of all connections.
@@ -50,15 +55,30 @@ public final class GameStarterPanel extends JPanel
 	private final LocalGameClient _localGameClient;
 
 	/**
+	 * Map of all registered {@link IGameSwingLauncher} using the relevant
+	 * {@link IGameListDescription} has a key.
+	 */
+	private final ConcurrentMap<IGameListDescription, IGameSwingLauncher> _launcherMapByDesc = new ConcurrentSkipListMap<IGameListDescription, IGameSwingLauncher>();
+
+	/**
+	 * Map of all registered {@link IGameSwingLauncher} using the relevant
+	 * {@link IClientGameCreator} class has a key.
+	 */
+	private final ConcurrentMap<Class<? extends IClientGameCreator<?, ?, ?, ?, ?>>, IGameSwingLauncher> _launcherMapByCreatorClass = new ConcurrentSkipListMap<Class<? extends IClientGameCreator<?, ?, ?, ?, ?>>, IGameSwingLauncher>();
+
+	/**
 	 * Creates a new GameCreationPanel.
 	 * 
 	 * @param localGameClient
 	 *            the local game client.
 	 * @param connectionList
 	 *            list of all connections.
+	 * @param gameLauncherSet
+	 *            set of all loaded {@link IGameSwingLauncher}.
 	 */
 	public GameStarterPanel(final LocalGameClient localGameClient,
-			final ConnectionList connectionList)
+			final ConnectionList connectionList,
+			final Set<IGameSwingLauncher> gameLauncherSet)
 	{
 		super(new BorderLayout(5, 5));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,6 +103,15 @@ public final class GameStarterPanel extends JPanel
 
 		add(panelCombo, BorderLayout.CENTER);
 		add(panelButton, BorderLayout.PAGE_END);
+
+		for (final IGameSwingLauncher gameLauncher : gameLauncherSet)
+		{
+			_launcherMapByDesc.put(gameLauncher.getGameListDescription(),
+					gameLauncher);
+			_launcherMapByCreatorClass.put(
+					gameLauncher.getIClientGameCreatorClass(), gameLauncher);
+		}
+
 		updateServerList();
 		updateGameList();
 	}
@@ -113,7 +142,12 @@ public final class GameStarterPanel extends JPanel
 				.getSelectedIndex());
 		for (final IGameListDescription desc : server.getAvailableGames())
 		{
-			_comboGameType.addItem(desc);
+			final IGameSwingLauncher gameLauncher = _launcherMapByDesc
+					.get(desc);
+			if (gameLauncher != null)
+			{
+				_comboGameType.addItem(gameLauncher);
+			}
 		}
 	}
 
@@ -124,14 +158,14 @@ public final class GameStarterPanel extends JPanel
 	{
 		final IGameServer selectedServer = _comboServer.getItemAt(_comboServer
 				.getSelectedIndex());
-		final IGameListDescription selectedGame = _comboGameType
+		final IGameSwingLauncher selectedGameLauncher = _comboGameType
 				.getItemAt(_comboGameType.getSelectedIndex());
 
-		if (selectedServer != null && selectedGame != null)
+		if (selectedServer != null && selectedGameLauncher != null)
 		{
-			final IGameServer server = selectedServer;
-			final IGameListDescription gameDescription = selectedGame;
-			_localGameClient.sendCreateGame(gameDescription, server);
+			_localGameClient.sendCreateGame(
+					selectedGameLauncher.createServerGameCreator(),
+					selectedServer);
 		}
 	}
 

@@ -1,9 +1,9 @@
 package game.communication;
 
-import javax.swing.JInternalFrame;
-
 import game.gameclient.IClientGameCreator;
 import game.gameserver.IServerGameCreator;
+
+import javax.swing.JInternalFrame;
 
 /**
  * Interface used on the client side to initialize the graphical component of a

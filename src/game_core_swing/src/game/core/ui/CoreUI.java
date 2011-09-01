@@ -1,5 +1,6 @@
 package game.core.ui;
 
+import game.communication.IGameSwingLauncher;
 import game.core.ApplicationCore;
 import game.network.config.INetworkServerConfiguration;
 import game.network.config.NetworkXMLFileConfigurationLoader;
@@ -16,6 +17,7 @@ import java.awt.event.WindowListener;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.Set;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.swing.JDesktopPane;
@@ -147,8 +149,11 @@ public final class CoreUI extends JFrame implements ActionListener
 	 * 
 	 * @param appCore
 	 *            the application core.
+	 * @param gameLauncherSet
+	 *            set of all loaded {@link IGameSwingLauncher}.
 	 */
-	public CoreUI(final ApplicationCore appCore)
+	public CoreUI(final ApplicationCore appCore,
+			final Set<IGameSwingLauncher> gameLauncherSet)
 	{
 		super("Core UI");
 		_appCore = appCore;
@@ -226,7 +231,7 @@ public final class CoreUI extends JFrame implements ActionListener
 		}
 		_createGameWindow.setContentPane(new GameStarterPanel(_appCore
 				.getLocalGameClient(), _appCore.getNetworkMain()
-				.getConnectionList()));
+				.getConnectionList(), gameLauncherSet));
 		_createGameWindow.pack();
 
 		_serverListWindow.setContentPane(new ServerListPanel(_appCore

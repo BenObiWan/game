@@ -1,7 +1,6 @@
 package game.gameclient;
 
 import game.communication.IGameClient;
-import game.communication.IGameListDescription;
 import game.communication.IGameServer;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.control.CreateGameCtrlAction;
@@ -15,6 +14,7 @@ import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.control.GameCreationStartedCtrlEvent;
 import game.communication.event.control.GameJoinedCtrlEvent;
 import game.communication.event.control.ServerStateCtrlEvent;
+import game.gameserver.IServerGameCreator;
 import game.gameserver.IServerSidePlayer;
 
 import java.util.Observable;
@@ -315,16 +315,18 @@ public final class LocalGameClient extends Observable implements IGameClient
 	/**
 	 * Creates a new game on the specified {@link IGameServer}.
 	 * 
-	 * @param gameDescription
-	 *            the description of the game to create.
+	 * @param gameCreator
+	 *            the {@link IServerGameCreator} to use on the server to create
+	 *            the game.
 	 * @param server
 	 *            the {@link IGameServer} on which to create the game.
 	 */
-	public void sendCreateGame(final IGameListDescription gameDescription,
+	public void sendCreateGame(
+			final IServerGameCreator<?, ?, ?, ?, ?> gameCreator,
 			final IGameServer server)
 	{
-		final CreateGameCtrlAction act = new CreateGameCtrlAction(
-				gameDescription.createServerGameCreator(), getNextPlayerId());
+		final CreateGameCtrlAction act = new CreateGameCtrlAction(gameCreator,
+				getNextPlayerId());
 		try
 		{
 			server.handleAction(this, act);

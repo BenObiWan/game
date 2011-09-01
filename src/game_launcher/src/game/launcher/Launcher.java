@@ -1,13 +1,18 @@
 package game.launcher;
 
+import game.communication.IGameListDescription;
+import game.communication.IGameSwingLauncher;
 import game.core.ApplicationCore;
 import game.core.ui.CoreUI;
 import game.launcher.config.ILauncherConfiguration;
 import game.launcher.config.ILauncherConfigurationLoader;
 import game.launcher.config.LauncherPropertyConfigurationLoader;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -18,6 +23,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 import common.config.InvalidConfigurationException;
@@ -34,10 +40,9 @@ import common.config.InvalidConfigurationException;
 public final class Launcher
 {
 	/**
-	 * Default configuration directory if nothing is specified on the command
-	 * line.
+	 * Logger object.
 	 */
-	public static final String DEFAULT_CONFIGURATION_DIRECTORY = "/home/benobiwan/.benobiwan/";
+	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
 
 	/**
 	 * Option used to change the configuration directory.
@@ -78,13 +83,22 @@ public final class Launcher
 	/**
 	 * Configuration directory that will be used.
 	 */
-	@SuppressWarnings("unused")
 	private String _strConfigurationPath;
 
 	/**
 	 * The {@link ILauncherConfiguration} of this program.
 	 */
 	private ILauncherConfiguration _launcherConf;
+
+	/**
+	 * Set of {@link IGameListDescription} loaded.
+	 */
+	private final Set<IGameListDescription> _gameDescriptionSet = new TreeSet<IGameListDescription>();
+
+	/**
+	 * Set of {@link IGameSwingLauncher} loaded.
+	 */
+	private final Set<IGameSwingLauncher> _gameLauncherSet = new TreeSet<IGameSwingLauncher>();
 
 	/**
 	 * Creates a new Launcher.
@@ -113,6 +127,7 @@ public final class Launcher
 		parse(args);
 		loadLoggingConfiguration();
 		loadConfiguration();
+		readGameDescFiles();
 	}
 
 	/**
@@ -137,7 +152,7 @@ public final class Launcher
 		}
 		else
 		{
-			_strConfigurationPath = DEFAULT_CONFIGURATION_DIRECTORY;
+			_strConfigurationPath = System.getenv("user.home") + "/.game/";
 		}
 		if (_commandLine.hasOption(OPTION_SERVER))
 		{
@@ -169,9 +184,24 @@ public final class Launcher
 	 */
 	private void loadConfiguration() throws InvalidConfigurationException
 	{
+		final File confDir = new File(_strConfigurationPath);
+		if (!(confDir.exists() && confDir.isDirectory()))
+		{
+			LOGGER.warn("Configuration directory " + _strConfigurationPath
+					+ " doesn't exists.");
+		}
 		final ILauncherConfigurationLoader _launcherConfLoader = new LauncherPropertyConfigurationLoader(
 				ManagementFactory.getPlatformMBeanServer());
 		_launcherConf = _launcherConfLoader.getLauncherConfiguration();
+	}
+
+	/**
+	 * Read the game descriptions files to extract the registered
+	 * {@link IGameListDescription} and {@link IGameSwingLauncher}.
+	 */
+	private void readGameDescFiles()
+	{
+
 	}
 
 	/**
@@ -191,7 +221,7 @@ public final class Launcher
 	 */
 	public void start() throws IOException
 	{
-		final ApplicationCore appCore = new ApplicationCore();
+		final ApplicationCore appCore = new ApplicationCore(_gameDescriptionSet);
 
 		if (_launcherConf.isDaemon())
 		{
@@ -201,7 +231,7 @@ public final class Launcher
 		{
 			CoreUI.setLookAndFeel();
 			final LauncherFrame frame = new LauncherFrame(_launcherConf,
-					appCore);
+					appCore, _gameLauncherSet);
 			frame.pack();
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
