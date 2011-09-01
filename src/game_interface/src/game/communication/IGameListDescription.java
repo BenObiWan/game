@@ -1,7 +1,5 @@
 package game.communication;
 
-import game.gameserver.IServerGameCreator;
-
 /**
  * Description of a game in the list of game available in the application.
  * 
@@ -23,11 +21,4 @@ public interface IGameListDescription extends Comparable<IGameListDescription>
 	 * @return the version of the game.
 	 */
 	String getVersion();
-
-	/**
-	 * Create an {@link IServerGameCreator} for this game.
-	 * 
-	 * @return the newly created {@link IServerGameCreator}.
-	 */
-	IServerGameCreator<?, ?, ?, ?, ?> createServerGameCreator();
 }
