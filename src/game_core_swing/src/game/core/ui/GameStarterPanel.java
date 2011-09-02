@@ -64,7 +64,7 @@ public final class GameStarterPanel extends JPanel
 	 * Map of all registered {@link IGameSwingLauncher} using the relevant
 	 * {@link IClientGameCreator} class has a key.
 	 */
-	private final ConcurrentMap<Class<? extends IClientGameCreator<?, ?, ?, ?, ?>>, IGameSwingLauncher> _launcherMapByCreatorClass = new ConcurrentSkipListMap<Class<? extends IClientGameCreator<?, ?, ?, ?, ?>>, IGameSwingLauncher>();
+	private final ConcurrentMap<String, IGameSwingLauncher> _launcherMapByCreatorClass = new ConcurrentSkipListMap<String, IGameSwingLauncher>();
 
 	/**
 	 * Creates a new GameCreationPanel.
@@ -108,8 +108,9 @@ public final class GameStarterPanel extends JPanel
 		{
 			_launcherMapByDesc.put(gameLauncher.getGameListDescription(),
 					gameLauncher);
-			_launcherMapByCreatorClass.put(
-					gameLauncher.getIClientGameCreatorClass(), gameLauncher);
+			_launcherMapByCreatorClass.put(gameLauncher
+					.getIClientGameCreatorClass().getCanonicalName(),
+					gameLauncher);
 		}
 
 		updateServerList();
