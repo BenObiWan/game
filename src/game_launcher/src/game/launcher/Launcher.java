@@ -9,8 +9,10 @@ import game.launcher.config.ILauncherConfigurationLoader;
 import game.launcher.config.LauncherPropertyConfigurationLoader;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -152,7 +154,7 @@ public final class Launcher
 		}
 		else
 		{
-			_strConfigurationPath = System.getenv("user.home") + "/.game/";
+			_strConfigurationPath = System.getProperty("user.home") + "/.game/";
 		}
 		if (_commandLine.hasOption(OPTION_SERVER))
 		{
@@ -201,7 +203,60 @@ public final class Launcher
 	 */
 	private void readGameDescFiles()
 	{
+		final File descDir = new File(_strConfigurationPath + "/desc/");
+		for (final File descFile : descDir.listFiles())
+		{
+			try
+			{
+				if (descFile.isFile() && descFile.canRead())
+				{
+					final Properties prop = new Properties();
+					final FileReader reader = new FileReader(descFile);
+					prop.load(reader);
 
+					final String strGameDesc = prop.getProperty("GameDesc");
+					if (strGameDesc != null)
+					{
+						final Object objGameDesc = Class.forName(strGameDesc)
+								.newInstance();
+						if (objGameDesc instanceof IGameListDescription)
+						{
+							_gameDescriptionSet
+									.add((IGameListDescription) objGameDesc);
+						}
+					}
+					final String strSwingLauncher = prop
+							.getProperty("SwingLauncher");
+					if (strSwingLauncher != null)
+					{
+						final Object objSwingLauncher = Class.forName(
+								strSwingLauncher).newInstance();
+						if (objSwingLauncher instanceof IGameSwingLauncher)
+						{
+							_gameLauncherSet
+									.add((IGameSwingLauncher) objSwingLauncher);
+						}
+					}
+					reader.close();
+				}
+			}
+			catch (final IOException e)
+			{
+				LOGGER.error("Error loading game description file.", e);
+			}
+			catch (final ClassNotFoundException e)
+			{
+				LOGGER.error("Error loading game description file.", e);
+			}
+			catch (final InstantiationException e)
+			{
+				LOGGER.error("Error loading game description file.", e);
+			}
+			catch (final IllegalAccessException e)
+			{
+				LOGGER.error("Error loading game description file.", e);
+			}
+		}
 	}
 
 	/**
