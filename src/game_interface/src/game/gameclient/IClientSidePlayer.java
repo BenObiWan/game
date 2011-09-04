@@ -73,8 +73,12 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 * 
 	 * @param evt
 	 *            the event to handle.
+	 * @throws InconsistentEventTypeException
+	 *             the type field of the {@link IGameEvent} and it's class are
+	 *             inconsistent.
 	 */
-	void handleGameEvent(final IGameEvent evt);
+	void handleGameEvent(final IGameEvent evt)
+			throws InconsistentEventTypeException;
 
 	/**
 	 * Check whether the game is in creation.
