@@ -64,6 +64,11 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	protected CONF_TYPE _conf;
 
 	/**
+	 * The configuration of the player.
+	 */
+	protected PLAYER_CONF _playerConf;
+
+	/**
 	 * Lock for accessing the different parameters of this
 	 * AbstractClientSidePlayer.
 	 */
@@ -361,5 +366,14 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	private void deleteClient()
 	{
 		_localGameClient.removeClientSidePlayer(this);
+	}
+
+	@Override
+	public PLAYER_CONF getPlayerConfiguration()
+	{
+		synchronized (_lock)
+		{
+			return _playerConf;
+		}
 	}
 }
