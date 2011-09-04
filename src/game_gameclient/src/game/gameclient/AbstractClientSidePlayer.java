@@ -1,5 +1,7 @@
 package game.gameclient;
 
+import java.util.Observable;
+
 import game.communication.IGameServer;
 import game.communication.event.GameCreationEventType;
 import game.communication.event.GameCtrlEventType;
@@ -35,7 +37,7 @@ import game.config.IPlayerConfiguration;
  *            the type of {@link IPlayerConfiguration}.
  */
 public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>, PLAYER_CONF extends IPlayerConfiguration>
-		implements
+		extends Observable implements
 		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>
 {
 	/**
