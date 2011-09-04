@@ -96,4 +96,6 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 * @return the {@link IGameServer} where this client is playing.
 	 */
 	IGameServer getServer();
+
+	void addObserver(IClientSidePlayerObserver o);
 }
