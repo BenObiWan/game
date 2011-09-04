@@ -87,7 +87,7 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 * @return the {@link IClientGameCreator} associated with this
 	 *         {@link IServerGameCreator}.
 	 */
-	IClientGameCreator<?, ?, ?, ?, ?> getClientGameCreator();
+	IClientGameCreator<?, ?, ?, ?, ?, ?> getClientGameCreator();
 
 	/**
 	 * Get the creator of this game.

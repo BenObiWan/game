@@ -20,7 +20,7 @@ public final class GameJoinedCtrlEvent extends AbstractControlEvent
 	/**
 	 * Object used on the client side to create a game of the appropriate type.
 	 */
-	private final IClientGameCreator<?, ?, ?, ?, ?> _gameCreator;
+	private final IClientGameCreator<?, ?, ?, ?, ?, ?> _gameCreator;
 
 	/**
 	 * The id of the game the client joined.
@@ -45,7 +45,7 @@ public final class GameJoinedCtrlEvent extends AbstractControlEvent
 	 *            appropriate type.
 	 */
 	public GameJoinedCtrlEvent(final int iGameId, final int iPlayerId,
-			final IClientGameCreator<?, ?, ?, ?, ?> gameCreator)
+			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
 	{
 		super(ControlEventType.GAME_JOINED);
 		_iGameId = iGameId;
@@ -60,7 +60,7 @@ public final class GameJoinedCtrlEvent extends AbstractControlEvent
 	 * @return the object used on the client side to create a game of the
 	 *         appropriate type.
 	 */
-	public IClientGameCreator<?, ?, ?, ?, ?> getClientGameCreator()
+	public IClientGameCreator<?, ?, ?, ?, ?, ?> getClientGameCreator()
 	{
 		return _gameCreator;
 	}

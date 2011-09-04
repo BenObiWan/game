@@ -60,7 +60,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 	/**
 	 * List of client side player on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?>> _clientSidePlayerList = new ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?>>();
+	private final ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?, ?>> _clientSidePlayerList = new ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?, ?>>();
 
 	/**
 	 * Creates a new LocalGameClient.
@@ -90,7 +90,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		else if (evt instanceof IGameCreationEvent)
 		{
 			final IGameCreationEvent event = (IGameCreationEvent) evt;
-			final IClientSidePlayer<?, ?, ?, ?> player = _clientSidePlayerList
+			final IClientSidePlayer<?, ?, ?, ?, ?> player = _clientSidePlayerList
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)
 			{
@@ -117,7 +117,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		else if (evt instanceof IGameEvent)
 		{
 			final IGameEvent event = (IGameEvent) evt;
-			final IClientSidePlayer<?, ?, ?, ?> player = _clientSidePlayerList
+			final IClientSidePlayer<?, ?, ?, ?, ?> player = _clientSidePlayerList
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)
 			{
@@ -262,10 +262,10 @@ public final class LocalGameClient extends Observable implements IGameClient
 	private void handleControlEvent(final IGameServer server,
 			final GameJoinedCtrlEvent evt)
 	{
-		final IClientGameCreator<?, ?, ?, ?, ?> gameCreator = evt
+		final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator = evt
 				.getClientGameCreator();
 		gameCreator.initialize(true, this, server, evt.getGameId());
-		final IClientSidePlayer<?, ?, ?, ?> player = gameCreator
+		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
 				.createPlayer(evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
 		setChanged();
@@ -284,10 +284,10 @@ public final class LocalGameClient extends Observable implements IGameClient
 	private void handleControlEvent(final IGameServer server,
 			final GameCreationStartedCtrlEvent evt)
 	{
-		final IClientGameCreator<?, ?, ?, ?, ?> gameCreator = evt
+		final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator = evt
 				.getClientGameCreator();
 		gameCreator.initialize(true, this, server, evt.getGameId());
-		final IClientSidePlayer<?, ?, ?, ?> player = gameCreator
+		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
 				.createPlayer(evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
 		setChanged();
@@ -406,7 +406,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 	 *            the {@link IClientSidePlayer} to remove.
 	 */
 	public void removeClientSidePlayer(
-			final IClientSidePlayer<?, ?, ?, ?> player)
+			final IClientSidePlayer<?, ?, ?, ?, ?> player)
 	{
 		_clientSidePlayerList.remove(Integer.valueOf(player.getId()));
 		setChanged();

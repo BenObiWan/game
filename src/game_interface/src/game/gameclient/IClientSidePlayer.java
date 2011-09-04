@@ -23,7 +23,7 @@ import game.config.IPlayerConfiguration;
  * @param <PLAYER_CONF>
  *            the type of player configuration.
  */
-public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration>
+public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_OBSERVER extends IClientSidePlayerObserver>
 		extends IPlayer<PLAYER_CONF>
 {
 	/**
@@ -42,7 +42,7 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 * @return the {@link IClientGameCreator} which this
 	 *         {@link IClientSidePlayer} is joining.
 	 */
-	IClientGameCreator<?, ?, ?, ?, ?> getGameCreator();
+	IClientGameCreator<?, ?, ?, ?, ?, ?> getGameCreator();
 
 	/**
 	 * Handle an {@link IGameCreationEvent}.
@@ -101,5 +101,5 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 */
 	IGameServer getServer();
 
-	void addObserver(IClientSidePlayerObserver o);
+	void addObserver(CLIENT_OBSERVER o);
 }

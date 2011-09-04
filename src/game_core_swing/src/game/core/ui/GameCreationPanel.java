@@ -40,7 +40,7 @@ public final class GameCreationPanel extends JPanel implements Observer
 	/**
 	 * The {@link AbstractClientGameCreator} of this game.
 	 */
-	private final AbstractClientGameCreator<?, ?, ?, ?, ?> _gameCreator;
+	private final AbstractClientGameCreator<?, ?, ?, ?, ?, ?> _gameCreator;
 
 	/**
 	 * Creates a new GameCreationPanel.
@@ -49,7 +49,7 @@ public final class GameCreationPanel extends JPanel implements Observer
 	 *            the {AbstractClientGameCreator} to display.
 	 */
 	public GameCreationPanel(
-			final AbstractClientGameCreator<?, ?, ?, ?, ?> gameCreator)
+			final AbstractClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
 	{
 		super(new BorderLayout());
 		_gameCreator = gameCreator;

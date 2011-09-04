@@ -30,7 +30,7 @@ public interface IGameSwingLauncher extends Comparable<IGameSwingLauncher>
 	 * @return the {@link IClientGameCreator} holding the parameters of the
 	 *         game.
 	 */
-	JInternalFrame createGameUI(IClientGameCreator<?, ?, ?, ?, ?> creator);
+	JInternalFrame createGameUI(IClientGameCreator<?, ?, ?, ?, ?, ?> creator);
 
 	/**
 	 * Get the {@link IGameListDescription} of this game.
@@ -46,5 +46,5 @@ public interface IGameSwingLauncher extends Comparable<IGameSwingLauncher>
 	 * @return the {@link Class} of the {@link IClientGameCreator} associated
 	 *         with this game.
 	 */
-	Class<? extends IClientGameCreator<?, ?, ?, ?, ?>> getIClientGameCreatorClass();
+	Class<? extends IClientGameCreator<?, ?, ?, ?, ?, ?>> getIClientGameCreatorClass();
 }

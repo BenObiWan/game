@@ -17,7 +17,8 @@ import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
-import java.util.Observable;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstract implementation of the {@link IClientSidePlayer} interface.
@@ -36,9 +37,9 @@ import java.util.Observable;
  * @param <PLAYER_CONF>
  *            the type of {@link IPlayerConfiguration}.
  */
-public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>, PLAYER_CONF extends IPlayerConfiguration>
-		extends Observable implements
-		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF>
+public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_OBSERVER extends IClientSidePlayerObserver>
+		implements
+		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>
 {
 	/**
 	 * Id of the player.
@@ -58,7 +59,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	/**
 	 * The game in creation the client joined.
 	 */
-	protected IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE> _gameCreator;
+	protected IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_OBSERVER> _gameCreator;
 
 	/**
 	 * The configuration of the game.
@@ -85,6 +86,11 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	 * The {@link LocalGameClient}.
 	 */
 	protected final LocalGameClient _localGameClient;
+
+	/**
+	 * List of {@link IClientSidePlayerObserver}.
+	 */
+	protected final List<CLIENT_OBSERVER> _observerList = new LinkedList<CLIENT_OBSERVER>();
 
 	/**
 	 * Creates a new AbstractClientSidePlayer.
@@ -130,7 +136,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	}
 
 	@Override
-	public IClientGameCreator<?, ?, ?, ?, ?> getGameCreator()
+	public IClientGameCreator<?, ?, ?, ?, ?, ?> getGameCreator()
 	{
 		synchronized (_lock)
 		{
@@ -377,5 +383,11 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 		{
 			return _playerConf;
 		}
+	}
+
+	@Override
+	public void addObserver(final CLIENT_OBSERVER o)
+	{
+		_observerList.add(o);
 	}
 }
