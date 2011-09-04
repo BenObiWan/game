@@ -28,8 +28,8 @@ public final class EmptyPlayerConfiguration extends AbstractConfigurationBranch
 	 * @param mBeanServer
 	 *            the {@link MBeanServer} to use.
 	 */
-	public EmptyPlayerConfiguration(IConfiguration parent,
-			MBeanServer mBeanServer)
+	public EmptyPlayerConfiguration(final IConfiguration parent,
+			final MBeanServer mBeanServer)
 	{
 		super(parent, "Empty Player Configuration", mBeanServer);
 	}

@@ -1,7 +1,5 @@
 package game.gameclient;
 
-import java.util.Observable;
-
 import game.communication.IGameServer;
 import game.communication.event.GameCreationEventType;
 import game.communication.event.GameCtrlEventType;
@@ -18,6 +16,8 @@ import game.communication.event.gamectrl.KickedFromGameCrEvent;
 import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
+
+import java.util.Observable;
 
 /**
  * Abstract implementation of the {@link IClientSidePlayer} interface.
