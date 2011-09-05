@@ -34,15 +34,6 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	CLIENT_GAME_TYPE createGame();
 
 	/**
-	 * Creates the player playing at this game.
-	 * 
-	 * @param iPlayerId
-	 *            the id of the player to create.
-	 * @return the newly created player.
-	 */
-	PLAYER_TYPE createPlayer(int iPlayerId);
-
-	/**
 	 * Check whether the local client is the creator of this game.
 	 * 
 	 * @return true if the local client is the creator of this game.
@@ -104,4 +95,13 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return the {@link IGameConfiguration} of this game creator.
 	 */
 	public CONF_TYPE getConfiguration();
+
+	/**
+	 * Creates the player playing at this game.
+	 * 
+	 * @param iPlayerId
+	 *            the id of the player to create.
+	 * @return the newly created player.
+	 */
+	PLAYER_TYPE createPlayer(LocalGameClient _locGameClient, int iPlayerId);
 }

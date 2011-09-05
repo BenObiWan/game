@@ -266,7 +266,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 				.getClientGameCreator();
 		gameCreator.initialize(true, this, server, evt.getGameId());
 		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
-				.createPlayer(evt.getPlayerId());
+				.createPlayer(this, evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
 		setChanged();
 		notifyObservers();
@@ -288,7 +288,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 				.getClientGameCreator();
 		gameCreator.initialize(true, this, server, evt.getGameId());
 		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
-				.createPlayer(evt.getPlayerId());
+				.createPlayer(this, evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
 		setChanged();
 		notifyObservers();
