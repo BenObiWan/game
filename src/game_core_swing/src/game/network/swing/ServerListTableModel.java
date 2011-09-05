@@ -1,4 +1,4 @@
-package game.network.ui;
+package game.network.swing;
 
 import game.communication.IGameServer;
 import game.network.ConnectionList;

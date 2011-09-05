@@ -3,7 +3,7 @@ package game.launcher;
 import game.communication.IGameListDescription;
 import game.communication.IGameSwingLauncher;
 import game.core.ApplicationCore;
-import game.core.ui.CoreUI;
+import game.core.swing.CoreUI;
 import game.launcher.config.ILauncherConfiguration;
 import game.launcher.config.ILauncherConfigurationLoader;
 import game.launcher.config.LauncherPropertyConfigurationLoader;

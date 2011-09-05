@@ -1,4 +1,4 @@
-package game.core.ui;
+package game.core.swing;
 
 import game.communication.IGameListDescription;
 import game.communication.IGameServer;

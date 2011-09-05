@@ -1,10 +1,10 @@
-package game.core.ui;
+package game.core.swing;
 
 import game.communication.IGameSwingLauncher;
 import game.core.ApplicationCore;
 import game.network.config.INetworkServerConfiguration;
 import game.network.config.NetworkXMLFileConfigurationLoader;
-import game.network.ui.ServerListPanel;
+import game.network.swing.ServerListPanel;
 
 import java.awt.Dimension;
 import java.awt.Point;
