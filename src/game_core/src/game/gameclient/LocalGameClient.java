@@ -4,6 +4,7 @@ import game.common.IGameClient;
 import game.common.IGameServer;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.control.CreateGameCtrlAction;
+import game.communication.action.gamectrl.AddAICrAction;
 import game.communication.action.gamectrl.JoinGameCrAction;
 import game.communication.event.ControlEventType;
 import game.communication.event.IControlEvent;
@@ -344,14 +345,39 @@ public final class LocalGameClient extends Observable implements IGameClient
 	 * @param server
 	 *            the {@link IGameServer} on which to join a game.
 	 * @param iGameId
-	 *            the id to join.
-	 * @param iPlayerId
-	 *            the id of the player which want to join.
+	 *            the id of the game to join.
 	 */
-	public void sendJoinGame(final IGameServer server, final int iGameId,
-			final int iPlayerId)
+	public void sendJoinGame(final IGameServer server, final int iGameId)
 	{
-		final JoinGameCrAction act = new JoinGameCrAction(iGameId, iPlayerId);
+		final JoinGameCrAction act = new JoinGameCrAction(iGameId,
+				getNextPlayerId());
+		try
+		{
+			server.handleAction(this, act);
+		}
+		catch (final InconsistentActionTypeException e)
+		{
+			LOGGER.error(e.getLocalizedMessage(), e);
+		}
+	}
+
+	/**
+	 * Creates an AI in the specified game on the specified {@link IGameServer}.
+	 * 
+	 * @param server
+	 *            the {@link IGameServer} on which to join a game.
+	 * @param iGameId
+	 *            the id of the game to join.
+	 * @param strAIName
+	 *            the name of the AI which want to join.
+	 */
+	public void sendAddAI(final IGameServer server, final int iGameId,
+			final String strAIName)
+	{
+		int iAIID = getNextPlayerId();
+		// TODO stock ai name and ai id
+
+		final AddAICrAction act = new AddAICrAction(iGameId, iAIID, strAIName);
 		try
 		{
 			server.handleAction(this, act);
