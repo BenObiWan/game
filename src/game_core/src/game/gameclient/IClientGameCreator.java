@@ -98,6 +98,8 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	/**
 	 * Creates the player playing at this game.
 	 * 
+	 * @param _locGameClient
+	 *            the local game client.
 	 * @param iPlayerId
 	 *            the id of the player to create.
 	 * @return the newly created player.

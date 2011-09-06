@@ -1,6 +1,5 @@
 package game.gameclient;
 
-import game.common.IGameClient;
 import game.common.IGameServer;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;

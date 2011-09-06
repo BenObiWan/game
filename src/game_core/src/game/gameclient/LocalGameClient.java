@@ -374,7 +374,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 	public void sendAddAI(final IGameServer server, final int iGameId,
 			final String strAIName)
 	{
-		int iAIID = getNextPlayerId();
+		final int iAIID = getNextPlayerId();
 		// TODO stock ai name and ai id
 
 		final AddAICrAction act = new AddAICrAction(iGameId, iAIID, strAIName);
