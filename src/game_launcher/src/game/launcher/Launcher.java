@@ -1,6 +1,6 @@
 package game.launcher;
 
-import game.common.IGameListDescription;
+import game.common.IGameDescription;
 import game.core.ApplicationCore;
 import game.core.swing.CoreUI;
 import game.core.swing.IGameSwingLauncher;
@@ -93,9 +93,9 @@ public final class Launcher
 	private ILauncherConfiguration _launcherConf;
 
 	/**
-	 * Set of {@link IGameListDescription} loaded.
+	 * Set of {@link IGameDescription} loaded.
 	 */
-	private final Set<IGameListDescription> _gameDescriptionSet = new TreeSet<IGameListDescription>();
+	private final Set<IGameDescription> _gameDescriptionSet = new TreeSet<IGameDescription>();
 
 	/**
 	 * Set of {@link IGameSwingLauncher} loaded.
@@ -199,7 +199,7 @@ public final class Launcher
 
 	/**
 	 * Read the game descriptions files to extract the registered
-	 * {@link IGameListDescription} and {@link IGameSwingLauncher}.
+	 * {@link IGameDescription} and {@link IGameSwingLauncher}.
 	 */
 	private void readGameDescFiles()
 	{
@@ -219,10 +219,10 @@ public final class Launcher
 					{
 						final Object objGameDesc = Class.forName(strGameDesc)
 								.newInstance();
-						if (objGameDesc instanceof IGameListDescription)
+						if (objGameDesc instanceof IGameDescription)
 						{
 							_gameDescriptionSet
-									.add((IGameListDescription) objGameDesc);
+									.add((IGameDescription) objGameDesc);
 						}
 					}
 					final String strSwingLauncher = prop

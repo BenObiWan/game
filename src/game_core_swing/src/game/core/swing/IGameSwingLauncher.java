@@ -1,6 +1,6 @@
 package game.core.swing;
 
-import game.common.IGameListDescription;
+import game.common.IGameDescription;
 import game.gameclient.IClientGameCreator;
 import game.gameserver.IServerGameCreator;
 
@@ -34,11 +34,11 @@ public interface IGameSwingLauncher extends Comparable<IGameSwingLauncher>
 	JInternalFrame createGameUI(IClientGameCreator<?, ?, ?, ?, ?, ?> creator);
 
 	/**
-	 * Get the {@link IGameListDescription} of this game.
+	 * Get the {@link IGameDescription} of this game.
 	 * 
-	 * @return the {@link IGameListDescription} of this game.
+	 * @return the {@link IGameDescription} of this game.
 	 */
-	IGameListDescription getGameListDescription();
+	IGameDescription getGameListDescription();
 
 	/**
 	 * Get the {@link Class} of the {@link IClientGameCreator} associated with

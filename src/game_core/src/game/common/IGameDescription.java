@@ -6,7 +6,7 @@ package game.common;
  * @author benobiwan
  * 
  */
-public interface IGameListDescription extends Comparable<IGameListDescription>
+public interface IGameDescription extends Comparable<IGameDescription>
 {
 	/**
 	 * Get the name of the game.

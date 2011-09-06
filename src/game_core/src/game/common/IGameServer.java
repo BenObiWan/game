@@ -111,5 +111,5 @@ public interface IGameServer extends Comparable<IGameServer>
 	 * 
 	 * @return the list of game available on this server.
 	 */
-	Set<IGameListDescription> getAvailableGames();
+	Set<IGameDescription> getAvailableGames();
 }

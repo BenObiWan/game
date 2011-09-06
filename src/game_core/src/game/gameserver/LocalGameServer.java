@@ -2,7 +2,7 @@ package game.gameserver;
 
 import game.common.IGameClient;
 import game.common.IGameInstanceDescription;
-import game.common.IGameListDescription;
+import game.common.IGameDescription;
 import game.common.IGameServer;
 import game.communication.action.ControlActionType;
 import game.communication.action.IAction;
@@ -80,17 +80,17 @@ public final class LocalGameServer implements IGameServer
 	private final ExecutorService _timeOutExecutor;
 
 	/**
-	 * List of {@link IGameListDescription} available on the server.
+	 * List of {@link IGameDescription} available on the server.
 	 */
-	private final Set<IGameListDescription> _gameListDescription;
+	private final Set<IGameDescription> _gameListDescription;
 
 	/**
 	 * Creates a new LocalGameServer.
 	 * 
 	 * @param gameListDescription
-	 *            list of {@link IGameListDescription} available on the server.
+	 *            list of {@link IGameDescription} available on the server.
 	 */
-	public LocalGameServer(final Set<IGameListDescription> gameListDescription)
+	public LocalGameServer(final Set<IGameDescription> gameListDescription)
 	{
 		// TODO constructor of LocalGameServer
 		_gameListDescription = gameListDescription;
@@ -463,7 +463,7 @@ public final class LocalGameServer implements IGameServer
 	}
 
 	@Override
-	public Set<IGameListDescription> getAvailableGames()
+	public Set<IGameDescription> getAvailableGames()
 	{
 		return _gameListDescription;
 	}

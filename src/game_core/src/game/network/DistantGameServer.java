@@ -1,7 +1,7 @@
 package game.network;
 
 import game.common.IGameClient;
-import game.common.IGameListDescription;
+import game.common.IGameDescription;
 import game.common.IGameServer;
 import game.communication.action.IAction;
 import game.gameserver.IServerState;
@@ -246,7 +246,7 @@ public final class DistantGameServer extends DistantPeer implements IGameServer
 	}
 
 	@Override
-	public Set<IGameListDescription> getAvailableGames()
+	public Set<IGameDescription> getAvailableGames()
 	{
 		// TODO Auto-generated method stub
 		return null;

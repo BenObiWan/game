@@ -1,6 +1,6 @@
 package game.core;
 
-import game.common.IGameListDescription;
+import game.common.IGameDescription;
 import game.gameclient.LocalGameClient;
 import game.gameserver.LocalGameServer;
 import game.network.NetworkMain;
@@ -42,7 +42,7 @@ public final class ApplicationCore
 	 *            set of game description loaded while launching the
 	 *            application.
 	 */
-	public ApplicationCore(final Set<IGameListDescription> gameDescriptionSet)
+	public ApplicationCore(final Set<IGameDescription> gameDescriptionSet)
 	{
 		_locGameServer = new LocalGameServer(gameDescriptionSet);
 		// TODO read name in configuration file

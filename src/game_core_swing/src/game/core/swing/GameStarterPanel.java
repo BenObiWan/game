@@ -1,6 +1,6 @@
 package game.core.swing;
 
-import game.common.IGameListDescription;
+import game.common.IGameDescription;
 import game.common.IGameServer;
 import game.gameclient.IClientGameCreator;
 import game.gameclient.LocalGameClient;
@@ -55,9 +55,9 @@ public final class GameStarterPanel extends JPanel
 
 	/**
 	 * Map of all registered {@link IGameSwingLauncher} using the relevant
-	 * {@link IGameListDescription} has a key.
+	 * {@link IGameDescription} has a key.
 	 */
-	private final ConcurrentMap<IGameListDescription, IGameSwingLauncher> _launcherMapByDesc = new ConcurrentSkipListMap<IGameListDescription, IGameSwingLauncher>();
+	private final ConcurrentMap<IGameDescription, IGameSwingLauncher> _launcherMapByDesc = new ConcurrentSkipListMap<IGameDescription, IGameSwingLauncher>();
 
 	/**
 	 * Map of all registered {@link IGameSwingLauncher} using the relevant
@@ -140,7 +140,7 @@ public final class GameStarterPanel extends JPanel
 		_comboGameType.removeAllItems();
 		final IGameServer server = _comboServer.getItemAt(_comboServer
 				.getSelectedIndex());
-		for (final IGameListDescription desc : server.getAvailableGames())
+		for (final IGameDescription desc : server.getAvailableGames())
 		{
 			final IGameSwingLauncher gameLauncher = _launcherMapByDesc
 					.get(desc);
