@@ -26,7 +26,8 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The object describing the local GameServer. It receives all Action sent by
@@ -41,7 +42,7 @@ public final class LocalGameServer implements IGameServer
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(LocalGameServer.class);
 
 	/**
@@ -348,7 +349,7 @@ public final class LocalGameServer implements IGameServer
 			}
 			catch (final InconsistentEventTypeException e)
 			{
-				LOGGER.error(e);
+				LOGGER.error(e.getLocalizedMessage(), e);
 			}
 		}
 	}
@@ -398,7 +399,7 @@ public final class LocalGameServer implements IGameServer
 		}
 		catch (final InconsistentEventTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 

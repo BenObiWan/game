@@ -3,9 +3,10 @@ package game.network;
 import game.network.messages.KeepAliveRequestMessage;
 import game.network.messages.KeepAliveResponseMessage;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of the KeepAliveMessageFactory. There is only one
@@ -20,7 +21,7 @@ public final class ActiveKeepAliveMessageFactory implements
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ActiveKeepAliveMessageFactory.class);
 
 	/**

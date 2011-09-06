@@ -10,8 +10,9 @@ import game.network.messages.GameActionMessage;
 import game.network.messages.MessageType;
 import game.network.messages.UnexpectedMessage;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A handler for the server part of the program.
@@ -24,7 +25,8 @@ public final class ServerHandler extends NetworkHandler
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(ServerHandler.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ServerHandler.class);
 
 	/**
 	 * Configuration of the network server.
@@ -65,7 +67,8 @@ public final class ServerHandler extends NetworkHandler
 		{
 			if (LOGGER.isDebugEnabled())
 			{
-				LOGGER.debug(((AbstractMessage) message).getMessageType());
+				LOGGER.debug(((AbstractMessage) message).getMessageType()
+						.toString());
 			}
 			// load the DistantGameClient attribute
 			final Object attribute = session
@@ -128,7 +131,7 @@ public final class ServerHandler extends NetworkHandler
 		}
 		catch (final InconsistentActionTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 }

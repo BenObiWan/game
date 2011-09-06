@@ -4,10 +4,11 @@ import game.common.IGameClient;
 import game.network.config.INetworkClientConfigurationElement;
 import game.network.config.INetworkConfiguration;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Object describing a connection attempt to a distant server.
@@ -20,7 +21,7 @@ public final class ClientConnection extends AbstractConnection
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ClientConnection.class);
 
 	/**

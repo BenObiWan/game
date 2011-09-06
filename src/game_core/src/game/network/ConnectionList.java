@@ -14,8 +14,9 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An objecting containing the list of all connected IoSession,
@@ -29,7 +30,7 @@ public final class ConnectionList extends Observable
 	/**
 	 * Logger object.
 	 */
-	protected static final Logger LOGGER = Logger
+	protected static final Logger LOGGER = LoggerFactory
 			.getLogger(ConnectionList.class);
 
 	/**

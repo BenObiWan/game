@@ -25,8 +25,9 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import common.config.InvalidConfigurationException;
 
@@ -44,7 +45,8 @@ public final class Launcher
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(Launcher.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(Launcher.class);
 
 	/**
 	 * Option used to change the configuration directory.

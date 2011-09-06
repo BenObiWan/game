@@ -12,9 +12,10 @@ import game.network.messages.RegistrationErrorMessage;
 import game.network.messages.RequestAuthenticationMessage;
 import game.network.messages.WrongAuthenticationMessage;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.filterchain.IoFilterAdapter;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An IoFilter which check, when a message is received, whether the connection
@@ -30,7 +31,7 @@ public final class AuthenticationFilter extends IoFilterAdapter
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(AuthenticationFilter.class);
 
 	/**
@@ -114,7 +115,8 @@ public final class AuthenticationFilter extends IoFilterAdapter
 		{
 			if (LOGGER.isDebugEnabled())
 			{
-				LOGGER.debug(((AbstractMessage) message).getMessageType());
+				LOGGER.debug(((AbstractMessage) message).getMessageType()
+						.toString());
 			}
 			final AuthenticateMessage mess = (AuthenticateMessage) message;
 			if (cli == null)
@@ -144,7 +146,8 @@ public final class AuthenticationFilter extends IoFilterAdapter
 		{
 			if (LOGGER.isDebugEnabled())
 			{
-				LOGGER.debug(((AbstractMessage) message).getMessageType());
+				LOGGER.debug(((AbstractMessage) message).getMessageType()
+						.toString());
 			}
 			final RegisterMessage mess = (RegisterMessage) message;
 			if (cli == null)

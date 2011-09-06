@@ -29,7 +29,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract implementation of the {@link IServerGameCreator}.
@@ -54,7 +55,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	/**
 	 * Logger object.
 	 */
-	private static transient final Logger LOGGER = Logger
+	private static transient final Logger LOGGER = LoggerFactory
 			.getLogger(AbstractServerGameCreator.class);
 
 	/**
@@ -225,7 +226,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			}
 			catch (final InconsistentEventTypeException e)
 			{
-				LOGGER.error(e);
+				LOGGER.error(e.getLocalizedMessage(), e);
 			}
 		}
 	}
@@ -250,7 +251,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			}
 			catch (final InconsistentEventTypeException e)
 			{
-				LOGGER.error(e);
+				LOGGER.error(e.getLocalizedMessage(), e);
 			}
 		}
 	}
@@ -365,7 +366,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 		catch (final InconsistentEventTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -404,7 +405,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 		catch (final InconsistentEventTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -481,7 +482,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 		catch (final InconsistentEventTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 }

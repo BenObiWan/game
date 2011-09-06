@@ -20,7 +20,8 @@ import game.gameserver.IServerSidePlayer;
 import java.util.Observable;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Object describing the local GameClient. It receives the Event from all the
@@ -34,7 +35,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(LocalGameClient.class);
 
 	/**
@@ -333,7 +334,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		}
 		catch (final InconsistentActionTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -357,7 +358,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		}
 		catch (final InconsistentActionTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 

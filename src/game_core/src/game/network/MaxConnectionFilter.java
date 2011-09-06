@@ -1,8 +1,9 @@
 package game.network;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.filterchain.IoFilterAdapter;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A IoFilter limiting the number of concurrent connection.
@@ -15,7 +16,7 @@ public final class MaxConnectionFilter extends IoFilterAdapter
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MaxConnectionFilter.class);
 
 	/**

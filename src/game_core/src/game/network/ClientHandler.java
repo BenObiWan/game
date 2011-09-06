@@ -14,8 +14,9 @@ import game.network.messages.RequestAuthenticationMessage;
 import game.network.messages.UnexpectedMessage;
 import game.network.messages.WrongAuthenticationMessage;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A handler for the client part of the program.
@@ -28,7 +29,8 @@ public final class ClientHandler extends NetworkHandler
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(ClientHandler.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ClientHandler.class);
 
 	/**
 	 * The local game client.
@@ -59,7 +61,8 @@ public final class ClientHandler extends NetworkHandler
 		{
 			if (LOGGER.isDebugEnabled())
 			{
-				LOGGER.debug(((AbstractMessage) message).getMessageType());
+				LOGGER.debug(((AbstractMessage) message).getMessageType()
+						.toString());
 			}
 			// load the DistantGameServer attribute
 			final Object attribute = session
@@ -173,7 +176,7 @@ public final class ClientHandler extends NetworkHandler
 		}
 		catch (final InconsistentEventTypeException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
 

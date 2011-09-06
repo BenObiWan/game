@@ -20,7 +20,8 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame used to launch the application. Displays 3 buttons: local game, host
@@ -51,7 +52,8 @@ public final class LauncherFrame extends JFrame implements ActionListener
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(LauncherFrame.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(LauncherFrame.class);
 
 	/**
 	 * serialVersionUID for Serialization.
@@ -139,7 +141,7 @@ public final class LauncherFrame extends JFrame implements ActionListener
 			}
 			catch (final IOException ex)
 			{
-				LOGGER.error(ex);
+				LOGGER.error(ex.getMessage(), ex);
 			}
 		}
 		else if (JOIN_GAME_ACTION_COMMAND.equals(ae.getActionCommand()))

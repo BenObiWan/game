@@ -2,9 +2,10 @@ package game.network;
 
 import game.network.config.INetworkConfiguration;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract IOHandler implementation with code common to both client and server.
@@ -17,7 +18,8 @@ public abstract class NetworkHandler extends IoHandlerAdapter
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(NetworkHandler.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(NetworkHandler.class);
 
 	/**
 	 * Message used to log when the type of a received message is inconsistent
@@ -53,7 +55,7 @@ public abstract class NetworkHandler extends IoHandlerAdapter
 	@Override
 	public void exceptionCaught(final IoSession session, final Throwable cause)
 	{
-		LOGGER.error(cause);
+		LOGGER.error(cause.getLocalizedMessage(), cause);
 	}
 
 	@Override
