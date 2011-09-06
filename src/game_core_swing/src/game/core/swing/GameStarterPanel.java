@@ -1,7 +1,7 @@
 package game.core.swing;
 
-import game.communication.IGameListDescription;
-import game.communication.IGameServer;
+import game.common.IGameListDescription;
+import game.common.IGameServer;
 import game.gameclient.IClientGameCreator;
 import game.gameclient.LocalGameClient;
 import game.network.ConnectionList;

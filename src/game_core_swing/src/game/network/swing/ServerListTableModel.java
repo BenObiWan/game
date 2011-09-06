@@ -1,6 +1,6 @@
 package game.network.swing;
 
-import game.communication.IGameServer;
+import game.common.IGameServer;
 import game.network.ConnectionList;
 
 import java.net.SocketAddress;

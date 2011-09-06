@@ -1,6 +1,6 @@
 package game.launcher;
 
-import game.communication.IGameListDescription;
+import game.common.IGameListDescription;
 import game.core.ApplicationCore;
 import game.core.swing.CoreUI;
 import game.core.swing.IGameSwingLauncher;
