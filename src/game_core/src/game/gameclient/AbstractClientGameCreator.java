@@ -50,7 +50,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	/**
 	 * The local game client.
 	 */
-	protected transient IGameClient _gameClient;
+	protected transient LocalGameClient _gameClient;
 
 	/**
 	 * Id of the game.
@@ -89,7 +89,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 
 	@Override
 	public void initialize(final boolean bCreator,
-			final IGameClient locGameClient, final IGameServer server,
+			final LocalGameClient locGameClient, final IGameServer server,
 			final int iGameId)
 	{
 		synchronized (_lock)

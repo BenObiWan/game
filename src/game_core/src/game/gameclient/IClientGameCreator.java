@@ -1,6 +1,5 @@
 package game.gameclient;
 
-import game.common.IGameClient;
 import game.common.IGameServer;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
@@ -71,7 +70,7 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @param iGameId
 	 *            the id of the new game.
 	 */
-	void initialize(boolean bCreator, IGameClient locGameClient,
+	void initialize(boolean bCreator, LocalGameClient locGameClient,
 			IGameServer server, int iGameId);
 
 	/**

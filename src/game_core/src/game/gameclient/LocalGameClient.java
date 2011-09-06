@@ -439,4 +439,17 @@ public final class LocalGameClient extends Observable implements IGameClient
 		setChanged();
 		notifyObservers();
 	}
+
+	/**
+	 * Get the name of the AI corresponding to the given id. Returns null if
+	 * this client isn't an AI.
+	 * 
+	 * @param iAIId
+	 *            the id of the AI.
+	 * @return the name of the AI.
+	 */
+	public String getAIName(final int iAIId)
+	{
+		return null;
+	}
 }
