@@ -1,8 +1,8 @@
 package game.gameserver;
 
 import game.common.IGameClient;
-import game.common.IGameInstanceDescription;
 import game.common.IGameDescription;
+import game.common.IGameInstanceDescription;
 import game.common.IGameServer;
 import game.communication.action.ControlActionType;
 import game.communication.action.IAction;

@@ -26,7 +26,8 @@ public class ServerStateCtrlEvent extends AbstractControlEvent
 	private final IServerState _serverState;
 
 	/**
-	 * Set holding the list of {@link IGameInstanceDescription} to send to the client.
+	 * Set holding the list of {@link IGameInstanceDescription} to send to the
+	 * client.
 	 */
 	private final TreeSet<IGameInstanceDescription> _setDescription;
 
@@ -41,8 +42,8 @@ public class ServerStateCtrlEvent extends AbstractControlEvent
 	 *            state of the server.
 	 * 
 	 * @param setDescription
-	 *            set holding the list of {@link IGameInstanceDescription} to send to
-	 *            the client.
+	 *            set holding the list of {@link IGameInstanceDescription} to
+	 *            send to the client.
 	 */
 	public ServerStateCtrlEvent(final IServerState serverState,
 			final TreeSet<IGameInstanceDescription> setDescription)
@@ -53,11 +54,11 @@ public class ServerStateCtrlEvent extends AbstractControlEvent
 	}
 
 	/**
-	 * Get the set holding the list of {@link IGameInstanceDescription} to send to the
-	 * client.
+	 * Get the set holding the list of {@link IGameInstanceDescription} to send
+	 * to the client.
 	 * 
-	 * @return the set holding the list of {@link IGameInstanceDescription} to send to
-	 *         the client.
+	 * @return the set holding the list of {@link IGameInstanceDescription} to
+	 *         send to the client.
 	 */
 	public TreeSet<IGameInstanceDescription> getGameDescriptionList()
 	{
