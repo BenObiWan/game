@@ -141,7 +141,7 @@ public final class LauncherFrame extends JFrame implements ActionListener
 			}
 			catch (final IOException ex)
 			{
-				LOGGER.error(ex.getMessage(), ex);
+				LOGGER.error(ex.getLocalizedMessage(), ex);
 			}
 		}
 		else if (JOIN_GAME_ACTION_COMMAND.equals(ae.getActionCommand()))

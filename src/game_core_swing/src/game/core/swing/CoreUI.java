@@ -227,7 +227,7 @@ public final class CoreUI extends JFrame implements ActionListener
 		}
 		catch (final IOException e)
 		{
-			LOGGER.error(e.getMessage(), e);
+			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 		_createGameWindow.setContentPane(new GameStarterPanel(_appCore
 				.getLocalGameClient(), _appCore.getNetworkMain()
@@ -491,7 +491,7 @@ public final class CoreUI extends JFrame implements ActionListener
 			}
 			catch (final PropertyVetoException e)
 			{
-				LOGGER.error(e.getMessage(), e);
+				LOGGER.error(e.getLocalizedMessage(), e);
 			}
 		}
 	}
