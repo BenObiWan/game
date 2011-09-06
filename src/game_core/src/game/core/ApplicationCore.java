@@ -1,6 +1,6 @@
 package game.core;
 
-import game.communication.IGameListDescription;
+import game.common.IGameListDescription;
 import game.gameclient.LocalGameClient;
 import game.gameserver.LocalGameServer;
 import game.network.NetworkMain;

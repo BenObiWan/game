@@ -1,7 +1,7 @@
 package game.gameclient;
 
-import game.communication.IGameClient;
-import game.communication.IGameServer;
+import game.common.IGameClient;
+import game.common.IGameServer;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;

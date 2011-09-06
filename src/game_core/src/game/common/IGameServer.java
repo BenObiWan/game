@@ -1,4 +1,4 @@
-package game.communication;
+package game.common;
 
 import game.communication.action.IAction;
 import game.communication.action.InconsistentActionTypeException;

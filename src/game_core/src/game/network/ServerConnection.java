@@ -1,6 +1,6 @@
 package game.network;
 
-import game.communication.IGameServer;
+import game.common.IGameServer;
 import game.network.config.INetworkConfiguration;
 import game.network.config.INetworkServerConfiguration;
 

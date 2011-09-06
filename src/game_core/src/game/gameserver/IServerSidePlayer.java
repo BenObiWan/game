@@ -1,8 +1,8 @@
 package game.gameserver;
 
+import game.common.IGameClient;
 import game.common.IPlayer;
 import game.common.IPlayerDescription;
-import game.communication.IGameClient;
 import game.config.IPlayerConfiguration;
 
 /**

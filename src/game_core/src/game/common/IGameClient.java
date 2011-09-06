@@ -1,4 +1,4 @@
-package game.communication;
+package game.common;
 
 import game.communication.event.IEvent;
 import game.communication.event.InconsistentEventTypeException;

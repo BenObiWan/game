@@ -1,7 +1,7 @@
 package game.network;
 
-import game.communication.IGameClient;
-import game.communication.IGameServer;
+import game.common.IGameClient;
+import game.common.IGameServer;
 import game.communication.event.IEvent;
 import game.gameserver.IServerSidePlayer;
 import game.network.config.INetworkConfiguration;

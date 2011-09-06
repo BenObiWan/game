@@ -1,6 +1,5 @@
 package game.common;
 
-import game.communication.IGameClient;
 import game.config.IPlayerConfiguration;
 
 /**

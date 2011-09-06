@@ -1,4 +1,4 @@
-package game.communication;
+package game.common;
 
 /**
  * Description of a game in the list of game available in the application.

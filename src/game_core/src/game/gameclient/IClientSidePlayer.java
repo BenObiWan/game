@@ -1,7 +1,7 @@
 package game.gameclient;
 
+import game.common.IGameServer;
 import game.common.IPlayer;
-import game.communication.IGameServer;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameCtrlEvent;
 import game.communication.event.IGameEvent;

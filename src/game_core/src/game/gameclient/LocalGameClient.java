@@ -1,7 +1,7 @@
 package game.gameclient;
 
-import game.communication.IGameClient;
-import game.communication.IGameServer;
+import game.common.IGameClient;
+import game.common.IGameServer;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.control.CreateGameCtrlAction;
 import game.communication.action.gamectrl.JoinGameCrAction;

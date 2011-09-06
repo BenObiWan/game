@@ -1,6 +1,6 @@
 package game.network;
 
-import game.communication.IGameClient;
+import game.common.IGameClient;
 import game.communication.event.InconsistentEventTypeException;
 import game.network.config.INetworkConfiguration;
 import game.network.config.RegistrationType;

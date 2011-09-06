@@ -1,6 +1,6 @@
 package game.gameserver;
 
-import game.communication.IGameServer;
+import game.common.IGameServer;
 import game.communication.action.CommonGameActionType;
 import game.communication.action.ICommonGameAction;
 import game.communication.action.IGameAction;

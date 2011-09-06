@@ -1,6 +1,6 @@
 package game.network;
 
-import game.communication.IGameServer;
+import game.common.IGameServer;
 import game.communication.action.AbstractAction;
 import game.communication.action.InconsistentActionTypeException;
 import game.network.config.INetworkConfiguration;

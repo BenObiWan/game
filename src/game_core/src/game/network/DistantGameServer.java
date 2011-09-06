@@ -1,8 +1,8 @@
 package game.network;
 
-import game.communication.IGameClient;
-import game.communication.IGameListDescription;
-import game.communication.IGameServer;
+import game.common.IGameClient;
+import game.common.IGameListDescription;
+import game.common.IGameServer;
 import game.communication.action.IAction;
 import game.gameserver.IServerState;
 import game.network.config.INetworkClientConfigurationElement;

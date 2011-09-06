@@ -1,6 +1,6 @@
 package game.gameclient;
 
-import game.communication.IGameServer;
+import game.common.IGameServer;
 import game.communication.event.GameCreationEventType;
 import game.communication.event.GameCtrlEventType;
 import game.communication.event.IGameCreationEvent;
