@@ -1,4 +1,4 @@
-package game.core.swing;
+package game.gameclient;
 
 public class ClientUI
 {
