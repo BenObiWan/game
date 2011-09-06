@@ -32,9 +32,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.WriterAppender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import common.config.swing.ConfigurationPanel;
 import common.logging.swing.LogInternalFrame;
@@ -55,7 +56,7 @@ public final class CoreUI extends JFrame implements ActionListener
 	/**
 	 * Logger object.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(CoreUI.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CoreUI.class);
 
 	/**
 	 * Valid icon.
@@ -226,7 +227,7 @@ public final class CoreUI extends JFrame implements ActionListener
 		}
 		catch (final IOException e)
 		{
-			LOGGER.error(e);
+			LOGGER.error(e.getMessage(), e);
 		}
 		_createGameWindow.setContentPane(new GameStarterPanel(_appCore
 				.getLocalGameClient(), _appCore.getNetworkMain()
@@ -490,7 +491,7 @@ public final class CoreUI extends JFrame implements ActionListener
 			}
 			catch (final PropertyVetoException e)
 			{
-				LOGGER.error(e);
+				LOGGER.error(e.getMessage(), e);
 			}
 		}
 	}
