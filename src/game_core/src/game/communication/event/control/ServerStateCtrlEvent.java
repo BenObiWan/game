@@ -1,6 +1,6 @@
 package game.communication.event.control;
 
-import game.common.IGameDescription;
+import game.common.IGameInstanceDescription;
 import game.communication.event.AbstractControlEvent;
 import game.communication.event.ControlEventType;
 import game.gameserver.IServerState;
@@ -26,9 +26,9 @@ public class ServerStateCtrlEvent extends AbstractControlEvent
 	private final IServerState _serverState;
 
 	/**
-	 * Set holding the list of {@link IGameDescription} to send to the client.
+	 * Set holding the list of {@link IGameInstanceDescription} to send to the client.
 	 */
-	private final TreeSet<IGameDescription> _setDescription;
+	private final TreeSet<IGameInstanceDescription> _setDescription;
 
 	// TODO add the list of connected players
 
@@ -41,11 +41,11 @@ public class ServerStateCtrlEvent extends AbstractControlEvent
 	 *            state of the server.
 	 * 
 	 * @param setDescription
-	 *            set holding the list of {@link IGameDescription} to send to
+	 *            set holding the list of {@link IGameInstanceDescription} to send to
 	 *            the client.
 	 */
 	public ServerStateCtrlEvent(final IServerState serverState,
-			final TreeSet<IGameDescription> setDescription)
+			final TreeSet<IGameInstanceDescription> setDescription)
 	{
 		super(ControlEventType.SERVER_STATE);
 		_serverState = serverState;
@@ -53,13 +53,13 @@ public class ServerStateCtrlEvent extends AbstractControlEvent
 	}
 
 	/**
-	 * Get the set holding the list of {@link IGameDescription} to send to the
+	 * Get the set holding the list of {@link IGameInstanceDescription} to send to the
 	 * client.
 	 * 
-	 * @return the set holding the list of {@link IGameDescription} to send to
+	 * @return the set holding the list of {@link IGameInstanceDescription} to send to
 	 *         the client.
 	 */
-	public TreeSet<IGameDescription> getGameDescriptionList()
+	public TreeSet<IGameInstanceDescription> getGameDescriptionList()
 	{
 		return _setDescription;
 	}

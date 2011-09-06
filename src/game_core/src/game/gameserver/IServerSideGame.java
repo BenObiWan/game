@@ -1,6 +1,6 @@
 package game.gameserver;
 
-import game.common.IGameDescription;
+import game.common.IGameInstanceDescription;
 import game.communication.action.ICommonGameAction;
 import game.communication.action.IGameAction;
 import game.communication.action.IGameCtrlAction;
@@ -80,7 +80,7 @@ public interface IServerSideGame<ACTION_TYPE extends IGameAction, CONF_TYPE exte
 	 * 
 	 * @return the description of this game.
 	 */
-	IGameDescription getDescription();
+	IGameInstanceDescription getDescription();
 
 	/**
 	 * Check whether this game can be joined or not.

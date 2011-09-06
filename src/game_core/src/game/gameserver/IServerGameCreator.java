@@ -1,7 +1,7 @@
 package game.gameserver;
 
 import game.common.IGameClient;
-import game.common.IGameDescription;
+import game.common.IGameInstanceDescription;
 import game.common.IGameServer;
 import game.communication.action.IGameAction;
 import game.communication.action.IGameCreationAction;
@@ -115,14 +115,14 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 * 
 	 * @return the description of this game.
 	 */
-	IGameDescription getDescription();
+	IGameInstanceDescription getDescription();
 
 	/**
-	 * Create a {@link IGameDescription} for this game.
+	 * Create a {@link IGameInstanceDescription} for this game.
 	 * 
-	 * @return the newly created {@link IGameDescription} for this game.
+	 * @return the newly created {@link IGameInstanceDescription} for this game.
 	 */
-	IGameDescription createGameDescription();
+	IGameInstanceDescription createGameDescription();
 
 	/**
 	 * Create a new {@link IServerSidePlayer} playing in this game.

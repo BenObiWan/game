@@ -6,7 +6,7 @@ package game.common;
  * @author benobiwan
  * 
  */
-public abstract class AbstractGameDescription implements IGameDescription
+public abstract class AbstractGameDescription implements IGameInstanceDescription
 {
 	/**
 	 * serialVersionUID for Serialization.
@@ -55,7 +55,7 @@ public abstract class AbstractGameDescription implements IGameDescription
 	}
 
 	@Override
-	public final int compareTo(final IGameDescription o)
+	public final int compareTo(final IGameInstanceDescription o)
 	{
 		return _iGameId - o.getGameId();
 	}

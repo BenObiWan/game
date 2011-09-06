@@ -1,7 +1,7 @@
 package game.gameserver;
 
 import game.common.IGameClient;
-import game.common.IGameDescription;
+import game.common.IGameInstanceDescription;
 import game.common.IGameListDescription;
 import game.common.IGameServer;
 import game.communication.action.ControlActionType;
@@ -365,7 +365,7 @@ public final class LocalGameServer implements IGameServer
 			final AskServerStateCtrlAction act)
 	{
 		// listing the game as asked
-		final TreeSet<IGameDescription> setDescription = new TreeSet<IGameDescription>();
+		final TreeSet<IGameInstanceDescription> setDescription = new TreeSet<IGameInstanceDescription>();
 		if (act.isOnlyJoinableGames())
 		{
 			for (final IServerSideGame<?, ?, ?, ?> game : _gameList.values())

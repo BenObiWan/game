@@ -1,7 +1,7 @@
 package game.gameserver;
 
 import game.common.IGameClient;
-import game.common.IGameDescription;
+import game.common.IGameInstanceDescription;
 import game.common.IGameServer;
 import game.common.IPlayerDescription;
 import game.communication.action.GameCreationActionType;
@@ -93,9 +93,9 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	protected transient IGameServer _gameServer;
 
 	/**
-	 * The {@link IGameDescription} of this game.
+	 * The {@link IGameInstanceDescription} of this game.
 	 */
-	protected transient IGameDescription _gameDescription;
+	protected transient IGameInstanceDescription _gameDescription;
 
 	@Override
 	public void initialize(final IGameServer gameServer, final int iGameId,
@@ -159,7 +159,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	}
 
 	@Override
-	public final IGameDescription getDescription()
+	public final IGameInstanceDescription getDescription()
 	{
 		synchronized (_lock)
 		{

@@ -3,14 +3,14 @@ package game.common;
 import java.io.Serializable;
 
 /**
- * Interface for the description of a game. Used to be sent to the client and to
- * display on the interface.
+ * Interface for the description of a game instance. Used to be sent to the
+ * client and to display on the interface.
  * 
  * @author benobiwan
  * 
  */
-public interface IGameDescription extends Comparable<IGameDescription>,
-		Serializable
+public interface IGameInstanceDescription extends
+		Comparable<IGameInstanceDescription>, Serializable
 {
 	/**
 	 * Get the game id.
