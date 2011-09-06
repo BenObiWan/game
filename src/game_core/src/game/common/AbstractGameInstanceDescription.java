@@ -1,12 +1,13 @@
 package game.common;
 
 /**
- * Abstract implementation of the @{link IGameDescription} interface.
+ * Abstract implementation of the @{link IGameInstanceDescription} interface.
  * 
  * @author benobiwan
  * 
  */
-public abstract class AbstractGameDescription implements IGameInstanceDescription
+public abstract class AbstractGameInstanceDescription implements
+		IGameInstanceDescription
 {
 	/**
 	 * serialVersionUID for Serialization.
@@ -43,7 +44,7 @@ public abstract class AbstractGameDescription implements IGameInstanceDescriptio
 	 * @param iNumberOfPlayer
 	 *            the current number of player of this game.
 	 */
-	protected AbstractGameDescription(final int iGameId,
+	protected AbstractGameInstanceDescription(final int iGameId,
 			final String strCreatorName, final int iNumberOfPlayer)
 	{
 		_iGameId = iGameId;
