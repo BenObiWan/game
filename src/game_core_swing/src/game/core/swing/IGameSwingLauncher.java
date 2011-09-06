@@ -1,5 +1,6 @@
-package game.communication;
+package game.core.swing;
 
+import game.communication.IGameListDescription;
 import game.gameclient.IClientGameCreator;
 import game.gameserver.IServerGameCreator;
 

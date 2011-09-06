@@ -1,8 +1,8 @@
 package game.launcher;
 
-import game.communication.IGameSwingLauncher;
 import game.core.ApplicationCore;
 import game.core.swing.CoreUI;
+import game.core.swing.IGameSwingLauncher;
 import game.launcher.config.ILauncherConfiguration;
 
 import java.awt.GridLayout;

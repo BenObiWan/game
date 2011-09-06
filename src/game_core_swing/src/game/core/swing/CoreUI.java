@@ -1,6 +1,5 @@
 package game.core.swing;
 
-import game.communication.IGameSwingLauncher;
 import game.core.ApplicationCore;
 import game.network.config.INetworkServerConfiguration;
 import game.network.config.NetworkXMLFileConfigurationLoader;
