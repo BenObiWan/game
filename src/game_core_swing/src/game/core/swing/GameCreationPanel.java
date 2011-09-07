@@ -47,19 +47,36 @@ public final class GameCreationPanel extends JPanel implements Observer
 	 * 
 	 * @param gameCreator
 	 *            the {IClientGameCreator} to display.
+	 * @param bCreator
+	 *            whether the local client is the creator of this game or not.
 	 */
 	public GameCreationPanel(
-			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
+			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator,
+			final boolean bCreator)
 	{
 		super(new BorderLayout());
 		_gameCreator = gameCreator;
 		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration());
 		_playerListPanel = new PlayerListPanel();
 		_gameCreator.addObserver(this);
-		final JButton buttonCreateGame = new JButton("Create Game");
-		final JButton buttonCancelGame = new JButton("Cancel Game");
+
+		String strCreate, strLeave;
+
+		if (bCreator)
+		{
+			strCreate = "Start Game";
+			strLeave = "Cancel Game";
+		}
+		else
+		{
+			strCreate = "Ready";
+			strLeave = "Leave Game";
+		}
+
+		final JButton buttonCreateGame = new JButton(strCreate);
+		final JButton buttonLeaveGame = new JButton(strLeave);
 		final JPanel buttonPane = new JPanel(new GridLayout(1, 0, 10, 10));
-		buttonPane.add(buttonCancelGame);
+		buttonPane.add(buttonLeaveGame);
 		buttonPane.add(buttonCreateGame);
 		add(_confPanel, BorderLayout.CENTER);
 		add(_playerListPanel, BorderLayout.LINE_START);

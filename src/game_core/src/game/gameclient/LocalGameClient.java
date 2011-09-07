@@ -281,7 +281,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		{
 			if (_clientUI != null)
 			{
-				_clientUI.createGameCreationUI(gameCreator);
+				_clientUI.createGameCreationUI(gameCreator, false);
 			}
 		}
 
@@ -312,7 +312,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 		{
 			if (_clientUI != null)
 			{
-				_clientUI.createGameCreationUI(gameCreator);
+				_clientUI.createGameCreationUI(gameCreator, true);
 			}
 		}
 
