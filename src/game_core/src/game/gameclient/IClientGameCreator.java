@@ -7,6 +7,8 @@ import game.communication.event.InconsistentEventTypeException;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
+import java.util.Observer;
+
 /**
  * Object used on the client side to create a game when joined.
  * 
@@ -105,4 +107,6 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return the newly created player.
 	 */
 	PLAYER_TYPE createPlayer(LocalGameClient _locGameClient, int iPlayerId);
+
+	void addObserver(Observer o);
 }

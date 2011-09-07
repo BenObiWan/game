@@ -1,6 +1,6 @@
 package game.core.swing;
 
-import game.gameclient.AbstractClientGameCreator;
+import game.gameclient.IClientGameCreator;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -38,18 +38,18 @@ public final class GameCreationPanel extends JPanel implements Observer
 	private final PlayerListPanel _playerListPanel;
 
 	/**
-	 * The {@link AbstractClientGameCreator} of this game.
+	 * The {@link IClientGameCreator} of this game.
 	 */
-	private final AbstractClientGameCreator<?, ?, ?, ?, ?, ?> _gameCreator;
+	private final IClientGameCreator<?, ?, ?, ?, ?, ?> _gameCreator;
 
 	/**
 	 * Creates a new GameCreationPanel.
 	 * 
 	 * @param gameCreator
-	 *            the {AbstractClientGameCreator} to display.
+	 *            the {IClientGameCreator} to display.
 	 */
 	public GameCreationPanel(
-			final AbstractClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
+			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
 	{
 		super(new BorderLayout());
 		_gameCreator = gameCreator;

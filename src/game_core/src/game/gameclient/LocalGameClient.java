@@ -54,6 +54,13 @@ public final class LocalGameClient extends Observable implements IGameClient
 	 */
 	private final Object _lockNextPlayer = new Object();
 
+	private ILocalClientUI _clientUI;
+
+	/**
+	 * Lock to protect the use of _clientUI.
+	 */
+	private final Object _lockUI = new Object();
+
 	/**
 	 * List of server side player on this client.
 	 */
@@ -270,6 +277,14 @@ public final class LocalGameClient extends Observable implements IGameClient
 		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
 				.createPlayer(this, evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
+		synchronized (_lockUI)
+		{
+			if (_clientUI != null)
+			{
+				_clientUI.createGameCreationUI(gameCreator);
+			}
+		}
+
 		setChanged();
 		notifyObservers();
 		// TODO handleControlEvent GameJoinedEvent
@@ -292,6 +307,15 @@ public final class LocalGameClient extends Observable implements IGameClient
 		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
 				.createPlayer(this, evt.getPlayerId());
 		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
+
+		synchronized (_lockUI)
+		{
+			if (_clientUI != null)
+			{
+				_clientUI.createGameCreationUI(gameCreator);
+			}
+		}
+
 		setChanged();
 		notifyObservers();
 		// TODO handleControlEvent GameCreationStartedCtrlEvent
@@ -451,5 +475,13 @@ public final class LocalGameClient extends Observable implements IGameClient
 	public String getAIName(final int iAIId)
 	{
 		return null;
+	}
+
+	public void setClientUI(final ILocalClientUI clientUI)
+	{
+		synchronized (_lockUI)
+		{
+			_clientUI = clientUI;
+		}
 	}
 }

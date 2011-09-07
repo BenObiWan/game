@@ -532,14 +532,18 @@ public final class CoreUI extends JFrame implements ActionListener,
 
 	@Override
 	public void createGameCreationUI(
-			IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
+			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
 	{
-		// TODO Auto-generated method stub
-
+		final JInternalFrame intFrame = new JInternalFrame("Game creation",
+				true, true, true, true);
+		intFrame.setContentPane(new GameCreationPanel(gameCreator));
+		intFrame.pack();
+		showInternalFrame(intFrame, true);
 	}
 
 	@Override
-	public void createGameUI(IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
+	public void createGameUI(
+			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
 	{
 		// TODO Auto-generated method stub
 

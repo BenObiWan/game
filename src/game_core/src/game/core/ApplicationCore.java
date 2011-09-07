@@ -1,6 +1,7 @@
 package game.core;
 
 import game.common.IGameDescription;
+import game.gameclient.ILocalClientUI;
 import game.gameclient.LocalGameClient;
 import game.gameserver.LocalGameServer;
 import game.network.NetworkMain;
@@ -19,7 +20,6 @@ import java.util.Set;
  */
 public final class ApplicationCore
 {
-
 	/**
 	 * Local game server.
 	 */
@@ -114,5 +114,10 @@ public final class ApplicationCore
 	public LocalGameClient getLocalGameClient()
 	{
 		return _locGameClient;
+	}
+
+	public void setClientUI(final ILocalClientUI clientUI)
+	{
+		_locGameClient.setClientUI(clientUI);
 	}
 }

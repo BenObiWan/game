@@ -100,6 +100,8 @@ public final class LauncherFrame extends JFrame implements ActionListener
 		_appCore = appCore;
 		_coreUI = new CoreUI(_appCore, gameLauncherSet);
 
+		_appCore.setClientUI(_coreUI);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		final JPanel contPane = new JPanel(new GridLayout(3, 1, 15, 15));
