@@ -1,6 +1,8 @@
 package game.core.swing;
 
 import game.core.ApplicationCore;
+import game.gameclient.IClientGameCreator;
+import game.gameclient.ILocalClientUI;
 import game.network.config.INetworkServerConfiguration;
 import game.network.config.NetworkXMLFileConfigurationLoader;
 import game.network.swing.ServerListPanel;
@@ -46,7 +48,8 @@ import common.logging.swing.LogInternalFrame;
  * @author benobiwan
  * 
  */
-public final class CoreUI extends JFrame implements ActionListener
+public final class CoreUI extends JFrame implements ActionListener,
+		ILocalClientUI
 {
 	/**
 	 * serialVersionUID for Serialization.
@@ -525,5 +528,20 @@ public final class CoreUI extends JFrame implements ActionListener
 		{
 			// handle exception
 		}
+	}
+
+	@Override
+	public void createGameCreationUI(
+			IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void createGameUI(IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
+	{
+		// TODO Auto-generated method stub
+
 	}
 }
