@@ -11,5 +11,10 @@ public enum GameCreationActionType
 	/**
 	 * Update status action.
 	 */
-	UPDATE_STATUS, ;
+	UPDATE_STATUS,
+
+	/**
+	 * Start game action.
+	 */
+	START_GAME, ;
 }

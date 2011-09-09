@@ -4,6 +4,7 @@ import game.communication.action.AbstractGameCreationAction;
 import game.communication.action.GameCreationActionType;
 
 /**
+ * The action of updating one's status.
  * 
  * @author benobiwan
  * 
