@@ -109,4 +109,19 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	PLAYER_TYPE createPlayer(LocalGameClient _locGameClient, int iPlayerId);
 
 	void addObserver(Observer o);
+
+	/**
+	 * Creates a new {@link IPlayerConfiguration} for one of the player of this
+	 * game.
+	 * 
+	 * @return the new {@link IPlayerConfiguration}.
+	 */
+	PLAYER_CONF createPlayerConfiguration();
+
+	/**
+	 * Creates a new {@link IGameConfiguration} for this game.
+	 * 
+	 * @return the new {@link IGameConfiguration}.
+	 */
+	CONF_TYPE createGameConfiguration();
 }
