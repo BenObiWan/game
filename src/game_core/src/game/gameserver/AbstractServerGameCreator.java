@@ -10,6 +10,7 @@ import game.communication.action.IGameAction;
 import game.communication.action.IGameCreationAction;
 import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
+import game.communication.action.gamecreation.StartGameCrAction;
 import game.communication.action.gamecreation.UpdateStatusCrAction;
 import game.communication.action.gamectrl.AddAICrAction;
 import game.communication.action.gamectrl.JoinGameCrAction;
@@ -263,7 +264,6 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	{
 		switch (act.getType())
 		{
-
 		case UPDATE_STATUS:
 			if (act instanceof UpdateStatusCrAction)
 			{
@@ -276,7 +276,17 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 						GameCreationActionType.UPDATE_STATUS, act.getClass());
 			}
 			break;
-
+		case START_GAME:
+			if (act instanceof StartGameCrAction)
+			{
+				handleStartGameCrAction(client, (StartGameCrAction) act);
+			}
+			else
+			{
+				throw new InconsistentActionTypeException(
+						GameCreationActionType.START_GAME, act.getClass());
+			}
+			break;
 		}
 	}
 
@@ -431,6 +441,31 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			}
 		}
 		sendPlayerListUpdate();
+	}
+
+	/**
+	 * Handle a {@link UpdateStatusCrAction}.
+	 * 
+	 * @param client
+	 *            the client from which the start game.
+	 * @param act
+	 *            the action to handle.
+	 */
+	private void handleStartGameCrAction(final IGameClient client,
+			final StartGameCrAction act)
+	{
+		synchronized (_lock)
+		{
+			// check if the client is the creator
+			
+			//_creatorPlayer
+			
+			boolean bReady = true;
+			for (final PLAYER_TYPE player : _playerList)
+			{
+				bReady &= player.isReady();
+			}
+		}
 	}
 
 	/**
