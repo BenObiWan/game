@@ -16,5 +16,15 @@ public enum GameCreationActionType
 	/**
 	 * Start game action.
 	 */
-	START_GAME, ;
+	START_GAME,
+
+	/**
+	 * Send game configuration status.
+	 */
+	SEND_GAME_CONF,
+
+	/**
+	 * Send player configuration status.
+	 */
+	SEND_PLAYER_CONF;
 }
