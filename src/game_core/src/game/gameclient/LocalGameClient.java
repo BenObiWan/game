@@ -271,20 +271,9 @@ public final class LocalGameClient extends Observable implements IGameClient
 	private void handleControlEvent(final IGameServer server,
 			final GameJoinedCtrlEvent evt)
 	{
-		final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator = evt
-				.getClientGameCreator();
-		gameCreator.initialize(true, this, server, evt.getGameId());
-		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
-				.createPlayer(this, evt.getPlayerId());
-		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
-		synchronized (_lockUI)
-		{
-			if (_clientUI != null)
-			{
-				_clientUI.createGameCreationUI(gameCreator, false);
-			}
-		}
-
+		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
+				evt.getPlayerId(), false);
+		// send player configuration
 		setChanged();
 		notifyObservers();
 		// TODO handleControlEvent GameJoinedEvent
@@ -301,21 +290,10 @@ public final class LocalGameClient extends Observable implements IGameClient
 	private void handleControlEvent(final IGameServer server,
 			final GameCreationStartedCtrlEvent evt)
 	{
-		final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator = evt
-				.getClientGameCreator();
-		gameCreator.initialize(true, this, server, evt.getGameId());
-		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
-				.createPlayer(this, evt.getPlayerId());
-		_clientSidePlayerList.put(Integer.valueOf(evt.getPlayerId()), player);
-
-		synchronized (_lockUI)
-		{
-			if (_clientUI != null)
-			{
-				_clientUI.createGameCreationUI(gameCreator, true);
-			}
-		}
-
+		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
+				evt.getPlayerId(), true);
+		// send game configuration
+		// send player configuration
 		setChanged();
 		notifyObservers();
 		// TODO handleControlEvent GameCreationStartedCtrlEvent
@@ -477,11 +455,49 @@ public final class LocalGameClient extends Observable implements IGameClient
 		return null;
 	}
 
+	/**
+	 * Change the {@link ILocalClientUI} of this {@link LocalGameClient}.
+	 * 
+	 * @param clientUI
+	 *            the new {@link ILocalClientUI}.
+	 */
 	public void setClientUI(final ILocalClientUI clientUI)
 	{
 		synchronized (_lockUI)
 		{
 			_clientUI = clientUI;
+		}
+	}
+
+	/**
+	 * Join the specified game.
+	 * 
+	 * @param server
+	 *            the {@link IGameServer} on which the game to join is.
+	 * @param gameCreator
+	 *            the {@link IClientGameCreator} of the game to join.
+	 * @param iGameId
+	 *            the id of the game to join.
+	 * @param iPlayerId
+	 *            the player id which the local client is going to use on this
+	 *            game.
+	 * @param bCreator
+	 *            whether on not this client is the creator of the game.
+	 */
+	private void joinGame(final IGameServer server,
+			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator,
+			final int iGameId, final int iPlayerId, final boolean bCreator)
+	{
+		gameCreator.initialize(true, this, server, iGameId);
+		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
+				.createPlayer(this, iPlayerId);
+		_clientSidePlayerList.put(Integer.valueOf(iPlayerId), player);
+		synchronized (_lockUI)
+		{
+			if (_clientUI != null)
+			{
+				_clientUI.createGameCreationUI(gameCreator, bCreator);
+			}
 		}
 	}
 }
