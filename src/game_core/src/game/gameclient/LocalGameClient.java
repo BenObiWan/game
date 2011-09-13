@@ -4,6 +4,8 @@ import game.common.IGameClient;
 import game.common.IGameServer;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.control.CreateGameCtrlAction;
+import game.communication.action.gamecreation.SendGameConfigurationGameCrAction;
+import game.communication.action.gamecreation.SendPlayerConfigurationGameCrAction;
 import game.communication.action.gamectrl.AddAICrAction;
 import game.communication.action.gamectrl.JoinGameCrAction;
 import game.communication.event.ControlEventType;
@@ -15,6 +17,8 @@ import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.control.GameCreationStartedCtrlEvent;
 import game.communication.event.control.GameJoinedCtrlEvent;
 import game.communication.event.control.ServerStateCtrlEvent;
+import game.config.IGameConfiguration;
+import game.config.IPlayerConfiguration;
 import game.gameserver.IServerGameCreator;
 import game.gameserver.IServerSidePlayer;
 
@@ -273,7 +277,9 @@ public final class LocalGameClient extends Observable implements IGameClient
 	{
 		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
 				evt.getPlayerId(), false);
-		// send player configuration
+		final IPlayerConfiguration playerConf = evt.getClientGameCreator()
+				.createPlayerConfiguration();
+		sendPlayerConf(server, evt.getGameId(), playerConf);
 		setChanged();
 		notifyObservers();
 		// TODO handleControlEvent GameJoinedEvent
@@ -292,6 +298,12 @@ public final class LocalGameClient extends Observable implements IGameClient
 	{
 		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
 				evt.getPlayerId(), true);
+		final IPlayerConfiguration playerConf = evt.getClientGameCreator()
+				.createPlayerConfiguration();
+		sendPlayerConf(server, evt.getGameId(), playerConf);
+		final IGameConfiguration<?> gameConf = evt.getClientGameCreator()
+				.createGameConfiguration();
+		sendGameConf(server, evt.getGameId(), gameConf);
 		// send game configuration
 		// send player configuration
 		setChanged();
@@ -380,6 +392,36 @@ public final class LocalGameClient extends Observable implements IGameClient
 		// TODO stock ai name and ai id
 
 		final AddAICrAction act = new AddAICrAction(iGameId, iAIID, strAIName);
+		try
+		{
+			server.handleAction(this, act);
+		}
+		catch (final InconsistentActionTypeException e)
+		{
+			LOGGER.error(e.getLocalizedMessage(), e);
+		}
+	}
+
+	public void sendPlayerConf(final IGameServer server, final int iGameId,
+			final IPlayerConfiguration playerConf)
+	{
+		final SendPlayerConfigurationGameCrAction act = new SendPlayerConfigurationGameCrAction(
+				iGameId, playerConf);
+		try
+		{
+			server.handleAction(this, act);
+		}
+		catch (final InconsistentActionTypeException e)
+		{
+			LOGGER.error(e.getLocalizedMessage(), e);
+		}
+	}
+
+	public void sendGameConf(final IGameServer server, final int iGameId,
+			final IGameConfiguration<?> gameConf)
+	{
+		final SendGameConfigurationGameCrAction act = new SendGameConfigurationGameCrAction(
+				iGameId, gameConf);
 		try
 		{
 			server.handleAction(this, act);
