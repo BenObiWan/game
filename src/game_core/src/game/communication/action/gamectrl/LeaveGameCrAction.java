@@ -17,7 +17,7 @@ public final class LeaveGameCrAction extends AbstractGameCtrlAction
 	private static final long serialVersionUID = -3135036353906290460L;
 
 	/**
-	 * Id of the player joining the game. The id is given by the client.
+	 * Id of the player leaving the game. The id is given by the client.
 	 */
 	private final int _iPlayerId;
 
@@ -27,7 +27,7 @@ public final class LeaveGameCrAction extends AbstractGameCtrlAction
 	 * @param iGameId
 	 *            the id of the game concerned by the action.
 	 * @param iPlayerId
-	 *            the id of the player joining the game.
+	 *            the id of the player leaving the game.
 	 */
 	public LeaveGameCrAction(final int iGameId, final int iPlayerId)
 	{
@@ -36,9 +36,9 @@ public final class LeaveGameCrAction extends AbstractGameCtrlAction
 	}
 
 	/**
-	 * Get the id of the player joining the game.
+	 * Get the id of the player leaving the game.
 	 * 
-	 * @return the id of the player joining the game.
+	 * @return the id of the player leaving the game.
 	 */
 	public int getPlayerId()
 	{
