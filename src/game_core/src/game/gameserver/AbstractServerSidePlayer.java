@@ -45,7 +45,12 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	/**
 	 * Configuration of the player.
 	 */
-	protected final PLAYER_CONF _conf;
+	protected PLAYER_CONF _conf;
+
+	/**
+	 * Lock used to protect the {@link IPlayerConfiguration}.
+	 */
+	protected final Object _lockConf = new Object();
 
 	/**
 	 * Creates a new AbstractServerSidePlayer.
@@ -60,20 +65,16 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	 *            whether this player is an AI or not.
 	 * @param serverGameCreator
 	 *            the {@link IServerGameCreator} which created this game.
-	 * @param conf
-	 *            the player configuration.
 	 */
 	protected AbstractServerSidePlayer(final int iPlayerId,
 			final IGameClient hostingClient, final String strName,
 			final boolean bIsAI,
-			final IServerGameCreator<?, ?, ?, ?, ?> serverGameCreator,
-			final PLAYER_CONF conf)
+			final IServerGameCreator<?, ?, ?, ?, ?> serverGameCreator)
 	{
 		_iPlayerId = iPlayerId;
 		_hostingClient = hostingClient;
 		_serverGameCreator = serverGameCreator;
 		_playerDescription = new PlayerDescriptionImpl(strName, bIsAI);
-		_conf = conf;
 	}
 
 	@Override
@@ -145,6 +146,11 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	@Override
 	public PLAYER_CONF getPlayerConfiguration()
 	{
-		return _conf;
+		synchronized (_lockConf)
+		{
+			return _conf;
+		}
 	}
+
+	// TODO add setPlayerConfiguration
 }

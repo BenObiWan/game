@@ -457,9 +457,9 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		synchronized (_lock)
 		{
 			// check if the client is the creator
-			
-			//_creatorPlayer
-			
+
+			// _creatorPlayer
+
 			boolean bReady = true;
 			for (final PLAYER_TYPE player : _playerList)
 			{
