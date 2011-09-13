@@ -22,4 +22,11 @@ public interface IGameCreationAction extends IAction
 	 * @return the id of the game concerned with the action.
 	 */
 	int getGameId();
+
+	/**
+	 * Get the id of the player doing the action.
+	 * 
+	 * @return the id of the player doing the action.
+	 */
+	int getPlayerId();
 }

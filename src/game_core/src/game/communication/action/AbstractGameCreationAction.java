@@ -26,18 +26,26 @@ public abstract class AbstractGameCreationAction extends AbstractAction
 	protected final GameCreationActionType _type;
 
 	/**
+	 * Id of the player doing the action.
+	 */
+	protected final int _iPlayerId;
+
+	/**
 	 * Creates a new AbstractGameCreationAction.
 	 * 
 	 * @param iGameId
 	 *            id of the game concerned with the action.
+	 * @param iPlayerId
+	 *            id of the player doing the action.
 	 * @param type
 	 *            type of this game creation action.
 	 */
 	protected AbstractGameCreationAction(final int iGameId,
-			final GameCreationActionType type)
+			final int iPlayerId, final GameCreationActionType type)
 	{
 		super();
 		_iGameId = iGameId;
+		_iPlayerId = iPlayerId;
 		_type = type;
 	}
 
@@ -45,6 +53,12 @@ public abstract class AbstractGameCreationAction extends AbstractAction
 	public final int getGameId()
 	{
 		return _iGameId;
+	}
+
+	@Override
+	public final int getPlayerId()
+	{
+		return _iPlayerId;
 	}
 
 	@Override

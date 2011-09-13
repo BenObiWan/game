@@ -280,9 +280,10 @@ public final class LocalGameClient extends Observable implements IGameClient
 	{
 		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
 				evt.getPlayerId(), false);
+		// send player configuration
 		final IPlayerConfiguration playerConf = evt.getClientGameCreator()
 				.createPlayerConfiguration();
-		sendPlayerConf(server, evt.getGameId(), playerConf);
+		sendPlayerConf(server, evt.getGameId(), evt.getPlayerId(), playerConf);
 		setChanged();
 		notifyObservers();
 		// TODO handleControlEvent GameJoinedEvent
@@ -301,14 +302,14 @@ public final class LocalGameClient extends Observable implements IGameClient
 	{
 		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
 				evt.getPlayerId(), true);
+		// send player configuration
 		final IPlayerConfiguration playerConf = evt.getClientGameCreator()
 				.createPlayerConfiguration();
-		sendPlayerConf(server, evt.getGameId(), playerConf);
+		sendPlayerConf(server, evt.getGameId(), evt.getPlayerId(), playerConf);
+		// send game configuration
 		final IGameConfiguration<?> gameConf = evt.getClientGameCreator()
 				.createGameConfiguration();
-		sendGameConf(server, evt.getGameId(), gameConf);
-		// send game configuration
-		// send player configuration
+		sendGameConf(server, evt.getGameId(), evt.getPlayerId(), gameConf);
 		setChanged();
 		notifyObservers();
 		// TODO handleControlEvent GameCreationStartedCtrlEvent
@@ -415,14 +416,16 @@ public final class LocalGameClient extends Observable implements IGameClient
 	 * @param iGameId
 	 *            the id of the game concerned by the
 	 *            {@link IPlayerConfiguration}.
+	 * @param iPlayerId
+	 *            the id of the player sending the message.
 	 * @param playerConf
 	 *            the {@link IPlayerConfiguration} to send.
 	 */
 	public void sendPlayerConf(final IGameServer server, final int iGameId,
-			final IPlayerConfiguration playerConf)
+			final int iPlayerId, final IPlayerConfiguration playerConf)
 	{
 		final SendPlayerConfigurationGameCrAction act = new SendPlayerConfigurationGameCrAction(
-				iGameId, playerConf);
+				iGameId, iPlayerId, playerConf);
 		try
 		{
 			server.handleAction(this, act);
@@ -443,14 +446,16 @@ public final class LocalGameClient extends Observable implements IGameClient
 	 * @param iGameId
 	 *            the id of the game concerned by the {@link IGameConfiguration}
 	 *            .
+	 * @param iPlayerId
+	 *            the id of the player sending the message.
 	 * @param gameConf
 	 *            the {@link IGameConfiguration} to send.
 	 */
 	public void sendGameConf(final IGameServer server, final int iGameId,
-			final IGameConfiguration<?> gameConf)
+			final int iPlayerId, final IGameConfiguration<?> gameConf)
 	{
 		final SendGameConfigurationGameCrAction act = new SendGameConfigurationGameCrAction(
-				iGameId, gameConf);
+				iGameId, iPlayerId, gameConf);
 		try
 		{
 			server.handleAction(this, act);

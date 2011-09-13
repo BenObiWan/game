@@ -21,9 +21,11 @@ public final class StartGameCrAction extends AbstractGameCreationAction
 	 * 
 	 * @param iGameId
 	 *            the id of the game concerned by the action.
+	 * @param iPlayerId
+	 *            id of the player doing the action.
 	 */
-	public StartGameCrAction(final int iGameId)
+	public StartGameCrAction(final int iGameId, final int iPlayerId)
 	{
-		super(iGameId, GameCreationActionType.START_GAME);
+		super(iGameId, iPlayerId, GameCreationActionType.START_GAME);
 	}
 }

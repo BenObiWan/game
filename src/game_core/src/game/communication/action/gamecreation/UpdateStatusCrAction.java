@@ -26,12 +26,15 @@ public final class UpdateStatusCrAction extends AbstractGameCreationAction
 	 * 
 	 * @param iGameId
 	 *            the id of the game concerned by the action.
+	 * @param iPlayerId
+	 *            id of the player doing the action.
 	 * @param bReadyStatus
 	 *            the new status of the player.
 	 */
-	public UpdateStatusCrAction(final int iGameId, final boolean bReadyStatus)
+	public UpdateStatusCrAction(final int iGameId, final int iPlayerId,
+			final boolean bReadyStatus)
 	{
-		super(iGameId, GameCreationActionType.UPDATE_STATUS);
+		super(iGameId, iPlayerId, GameCreationActionType.UPDATE_STATUS);
 		_bReadyStatus = bReadyStatus;
 	}
 

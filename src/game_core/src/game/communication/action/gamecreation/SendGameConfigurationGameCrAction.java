@@ -28,13 +28,15 @@ public final class SendGameConfigurationGameCrAction extends
 	 * 
 	 * @param iGameId
 	 *            the id of the game concerned by the action.
+	 * @param iPlayerId
+	 *            id of the player doing the action.
 	 * @param gameConf
 	 *            the {@link IGameConfiguration} to send with this message.
 	 */
 	public SendGameConfigurationGameCrAction(final int iGameId,
-			final IGameConfiguration<?> gameConf)
+			final int iPlayerId, final IGameConfiguration<?> gameConf)
 	{
-		super(iGameId, GameCreationActionType.SEND_GAME_CONF);
+		super(iGameId, iPlayerId, GameCreationActionType.SEND_GAME_CONF);
 		_gameConf = gameConf;
 	}
 
