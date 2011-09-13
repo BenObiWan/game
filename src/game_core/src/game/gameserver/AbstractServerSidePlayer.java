@@ -45,7 +45,7 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	/**
 	 * Configuration of the player.
 	 */
-	protected PLAYER_CONF _conf;
+	protected PLAYER_CONF _playerConf;
 
 	/**
 	 * Lock used to protect the {@link IPlayerConfiguration}.
@@ -148,8 +148,14 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	{
 		synchronized (_lockConf)
 		{
-			return _conf;
+			return _playerConf;
 		}
+	}
+
+	@Override
+	public boolean isPlayerConfigurationSet()
+	{
+		return _playerConf != null;
 	}
 
 	// TODO add setPlayerConfiguration

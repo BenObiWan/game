@@ -452,18 +452,26 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	 *            the action to handle.
 	 */
 	private void handleStartGameCrAction(final IGameClient client,
-			final StartGameCrAction act)
+			@SuppressWarnings("unused") final StartGameCrAction act)
 	{
 		synchronized (_lock)
 		{
 			// check if the client is the creator
-
-			// _creatorPlayer
-
-			boolean bReady = true;
-			for (final PLAYER_TYPE player : _playerList)
+			if (_creatorPlayer.equals(client.getServerSidePlayer(_creatorPlayer
+					.getId())))
 			{
-				bReady &= player.isReady();
+				// set the creator player ready
+				_creatorPlayer.setReady(true);
+				// check if every player is ready
+				boolean bReady = true;
+				for (final PLAYER_TYPE player : _playerList)
+				{
+					bReady &= player.isReady();
+				}
+				if (bReady)
+				{
+
+				}
 			}
 		}
 	}
