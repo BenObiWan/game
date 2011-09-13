@@ -116,6 +116,12 @@ public final class ApplicationCore
 		return _locGameClient;
 	}
 
+	/**
+	 * change the {@link ILocalClientUI} of the local client.
+	 * 
+	 * @param clientUI
+	 *            the new {@link ILocalClientUI}.
+	 */
 	public void setClientUI(final ILocalClientUI clientUI)
 	{
 		_locGameClient.setClientUI(clientUI);

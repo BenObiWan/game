@@ -58,6 +58,9 @@ public final class LocalGameClient extends Observable implements IGameClient
 	 */
 	private final Object _lockNextPlayer = new Object();
 
+	/**
+	 * The {@link ILocalClientUI} for this game client.
+	 */
 	private ILocalClientUI _clientUI;
 
 	/**
@@ -402,6 +405,19 @@ public final class LocalGameClient extends Observable implements IGameClient
 		}
 	}
 
+	/**
+	 * Sends a {@link SendPlayerConfigurationGameCrAction} message to the
+	 * specified {@link IGameServer}.
+	 * 
+	 * @param server
+	 *            the {@link IGameServer} to which sending the
+	 *            {@link IPlayerConfiguration}.
+	 * @param iGameId
+	 *            the id of the game concerned by the
+	 *            {@link IPlayerConfiguration}.
+	 * @param playerConf
+	 *            the {@link IPlayerConfiguration} to send.
+	 */
 	public void sendPlayerConf(final IGameServer server, final int iGameId,
 			final IPlayerConfiguration playerConf)
 	{
@@ -417,6 +433,19 @@ public final class LocalGameClient extends Observable implements IGameClient
 		}
 	}
 
+	/**
+	 * Sends a {@link SendGameConfigurationGameCrAction} message to the
+	 * specified {@link IGameServer}.
+	 * 
+	 * @param server
+	 *            the {@link IGameServer} to which sending the
+	 *            {@link IGameConfiguration}.
+	 * @param iGameId
+	 *            the id of the game concerned by the {@link IGameConfiguration}
+	 *            .
+	 * @param gameConf
+	 *            the {@link IGameConfiguration} to send.
+	 */
 	public void sendGameConf(final IGameServer server, final int iGameId,
 			final IGameConfiguration<?> gameConf)
 	{

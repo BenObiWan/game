@@ -1,5 +1,11 @@
 package game.gameclient;
 
+/**
+ * Interface describing the graphical user interface on this game client.
+ * 
+ * @author benobiwan
+ * 
+ */
 public interface ILocalClientUI
 {
 	/**
