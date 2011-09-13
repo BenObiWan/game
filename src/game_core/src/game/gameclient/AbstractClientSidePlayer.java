@@ -390,10 +390,4 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	{
 		_observerList.add(o);
 	}
-
-	@Override
-	public boolean isPlayerConfigurationSet()
-	{
-		return _playerConf != null;
-	}
 }

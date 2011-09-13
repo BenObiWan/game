@@ -41,11 +41,4 @@ public interface IPlayer<PLAYER_CONF extends IPlayerConfiguration>
 	 *            the new {@link IPlayerConfiguration}.
 	 */
 	void setPlayerConfiguration(IPlayerConfiguration conf);
-
-	/**
-	 * Check if the {@link IPlayerConfiguration} has been set.
-	 * 
-	 * @return true if the {@link IPlayerConfiguration} has been set.
-	 */
-	boolean isPlayerConfigurationSet();
 }
