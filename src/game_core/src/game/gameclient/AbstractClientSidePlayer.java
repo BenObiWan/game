@@ -390,4 +390,21 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	{
 		_observerList.add(o);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setPlayerConfiguration(final IPlayerConfiguration conf)
+	{
+		try
+		{
+			synchronized (_lock)
+			{
+				_playerConf = (PLAYER_CONF) conf;
+			}
+		}
+		catch (final ClassCastException e)
+		{
+			// TODO class error
+		}
+	}
 }

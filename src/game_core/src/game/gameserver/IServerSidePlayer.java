@@ -69,7 +69,7 @@ public interface IServerSidePlayer<PLAYER_CONF extends IPlayerConfiguration>
 	 * @return the description of the player.
 	 */
 	IPlayerDescription getDescription();
-	
+
 	/**
 	 * Check if the {@link IPlayerConfiguration} has been set.
 	 * 

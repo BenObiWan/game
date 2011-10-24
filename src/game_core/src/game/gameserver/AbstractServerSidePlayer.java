@@ -28,11 +28,6 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	protected final int _iPlayerId;
 
 	/**
-	 * The game where this player is playing.
-	 */
-	protected IServerSideGame<?, ?, ?, ?> _serverSideGame;
-
-	/**
 	 * The game creator this player is joining.
 	 */
 	protected final IServerGameCreator<?, ?, ?, ?, ?> _serverGameCreator;
@@ -43,14 +38,20 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	protected final IPlayerDescription _playerDescription;
 
 	/**
+	 * The game where this player is playing.
+	 */
+	protected IServerSideGame<?, ?, ?, ?> _serverSideGame;
+
+	/**
 	 * Configuration of the player.
 	 */
 	protected PLAYER_CONF _playerConf;
 
 	/**
-	 * Lock used to protect the {@link IPlayerConfiguration}.
+	 * Lock used to protect the {@link IPlayerConfiguration} and the
+	 * {@link IServerSideGame}.
 	 */
-	protected final Object _lockConf = new Object();
+	protected final Object _lock = new Object();
 
 	/**
 	 * Creates a new AbstractServerSidePlayer.
@@ -122,7 +123,10 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	@Override
 	public IServerSideGame<?, ?, ?, ?> getGame()
 	{
-		return _serverSideGame;
+		synchronized (_lock)
+		{
+			return _serverSideGame;
+		}
 	}
 
 	@Override
@@ -146,7 +150,7 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	@Override
 	public PLAYER_CONF getPlayerConfiguration()
 	{
-		synchronized (_lockConf)
+		synchronized (_lock)
 		{
 			return _playerConf;
 		}
@@ -158,5 +162,20 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 		return _playerConf != null;
 	}
 
-	// TODO add setPlayerConfiguration
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setPlayerConfiguration(final IPlayerConfiguration conf)
+	{
+		try
+		{
+			synchronized (_lock)
+			{
+				_playerConf = (PLAYER_CONF) conf;
+			}
+		}
+		catch (final ClassCastException e)
+		{
+			// TODO class error
+		}
+	}
 }
