@@ -1,13 +1,16 @@
 package game.gameclient;
 
 import game.common.IGameServer;
+import game.common.IPlayerDescription;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
+import java.util.Collections;
 import java.util.Observable;
+import java.util.Set;
 
 /**
  * Abstract implementation of the {@link IClientGameCreator} interface. Used on
@@ -60,6 +63,11 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	 * Configuration of the game.
 	 */
 	protected transient CONF_TYPE _conf;
+
+	/**
+	 * List of player playing in this game.
+	 */
+	protected transient Set<IPlayerDescription> _playerList;
 
 	@Override
 	public boolean isCreator()
@@ -126,6 +134,24 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 			_conf = gameConfiguration;
 			setChanged();
 			notifyObservers();
+		}
+	}
+
+	@Override
+	public void setClientSidePlayerList(Set<IPlayerDescription> playerList)
+	{
+		synchronized (_lock)
+		{
+			_playerList = playerList;
+		}
+	}
+
+	@Override
+	public Set<IPlayerDescription> getClientSidePlayerList()
+	{
+		synchronized (_lock)
+		{
+			return Collections.unmodifiableSet(_playerList);
 		}
 	}
 
