@@ -134,7 +134,7 @@ public final class CoreUI extends JFrame implements ActionListener,
 	 * The create game window.
 	 */
 	private final JInternalFrame _createGameWindow = new JInternalFrame(
-			"Game creation", true, true, true, true);
+			"Game starter", true, true, true, true);
 
 	/**
 	 * The server list window.

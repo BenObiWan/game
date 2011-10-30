@@ -138,7 +138,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	}
 
 	@Override
-	public void setClientSidePlayerList(Set<IPlayerDescription> playerList)
+	public void setClientSidePlayerList(final Set<IPlayerDescription> playerList)
 	{
 		synchronized (_lock)
 		{

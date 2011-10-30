@@ -3,7 +3,7 @@ package game.core.swing;
 import game.common.IPlayerDescription;
 
 import java.awt.GridLayout;
-import java.util.SortedSet;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -34,10 +34,10 @@ public final class PlayerListPanel extends JPanel
 	 * @param playerList
 	 *            the list of players.
 	 */
-	public void updatePlayerList(final SortedSet<IPlayerDescription> playerList)
+	public void updatePlayerList(final Set<IPlayerDescription> playerList)
 	{
 		removeAll();
-		for (IPlayerDescription desc : playerList)
+		for (final IPlayerDescription desc : playerList)
 		{
 			add(new PlayerDescriptionPanel(desc));
 		}
