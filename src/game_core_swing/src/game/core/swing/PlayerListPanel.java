@@ -36,6 +36,10 @@ public final class PlayerListPanel extends JPanel
 	 */
 	public void updatePlayerList(final SortedSet<IPlayerDescription> playerList)
 	{
-
+		removeAll();
+		for (IPlayerDescription desc : playerList)
+		{
+			add(new PlayerDescriptionPanel(desc));
+		}
 	}
 }
