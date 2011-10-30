@@ -10,6 +10,8 @@ import game.communication.action.IGameAction;
 import game.communication.action.IGameCreationAction;
 import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
+import game.communication.action.gamecreation.SendGameConfigurationGameCrAction;
+import game.communication.action.gamecreation.SendPlayerConfigurationGameCrAction;
 import game.communication.action.gamecreation.StartGameCrAction;
 import game.communication.action.gamecreation.UpdateStatusCrAction;
 import game.communication.action.gamectrl.AddAICrAction;
@@ -287,6 +289,30 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 						GameCreationActionType.START_GAME, act.getClass());
 			}
 			break;
+		case SEND_PLAYER_CONF:
+			if (act instanceof SendPlayerConfigurationGameCrAction)
+			{
+				handleSendPlayerConfigurationGameCrAction(client,
+						(SendPlayerConfigurationGameCrAction) act);
+			}
+			else
+			{
+				throw new InconsistentActionTypeException(
+						GameCreationActionType.SEND_PLAYER_CONF, act.getClass());
+			}
+			break;
+		case SEND_GAME_CONF:
+			if (act instanceof SendGameConfigurationGameCrAction)
+			{
+				handleSendGameConfigurationGameCrAction(client,
+						(SendGameConfigurationGameCrAction) act);
+			}
+			else
+			{
+				throw new InconsistentActionTypeException(
+						GameCreationActionType.SEND_GAME_CONF, act.getClass());
+			}
+			break;
 		}
 	}
 
@@ -444,7 +470,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	}
 
 	/**
-	 * Handle a {@link UpdateStatusCrAction}.
+	 * Handle a {@link StartGameCrAction}.
 	 * 
 	 * @param client
 	 *            the client from which the start game.
@@ -527,5 +553,35 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		{
 			LOGGER.error(e.getLocalizedMessage(), e);
 		}
+	}
+
+	/**
+	 * Handle a {@link SendPlayerConfigurationGameCrAction}.
+	 * 
+	 * @param client
+	 *            the client from which the action is coming.
+	 * @param act
+	 *            the action to handle.
+	 */
+	private void handleSendPlayerConfigurationGameCrAction(
+			final IGameClient client,
+			final SendPlayerConfigurationGameCrAction act)
+	{
+
+	}
+
+	/**
+	 * Handle a {@link SendGameConfigurationGameCrAction}.
+	 * 
+	 * @param client
+	 *            the client from which the action is coming.
+	 * @param act
+	 *            the action to handle.
+	 */
+	private void handleSendGameConfigurationGameCrAction(
+			final IGameClient client,
+			final SendGameConfigurationGameCrAction act)
+	{
+
 	}
 }
