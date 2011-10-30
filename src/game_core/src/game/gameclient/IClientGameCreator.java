@@ -1,6 +1,7 @@
 package game.gameclient;
 
 import game.common.IGameServer;
+import game.common.IPlayerDescription;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
@@ -8,6 +9,7 @@ import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
 import java.util.Observer;
+import java.util.Set;
 
 /**
  * Object used on the client side to create a game when joined.
@@ -124,4 +126,19 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return the new {@link IGameConfiguration}.
 	 */
 	CONF_TYPE createGameConfiguration();
+
+	/**
+	 * Set the list of player playing this game.
+	 * 
+	 * @param playerList
+	 *            the new player list.
+	 */
+	void setClientSidePlayerList(Set<IPlayerDescription> playerList);
+
+	/**
+	 * Get the list of player playing this game.
+	 * 
+	 * @return the list of player playing this game.
+	 */
+	Set<IPlayerDescription> getClientSidePlayerList();
 }
