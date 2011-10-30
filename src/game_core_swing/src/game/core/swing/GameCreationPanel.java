@@ -88,7 +88,8 @@ public final class GameCreationPanel extends JPanel implements Observer
 	{
 		if (_gameCreator.equals(o))
 		{
-
+			_playerListPanel.updatePlayerList(_gameCreator
+					.getClientSidePlayerList());
 		}
 	}
 }
