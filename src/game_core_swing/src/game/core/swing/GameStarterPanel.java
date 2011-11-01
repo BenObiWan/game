@@ -170,7 +170,7 @@ public final class GameStarterPanel extends JPanel
 	}
 
 	/**
-	 * {@link ActionListener} for the Create game button.
+	 * {@link ActionListener} for the Create game {@link JButton}.
 	 * 
 	 * @author benobiwan
 	 * 

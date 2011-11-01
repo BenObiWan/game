@@ -120,7 +120,7 @@ public final class GameCreationPanel extends JPanel implements Observer
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e)
+		public void actionPerformed(final ActionEvent e)
 		{
 			if (_bCreator)
 			{
@@ -150,7 +150,7 @@ public final class GameCreationPanel extends JPanel implements Observer
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e)
+		public void actionPerformed(final ActionEvent e)
 		{
 			if (_bCreator)
 			{
