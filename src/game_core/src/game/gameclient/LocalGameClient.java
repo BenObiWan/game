@@ -100,7 +100,10 @@ public final class LocalGameClient extends Observable implements IGameClient
 	public void handleEvent(final IGameServer server, final IEvent evt)
 			throws InconsistentEventTypeException
 	{
-		LOGGER.info(evt.getClass().toString());
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug(evt.getClass().toString());
+		}
 		if (evt instanceof IControlEvent)
 		{
 			handleControlEvent(server, (IControlEvent) evt);

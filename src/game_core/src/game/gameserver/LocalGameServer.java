@@ -102,6 +102,10 @@ public final class LocalGameServer implements IGameServer
 	public void handleAction(final IGameClient client, final IAction act)
 			throws InconsistentActionTypeException
 	{
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug(act.getClass().toString());
+		}
 		if (act instanceof IControlAction)
 		{
 			handleControlAction(client, (IControlAction) act);
