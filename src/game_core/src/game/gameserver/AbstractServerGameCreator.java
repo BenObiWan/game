@@ -216,7 +216,6 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	/**
 	 * Send a {@link ConfigurationUpdateCrEvent} to every player.
 	 */
-	@SuppressWarnings("unused")
 	private void sendConfigurationUpdate()
 	{
 		for (final PLAYER_TYPE player : _playerList)
@@ -567,7 +566,15 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			final IGameClient client,
 			final SendPlayerConfigurationGameCrAction act)
 	{
-
+		synchronized (_lock)
+		{
+			final IServerSidePlayer<?> player = client.getServerSidePlayer(act
+					.getPlayerId());
+			if (player != null)
+			{
+				player.setPlayerConfiguration(act.getPlayerConfiguration());
+			}
+		}
 	}
 
 	/**
@@ -578,10 +585,31 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	 * @param act
 	 *            the action to handle.
 	 */
+	@SuppressWarnings("unchecked")
 	private void handleSendGameConfigurationGameCrAction(
 			final IGameClient client,
 			final SendGameConfigurationGameCrAction act)
 	{
-
+		synchronized (_lock)
+		{
+			// check if the client is the creator
+			if (_creatorPlayer.equals(client.getServerSidePlayer(_creatorPlayer
+					.getId())))
+			{
+				final IGameConfiguration<?> conf = act.getGameConfiguration();
+				if (conf != null)
+				{
+					try
+					{
+						_conf = (CONF_TYPE) conf;
+					}
+					catch (final ClassCastException e)
+					{
+						// TODO class error
+					}
+				}
+			}
+		}
+		sendConfigurationUpdate();
 	}
 }
