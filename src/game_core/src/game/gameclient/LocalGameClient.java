@@ -12,6 +12,7 @@ import game.communication.event.ControlEventType;
 import game.communication.event.IControlEvent;
 import game.communication.event.IEvent;
 import game.communication.event.IGameCreationEvent;
+import game.communication.event.IGameCtrlEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.control.GameCreationStartedCtrlEvent;
@@ -99,6 +100,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 	public void handleEvent(final IGameServer server, final IEvent evt)
 			throws InconsistentEventTypeException
 	{
+		LOGGER.info(evt.getClass().toString());
 		if (evt instanceof IControlEvent)
 		{
 			handleControlEvent(server, (IControlEvent) evt);
@@ -128,6 +130,29 @@ public final class LocalGameClient extends Observable implements IGameClient
 			else
 			{
 				player.handleGameCreationEvent(event);
+			}
+		}
+		else if (evt instanceof IGameCtrlEvent)
+		{
+			final IGameCtrlEvent event = (IGameCtrlEvent) evt;
+			final IClientSidePlayer<?, ?, ?, ?, ?> player = _clientSidePlayerList
+					.get(Integer.valueOf(event.getPlayerId()));
+			if (player == null)
+			{
+				// TODO player is null
+			}
+			else if (event.getGameId() != player.getGameId())
+			{
+				// TODO game id is different
+			}
+			else if (server.equals(player.getServer()))
+			{
+				// TODO the server from which the message is coming is not the
+				// good one.
+			}
+			else
+			{
+				player.handleGameCtrlEvent(event);
 			}
 		}
 		else if (evt instanceof IGameEvent)
@@ -564,7 +589,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator,
 			final int iGameId, final int iPlayerId, final boolean bCreator)
 	{
-		gameCreator.initialize(true, this, server, iGameId, iPlayerId);
+		gameCreator.initialize(bCreator, this, server, iGameId, iPlayerId);
 		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
 				.createPlayer(this, iPlayerId);
 		_clientSidePlayerList.put(Integer.valueOf(iPlayerId), player);
