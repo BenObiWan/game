@@ -4,6 +4,8 @@ import game.gameclient.IClientGameCreator;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -43,6 +45,12 @@ public final class GameCreationPanel extends JPanel implements Observer
 	private final IClientGameCreator<?, ?, ?, ?, ?, ?> _gameCreator;
 
 	/**
+	 * Boolean showing whether the local client is the creator of this game or
+	 * not.
+	 */
+	protected final boolean _bCreator;
+
+	/**
 	 * Creates a new GameCreationPanel.
 	 * 
 	 * @param gameCreator
@@ -59,10 +67,10 @@ public final class GameCreationPanel extends JPanel implements Observer
 		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration());
 		_playerListPanel = new PlayerListPanel();
 		_gameCreator.addObserver(this);
-
+		_bCreator = bCreator;
 		String strCreate, strLeave;
 
-		if (bCreator)
+		if (_bCreator)
 		{
 			strCreate = "Start Game";
 			strLeave = "Cancel Game";
@@ -74,7 +82,9 @@ public final class GameCreationPanel extends JPanel implements Observer
 		}
 
 		final JButton buttonCreateGame = new JButton(strCreate);
+		buttonCreateGame.addActionListener(new StartGameActionListener());
 		final JButton buttonLeaveGame = new JButton(strLeave);
+		buttonLeaveGame.addActionListener(new CancelGameActionListener());
 		final JPanel buttonPane = new JPanel(new GridLayout(1, 0, 10, 10));
 		buttonPane.add(buttonLeaveGame);
 		buttonPane.add(buttonCreateGame);
@@ -90,6 +100,66 @@ public final class GameCreationPanel extends JPanel implements Observer
 		{
 			_playerListPanel.updatePlayerList(_gameCreator
 					.getClientSidePlayerList());
+		}
+	}
+
+	/**
+	 * {@link ActionListener} for the start game {@link JButton}.
+	 * 
+	 * @author benobiwan
+	 * 
+	 */
+	private final class StartGameActionListener implements ActionListener
+	{
+		/**
+		 * Creates a new StartGameActionListener.
+		 */
+		public StartGameActionListener()
+		{
+			super();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if (_bCreator)
+			{
+				// Start Game
+			}
+			else
+			{
+				// Ready
+			}
+		}
+	}
+
+	/**
+	 * {@link ActionListener} for the cancel game {@link JButton}.
+	 * 
+	 * @author benobiwan
+	 * 
+	 */
+	private final class CancelGameActionListener implements ActionListener
+	{
+		/**
+		 * Creates a new CancelGameActionListener.
+		 */
+		public CancelGameActionListener()
+		{
+			super();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if (_bCreator)
+			{
+				// Cancel Game
+			}
+			else
+			{
+				// Leave Game
+			}
 		}
 	}
 }
