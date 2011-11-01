@@ -59,7 +59,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	/**
 	 * The game in creation the client joined.
 	 */
-	protected IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_OBSERVER> _gameCreator;
+	protected final IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_OBSERVER> _gameCreator;
 
 	/**
 	 * The configuration of the game.
@@ -103,15 +103,21 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	 *            the {@link IGameServer} where this client is playing.
 	 * @param localGameClient
 	 *            the {@link LocalGameClient}.
+	 * @param gameCreator
+	 *            the {@link IClientGameCreator} which created this player.
 	 */
-	protected AbstractClientSidePlayer(final int iPlayerId,
-			final String strName, final IGameServer server,
-			final LocalGameClient localGameClient)
+	protected AbstractClientSidePlayer(
+			final int iPlayerId,
+			final String strName,
+			final IGameServer server,
+			final LocalGameClient localGameClient,
+			final IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_OBSERVER> gameCreator)
 	{
 		_iPlayerId = iPlayerId;
 		_strName = strName;
 		_gameServer = server;
 		_localGameClient = localGameClient;
+		_gameCreator = gameCreator;
 	}
 
 	@Override
@@ -138,10 +144,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	@Override
 	public IClientGameCreator<?, ?, ?, ?, ?, ?> getGameCreator()
 	{
-		synchronized (_lock)
-		{
-			return _gameCreator;
-		}
+		return _gameCreator;
 	}
 
 	@Override
@@ -149,7 +152,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	{
 		synchronized (_lock)
 		{
-			return (_game != null);
+			return (_game == null);
 		}
 	}
 
