@@ -2,6 +2,8 @@ package game.gameclient;
 
 import game.common.IGameServer;
 import game.common.IPlayerDescription;
+import game.communication.action.InconsistentActionTypeException;
+import game.communication.action.gamecreation.UpdateStatusCrAction;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
@@ -11,6 +13,9 @@ import game.config.IPlayerConfiguration;
 import java.util.Collections;
 import java.util.Observable;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract implementation of the {@link IClientGameCreator} interface. Used on
@@ -34,6 +39,12 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		implements
 		IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, PLAYER_TYPE, CLIENT_OBSERVER>
 {
+	/**
+	 * Logger object.
+	 */
+	private static transient final Logger LOGGER = LoggerFactory
+			.getLogger(AbstractClientGameCreator.class);
+
 	/**
 	 * Lock to protect the access to the other parameters of the object.
 	 */
@@ -60,6 +71,11 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	protected transient int _iGameId;
 
 	/**
+	 * Id of the player.
+	 */
+	protected transient int _iPlayerId;
+
+	/**
 	 * Configuration of the game.
 	 */
 	protected transient CONF_TYPE _conf;
@@ -68,6 +84,11 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	 * List of player playing in this game.
 	 */
 	protected transient Set<IPlayerDescription> _playerList;
+
+	/**
+	 * Boolean telling whether of not this player is ready.
+	 */
+	protected transient boolean _bReady;
 
 	@Override
 	public boolean isCreator()
@@ -97,7 +118,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	@Override
 	public void initialize(final boolean bCreator,
 			final LocalGameClient locGameClient, final IGameServer server,
-			final int iGameId)
+			final int iGameId, final int iPlayerId)
 	{
 		synchronized (_lock)
 		{
@@ -105,6 +126,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 			_bIsCreator = bCreator;
 			_iGameId = iGameId;
 			_gameClient = locGameClient;
+			_iPlayerId = iPlayerId;
 		}
 	}
 
@@ -114,6 +136,15 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		synchronized (_lock)
 		{
 			return _iGameId;
+		}
+	}
+
+	@Override
+	public int getPlayerId()
+	{
+		synchronized (_lock)
+		{
+			return _iPlayerId;
 		}
 	}
 
@@ -155,4 +186,25 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		}
 	}
 
+	@Override
+	public void updateReadyStatus(final boolean bReadyStatus)
+	{
+		synchronized (_lock)
+		{
+			if (_bReady != bReadyStatus)
+			{
+				_bReady = bReadyStatus;
+				final UpdateStatusCrAction act = new UpdateStatusCrAction(
+						_iGameId, _iGameId, _bReady);
+				try
+				{
+					_gameServer.handleAction(_gameClient, act);
+				}
+				catch (final InconsistentActionTypeException e)
+				{
+					LOGGER.error(e.getLocalizedMessage(), e);
+				}
+			}
+		}
+	}
 }

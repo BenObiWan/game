@@ -564,7 +564,7 @@ public final class LocalGameClient extends Observable implements IGameClient
 			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator,
 			final int iGameId, final int iPlayerId, final boolean bCreator)
 	{
-		gameCreator.initialize(true, this, server, iGameId);
+		gameCreator.initialize(true, this, server, iGameId, iPlayerId);
 		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
 				.createPlayer(this, iPlayerId);
 		_clientSidePlayerList.put(Integer.valueOf(iPlayerId), player);

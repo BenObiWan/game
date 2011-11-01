@@ -73,9 +73,11 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 *            the server hosting this game.
 	 * @param iGameId
 	 *            the id of the new game.
+	 * @param iPlayerId
+	 *            the local id of the player joining the game.
 	 */
 	void initialize(boolean bCreator, LocalGameClient locGameClient,
-			IGameServer server, int iGameId);
+			IGameServer server, int iGameId, int iPlayerId);
 
 	/**
 	 * Get the game id.
@@ -83,6 +85,13 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return the game id.
 	 */
 	int getGameId();
+
+	/**
+	 * Get the player id.
+	 * 
+	 * @return the player id.
+	 */
+	int getPlayerId();
 
 	/**
 	 * Set the {@link IGameConfiguration} of this game creator.
@@ -141,4 +150,12 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return the list of player playing this game.
 	 */
 	Set<IPlayerDescription> getClientSidePlayerList();
+
+	/**
+	 * Update the ready status of this player and sends it to the server.
+	 * 
+	 * @param bReadyStatus
+	 *            the new ready status of this player.
+	 */
+	void updateReadyStatus(boolean bReadyStatus);
 }
