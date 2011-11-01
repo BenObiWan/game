@@ -174,6 +174,8 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		synchronized (_lock)
 		{
 			_playerList = playerList;
+			setChanged();
+			notifyObservers();
 		}
 	}
 
