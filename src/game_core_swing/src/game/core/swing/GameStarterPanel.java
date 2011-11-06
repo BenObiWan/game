@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import common.swing.IDisposableFrame;
+
 /**
  * Panel for the game creation.
  * 
@@ -66,6 +68,11 @@ public final class GameStarterPanel extends JPanel
 	private final ConcurrentMap<String, IGameSwingLauncher> _launcherMapByCreatorClass = new ConcurrentSkipListMap<String, IGameSwingLauncher>();
 
 	/**
+	 * The parent frame.
+	 */
+	private final IDisposableFrame _parentFrame;
+
+	/**
 	 * Creates a new GameCreationPanel.
 	 * 
 	 * @param localGameClient
@@ -74,14 +81,17 @@ public final class GameStarterPanel extends JPanel
 	 *            list of all connections.
 	 * @param gameLauncherSet
 	 *            set of all loaded {@link IGameSwingLauncher}.
+	 * @param parentFrame
+	 *            the parent frame.
 	 */
 	public GameStarterPanel(final LocalGameClient localGameClient,
 			final ConnectionList connectionList,
-			final Set<IGameSwingLauncher> gameLauncherSet)
+			final Set<IGameSwingLauncher> gameLauncherSet,
+			final IDisposableFrame parentFrame)
 	{
 		super(new BorderLayout(5, 5));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		_parentFrame = parentFrame;
 		_connectionList = connectionList;
 		_localGameClient = localGameClient;
 
@@ -167,6 +177,7 @@ public final class GameStarterPanel extends JPanel
 					selectedGameLauncher.createServerGameCreator(),
 					selectedServer);
 		}
+		_parentFrame.dispose();
 	}
 
 	/**
