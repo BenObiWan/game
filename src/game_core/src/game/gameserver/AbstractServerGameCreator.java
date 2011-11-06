@@ -213,10 +213,8 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		_gameDescription.setNumberOfPlayer(_playerList.size());
 	}
 
-	/**
-	 * Send a {@link ConfigurationUpdateCrEvent} to every player.
-	 */
-	private void sendConfigurationUpdate()
+	@Override
+	public void sendConfigurationUpdate()
 	{
 		for (final PLAYER_TYPE player : _playerList)
 		{
@@ -233,10 +231,8 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 	}
 
-	/**
-	 * Send a {@link PlayerListUpdateCrEvent} to every player.
-	 */
-	private void sendPlayerListUpdate()
+	@Override
+	public void sendPlayerListUpdate()
 	{
 		final SortedSet<IPlayerDescription> playerList = new TreeSet<IPlayerDescription>();
 		for (final PLAYER_TYPE player : _playerList)

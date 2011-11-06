@@ -7,6 +7,8 @@ import game.communication.action.IGameAction;
 import game.communication.action.IGameCreationAction;
 import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
+import game.communication.event.gamecreation.ConfigurationUpdateCrEvent;
+import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 import game.gameclient.IClientGameCreator;
@@ -164,4 +166,14 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 */
 	void initialize(IGameServer gameServer, int iGameId,
 			IGameClient creatorClient, int iCreatorPlayerId);
+
+	/**
+	 * Send a {@link ConfigurationUpdateCrEvent} to every player.
+	 */
+	void sendConfigurationUpdate();
+
+	/**
+	 * Send a {@link PlayerListUpdateCrEvent} to every player.
+	 */
+	void sendPlayerListUpdate();
 }

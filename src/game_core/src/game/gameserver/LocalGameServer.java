@@ -93,7 +93,6 @@ public final class LocalGameServer implements IGameServer
 	 */
 	public LocalGameServer(final Set<IGameDescription> gameListDescription)
 	{
-		// TODO constructor of LocalGameServer
 		_gameListDescription = gameListDescription;
 		_timeOutExecutor = Executors.newCachedThreadPool();
 	}
@@ -350,6 +349,7 @@ public final class LocalGameServer implements IGameServer
 			try
 			{
 				client.handleEvent(this, event);
+				gameCreator.sendPlayerListUpdate();
 			}
 			catch (final InconsistentEventTypeException e)
 			{
