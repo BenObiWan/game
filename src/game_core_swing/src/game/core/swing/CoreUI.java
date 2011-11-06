@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 
 import common.config.swing.ConfigurationPanel;
 import common.logging.swing.LogInternalFrame;
+import common.swing.DisposableInternalFrame;
 
 /**
  * Core UI of the game.
@@ -133,7 +134,7 @@ public final class CoreUI extends JFrame implements ActionListener,
 	/**
 	 * The create game window.
 	 */
-	private final JInternalFrame _createGameWindow = new JInternalFrame(
+	private final DisposableInternalFrame _createGameWindow = new DisposableInternalFrame(
 			"Game starter", true, true, true, true);
 
 	/**
@@ -234,7 +235,7 @@ public final class CoreUI extends JFrame implements ActionListener,
 		}
 		_createGameWindow.setContentPane(new GameStarterPanel(_appCore
 				.getLocalGameClient(), _appCore.getNetworkMain()
-				.getConnectionList(), gameLauncherSet));
+				.getConnectionList(), gameLauncherSet, _createGameWindow));
 		_createGameWindow.pack();
 
 		_serverListWindow.setContentPane(new ServerListPanel(_appCore
@@ -512,19 +513,8 @@ public final class CoreUI extends JFrame implements ActionListener,
 			// UIManager.setLookAndFeel(UIManager
 			// .getCrossPlatformLookAndFeelClassName());
 		}
-		catch (final UnsupportedLookAndFeelException e)
-		{
-			// handle exception
-		}
-		catch (final ClassNotFoundException e)
-		{
-			// handle exception
-		}
-		catch (final InstantiationException e)
-		{
-			// handle exception
-		}
-		catch (final IllegalAccessException e)
+		catch (final UnsupportedLookAndFeelException | ClassNotFoundException
+				| InstantiationException | IllegalAccessException e)
 		{
 			// handle exception
 		}
