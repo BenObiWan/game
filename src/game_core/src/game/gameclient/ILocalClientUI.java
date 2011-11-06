@@ -14,11 +14,8 @@ public interface ILocalClientUI
 	 * 
 	 * @param gameCreator
 	 *            the {@link IClientGameCreator} of the specified game.
-	 * @param bCreator
-	 *            whether the local client is the creator of this game or not.
 	 */
-	void createGameCreationUI(IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator,
-			boolean bCreator);
+	void createGameCreationUI(IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator);
 
 	/**
 	 * Create and show the main game UI for the specified

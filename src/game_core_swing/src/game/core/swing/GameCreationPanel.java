@@ -55,19 +55,16 @@ public final class GameCreationPanel extends JPanel implements Observer
 	 * 
 	 * @param gameCreator
 	 *            the {IClientGameCreator} to display.
-	 * @param bCreator
-	 *            whether the local client is the creator of this game or not.
 	 */
 	public GameCreationPanel(
-			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator,
-			final boolean bCreator)
+			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
 	{
 		super(new BorderLayout());
 		_gameCreator = gameCreator;
 		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration());
 		_playerListPanel = new PlayerListPanel();
 		_gameCreator.addObserver(this);
-		_bCreator = bCreator;
+		_bCreator = _gameCreator.isCreator();
 		String strCreate, strLeave;
 
 		if (_bCreator)
