@@ -17,6 +17,7 @@ import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.control.GameCreationStartedCtrlEvent;
 import game.communication.event.control.GameJoinedCtrlEvent;
+import game.communication.event.control.IControlEventHandler;
 import game.communication.event.control.ServerStateCtrlEvent;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
@@ -36,7 +37,8 @@ import org.slf4j.LoggerFactory;
  * @author benobiwan
  * 
  */
-public final class LocalGameClient extends Observable implements IGameClient
+public final class LocalGameClient extends Observable implements IGameClient,
+		IControlEventHandler
 {
 	/**
 	 * Logger object.
@@ -155,7 +157,8 @@ public final class LocalGameClient extends Observable implements IGameClient
 			}
 			else
 			{
-				player.handleGameCtrlEvent(event);
+				player.handleG)
+				ameCtrlEvent(event);
 			}
 		}
 		else if (evt instanceof IGameEvent)
@@ -243,18 +246,8 @@ public final class LocalGameClient extends Observable implements IGameClient
 		return true;
 	}
 
-	/**
-	 * Method handling all the control event.
-	 * 
-	 * @param server
-	 *            the game server from which the control event is coming.
-	 * @param evt
-	 *            the event to handle.
-	 * @throws InconsistentEventTypeException
-	 *             the type field of the {@link IControlEvent} and it's class
-	 *             are inconsistent.
-	 */
-	private void handleControlEvent(final IGameServer server,
+	@Override
+	public void handleControlEvent(final IGameServer server,
 			final IControlEvent evt) throws InconsistentEventTypeException
 	{
 		switch (evt.getType())
@@ -295,15 +288,8 @@ public final class LocalGameClient extends Observable implements IGameClient
 		}
 	}
 
-	/**
-	 * Handle a {@link GameJoinedCtrlEvent}.
-	 * 
-	 * @param server
-	 *            the game server from which the control event is coming.
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleControlEvent(final IGameServer server,
+	@Override
+	public void handleControlEvent(final IGameServer server,
 			final GameJoinedCtrlEvent evt)
 	{
 		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
@@ -317,15 +303,8 @@ public final class LocalGameClient extends Observable implements IGameClient
 		// TODO handleControlEvent GameJoinedEvent
 	}
 
-	/**
-	 * Handle a {@link GameCreationStartedCtrlEvent}.
-	 * 
-	 * @param server
-	 *            the game server from which the control event is coming.
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleControlEvent(final IGameServer server,
+	@Override
+	public void handleControlEvent(final IGameServer server,
 			final GameCreationStartedCtrlEvent evt)
 	{
 		joinGame(server, evt.getClientGameCreator(), evt.getGameId(),
@@ -343,15 +322,8 @@ public final class LocalGameClient extends Observable implements IGameClient
 		// TODO handleControlEvent GameCreationStartedCtrlEvent
 	}
 
-	/**
-	 * Handle a {@link ServerStateCtrlEvent}.
-	 * 
-	 * @param server
-	 *            the game server from which the control event is coming.
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleControlEvent(final IGameServer server,
+	@Override
+	public void handleControlEvent(final IGameServer server,
 			final ServerStateCtrlEvent evt)
 	{
 		server.updateServerState(evt.getServerState());

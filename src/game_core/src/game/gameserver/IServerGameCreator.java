@@ -4,9 +4,10 @@ import game.common.IGameClient;
 import game.common.IGameInstanceDescription;
 import game.common.IGameServer;
 import game.communication.action.IGameAction;
-import game.communication.action.IGameCreationAction;
 import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
+import game.communication.action.gamecreation.IGameCreationActionHandler;
+import game.communication.action.gamectrl.IGameCtrlActionHandler;
 import game.communication.event.gamecreation.ConfigurationUpdateCrEvent;
 import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
@@ -30,6 +31,7 @@ import game.gameclient.IClientGameCreator;
  *            the type of {@link IServerSidePlayer} used in this game.
  */
 public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, PLAYER_TYPE extends IServerSidePlayer<PLAYER_CONF>, SERVER_GAME_TYPE extends IServerSideGame<ACTION_TYPE, CONF_TYPE, PLAYER_CONF, PLAYER_TYPE>>
+		extends IGameCreationActionHandler, IGameCtrlActionHandler
 {
 	/**
 	 * Create a game of the specified type.
@@ -44,21 +46,6 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 * @return the local game server.
 	 */
 	IGameServer getGameServer();
-
-	/**
-	 * Handle a {@link IGameCreationAction}.
-	 * 
-	 * @param client
-	 *            the client from which the game creation action is coming.
-	 * @param act
-	 *            the action to handle.
-	 * @throws InconsistentActionTypeException
-	 *             the type field of the {@link IGameCreationAction} and it's
-	 *             class are inconsistent.
-	 */
-	void handleGameCreationAction(final IGameClient client,
-			final IGameCreationAction act)
-			throws InconsistentActionTypeException;
 
 	/**
 	 * Handle a {@link IGameCtrlAction}.

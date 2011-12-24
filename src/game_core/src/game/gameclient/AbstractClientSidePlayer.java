@@ -12,6 +12,7 @@ import game.communication.event.gamecreation.GameCreatedCrEvent;
 import game.communication.event.gamectrl.GameDestroyedCrEvent;
 import game.communication.event.gamectrl.GameFullCrEvent;
 import game.communication.event.gamectrl.GameLeftCrEvent;
+import game.communication.event.gamectrl.IGameCtrlEventHandler;
 import game.communication.event.gamectrl.KickedFromGameCrEvent;
 import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
@@ -39,7 +40,8 @@ import java.util.List;
  */
 public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_OBSERVER extends IClientSidePlayerObserver>
 		implements
-		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>
+		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>,
+		IGameCtrlEventHandler
 {
 	/**
 	 * Id of the player.
@@ -272,14 +274,9 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 		}
 	}
 
-	/**
-	 * Handle a {@link ConfigurationUpdateCrEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
-	private void handleConfigurationUpdateCrEvent(
+	public void handleConfigurationUpdateCrEvent(
 			final ConfigurationUpdateCrEvent evt)
 	{
 		final IGameConfiguration<?> conf = evt.getGameConfiguration();
@@ -296,26 +293,14 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 		}
 	}
 
-	/**
-	 * Handle a {@link PlayerListUpdateCrEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 */
-	@SuppressWarnings("unused")
-	private void handlePlayerListUpdateCrEvent(final PlayerListUpdateCrEvent evt)
+	@Override
+	public void handlePlayerListUpdateCrEvent(final PlayerListUpdateCrEvent evt)
 	{
 		// TODO handlePlayerListUpdateCrEvent
 	}
 
-	/**
-	 * Handle a {@link GameCreatedCrEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleGameCreatedCrEvent(
-			@SuppressWarnings("unused") final GameCreatedCrEvent evt)
+	@Override
+	public void handleGameCreatedCrEvent(final GameCreatedCrEvent evt)
 	{
 		synchronized (_lock)
 		{
@@ -323,50 +308,26 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 		}
 	}
 
-	/**
-	 * Handle a {@link KickedFromGameCrEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleKickedFromGameCrEvent(
-			@SuppressWarnings("unused") final KickedFromGameCrEvent evt)
+	@Override
+	public void handleKickedFromGameCrEvent(final KickedFromGameCrEvent evt)
 	{
 		deleteClient();
 	}
 
-	/**
-	 * Handle a {@link GameLeftCrEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleGameLeftCrEvent(
-			@SuppressWarnings("unused") final GameLeftCrEvent evt)
+	@Override
+	public void handleGameLeftCrEvent(final GameLeftCrEvent evt)
 	{
 		deleteClient();
 	}
 
-	/**
-	 * Handle a {@link GameDestroyedCrEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleGameDestroyedCrEvent(
-			@SuppressWarnings("unused") final GameDestroyedCrEvent evt)
+	@Override
+	public void handleGameDestroyedCrEvent(final GameDestroyedCrEvent evt)
 	{
 		deleteClient();
 	}
 
-	/**
-	 * Handle a {@link GameFullCrEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 */
-	private void handleGameFullCrEvent(
-			@SuppressWarnings("unused") final GameFullCrEvent evt)
+	@Override
+	public void handleGameFullCrEvent(final GameFullCrEvent evt)
 	{
 		deleteClient();
 	}

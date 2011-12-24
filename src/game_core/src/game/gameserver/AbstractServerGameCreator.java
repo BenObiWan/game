@@ -363,15 +363,8 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 	}
 
-	/**
-	 * Handle a {@link IGameCreationAction}.
-	 * 
-	 * @param client
-	 *            the client from which the game creation action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleJoinGameCrAction(final IGameClient client,
+	@Override
+	public void handleJoinGameCrAction(final IGameClient client,
 			final JoinGameCrAction act)
 	{
 		IEvent evt;
@@ -401,15 +394,8 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 	}
 
-	/**
-	 * Handle a {@link LeaveGameCrAction}.
-	 * 
-	 * @param client
-	 *            the client from which the leave game action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleLeaveGameCrAction(final IGameClient client,
+	@Override
+	public void handleLeaveGameCrAction(final IGameClient client,
 			final LeaveGameCrAction act)
 	{
 		IEvent evt = null;
@@ -440,15 +426,8 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 	}
 
-	/**
-	 * Handle a {@link UpdateStatusCrAction}.
-	 * 
-	 * @param client
-	 *            the client from which the update status action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleUpdateStatusGameCrAction(final IGameClient client,
+	@Override
+	public void handleUpdateStatusGameCrAction(final IGameClient client,
 			final UpdateStatusCrAction act)
 	{
 		synchronized (_lock)
@@ -464,16 +443,9 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		sendPlayerListUpdate();
 	}
 
-	/**
-	 * Handle a {@link StartGameCrAction}.
-	 * 
-	 * @param client
-	 *            the client from which the start game.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleStartGameCrAction(final IGameClient client,
-			@SuppressWarnings("unused") final StartGameCrAction act)
+	@Override
+	public void handleStartGameCrAction(final IGameClient client,
+			final StartGameCrAction act)
 	{
 		synchronized (_lock)
 		{
@@ -497,30 +469,15 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 	}
 
-	/**
-	 * Handle a {@link KickPlayerCrAction}.
-	 * 
-	 * @param client
-	 *            the client from which the kick player action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	@SuppressWarnings("unused")
-	private void handleKickPlayerGameCrAction(final IGameClient client,
+	@Override
+	public void handleKickPlayerGameCrAction(final IGameClient client,
 			final KickPlayerCrAction act)
 	{
 		// TODO handleKickPlayerGameCrAction
 	}
 
-	/**
-	 * Handle a {@link AddAICrAction}.
-	 * 
-	 * @param client
-	 *            the client from which the add AI action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleAddAIGameCrAction(final IGameClient client,
+	@Override
+	public void handleAddAIGameCrAction(final IGameClient client,
 			final AddAICrAction act)
 	{
 		IEvent evt = null;
@@ -550,15 +507,8 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 	}
 
-	/**
-	 * Handle a {@link SendPlayerConfigurationGameCrAction}.
-	 * 
-	 * @param client
-	 *            the client from which the action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleSendPlayerConfigurationGameCrAction(
+	@Override
+	public void handleSendPlayerConfigurationGameCrAction(
 			final IGameClient client,
 			final SendPlayerConfigurationGameCrAction act)
 	{
@@ -573,16 +523,9 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		}
 	}
 
-	/**
-	 * Handle a {@link SendGameConfigurationGameCrAction}.
-	 * 
-	 * @param client
-	 *            the client from which the action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
 	@SuppressWarnings("unchecked")
-	private void handleSendGameConfigurationGameCrAction(
+	@Override
+	public void handleSendGameConfigurationGameCrAction(
 			final IGameClient client,
 			final SendGameConfigurationGameCrAction act)
 	{

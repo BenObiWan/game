@@ -1,10 +1,10 @@
 package game.gameserver;
 
 import game.common.IGameInstanceDescription;
-import game.communication.action.ICommonGameAction;
 import game.communication.action.IGameAction;
-import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
+import game.communication.action.game.IGameActionHandler;
+import game.communication.action.gamectrl.IGameCtrlActionHandler;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
@@ -24,7 +24,8 @@ import game.config.IPlayerConfiguration;
  *            the type of {@link IPlayerConfiguration}.
  */
 public interface IServerSideGame<ACTION_TYPE extends IGameAction, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IServerSidePlayer<PLAYER_CONF>>
-		extends Comparable<IServerSideGame<?, ?, ?, ?>>
+		extends Comparable<IServerSideGame<?, ?, ?, ?>>, IGameActionHandler,
+		IGameCtrlActionHandler
 {
 	/**
 	 * Get the id of this game.
@@ -46,34 +47,6 @@ public interface IServerSideGame<ACTION_TYPE extends IGameAction, CONF_TYPE exte
 	 */
 	void handleGameAction(final IServerSidePlayer<?> player,
 			final IGameAction act) throws InconsistentActionTypeException;
-
-	/**
-	 * Handle an {@link ICommonGameAction}.
-	 * 
-	 * @param player
-	 *            the player doing the action.
-	 * @param act
-	 *            the action to handle.
-	 * @throws InconsistentActionTypeException
-	 *             if the action type field and the class of the action object
-	 *             are inconsistent.
-	 */
-	void handleCommonGameAction(final IServerSidePlayer<?> player,
-			final ICommonGameAction act) throws InconsistentActionTypeException;
-
-	/**
-	 * Handle an {@link IGameCtrlAction}.
-	 * 
-	 * @param player
-	 *            the player doing the action.
-	 * @param act
-	 *            the action to handle.
-	 * @throws InconsistentActionTypeException
-	 *             the type field of the {@link IGameCtrlAction} and it's class
-	 *             are inconsistent.
-	 */
-	void handleGameCtrlAction(final IServerSidePlayer<?> player,
-			final IGameCtrlAction act) throws InconsistentActionTypeException;
 
 	/**
 	 * Get the description of this game.

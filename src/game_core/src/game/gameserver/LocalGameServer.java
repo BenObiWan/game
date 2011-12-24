@@ -13,6 +13,7 @@ import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.control.AskServerStateCtrlAction;
 import game.communication.action.control.CreateGameCtrlAction;
+import game.communication.action.control.IControlActionHandler;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.control.GameCreationStartedCtrlEvent;
 import game.communication.event.control.ServerStateCtrlEvent;
@@ -37,7 +38,8 @@ import org.slf4j.LoggerFactory;
  * @author benobiwan
  * 
  */
-public final class LocalGameServer implements IGameServer
+public final class LocalGameServer implements IGameServer,
+		IControlActionHandler
 {
 	/**
 	 * Logger object.
@@ -279,18 +281,8 @@ public final class LocalGameServer implements IGameServer
 		return true;
 	}
 
-	/**
-	 * Method handling all the control action.
-	 * 
-	 * @param client
-	 *            the client from which the control action is coming.
-	 * @param act
-	 *            the action to handle.
-	 * @throws InconsistentActionTypeException
-	 *             the type field of the {@link IControlAction} and it's class
-	 *             are inconsistent.
-	 */
-	private void handleControlAction(final IGameClient client,
+	@Override
+	public void handleControlAction(final IGameClient client,
 			final IControlAction act) throws InconsistentActionTypeException
 	{
 		switch (act.getType())
@@ -321,15 +313,8 @@ public final class LocalGameServer implements IGameServer
 		}
 	}
 
-	/**
-	 * Handle a {@link CreateGameCtrlAction}.
-	 * 
-	 * @param client
-	 *            the client from which the control action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleCreateGameCtrlAction(final IGameClient client,
+	@Override
+	public void handleCreateGameCtrlAction(final IGameClient client,
 			final CreateGameCtrlAction act)
 	{
 		// TODO check whether the user has the right to create a game.
@@ -358,15 +343,8 @@ public final class LocalGameServer implements IGameServer
 		}
 	}
 
-	/**
-	 * Handle a {@link AskServerStateCtrlAction}.
-	 * 
-	 * @param client
-	 *            the client from which the control action is coming.
-	 * @param act
-	 *            the action to handle.
-	 */
-	private void handleAskServerStateCtrlActionAction(final IGameClient client,
+	@Override
+	public void handleAskServerStateCtrlActionAction(final IGameClient client,
 			final AskServerStateCtrlAction act)
 	{
 		// listing the game as asked
