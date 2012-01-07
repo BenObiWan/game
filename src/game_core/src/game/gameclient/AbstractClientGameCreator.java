@@ -4,9 +4,19 @@ import game.common.IGameServer;
 import game.common.IPlayerDescription;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.gamecreation.UpdateStatusCrAction;
+import game.communication.event.GameCreationEventType;
+import game.communication.event.GameCtrlEventType;
 import game.communication.event.IGameCreationEvent;
+import game.communication.event.IGameCtrlEvent;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
+import game.communication.event.gamecreation.ConfigurationUpdateCrEvent;
+import game.communication.event.gamecreation.GameCreatedCrEvent;
+import game.communication.event.gamectrl.GameDestroyedCrEvent;
+import game.communication.event.gamectrl.GameFullCrEvent;
+import game.communication.event.gamectrl.GameLeftCrEvent;
+import game.communication.event.gamectrl.KickedFromGameCrEvent;
+import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
@@ -106,13 +116,6 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		{
 			return _bIsCreator;
 		}
-	}
-
-	@Override
-	public void handleGameCreationEvent(final IGameCreationEvent evt)
-			throws InconsistentEventTypeException
-	{
-		// TODO AbstractClientGameCreator handleGameCreationEvent
 	}
 
 	@Override
@@ -224,4 +227,149 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		_eventBus.register(o);
 	}
 
+	@Override
+	public void handleGameCtrlEvent(IGameCtrlEvent evt)
+			throws InconsistentEventTypeException
+	{
+		switch (evt.getType())
+		{
+		case PLAYER_LIST_UPDATE:
+			if (evt instanceof PlayerListUpdateCrEvent)
+			{
+				handlePlayerListUpdateCrEvent((PlayerListUpdateCrEvent) evt);
+			}
+			else
+			{
+				throw new InconsistentEventTypeException(
+						GameCtrlEventType.PLAYER_LIST_UPDATE, evt.getClass());
+			}
+			break;
+		case KICKED_FROM_GAME:
+			if (evt instanceof KickedFromGameCrEvent)
+			{
+				handleKickedFromGameCrEvent((KickedFromGameCrEvent) evt);
+			}
+			else
+			{
+				throw new InconsistentEventTypeException(
+						GameCtrlEventType.KICKED_FROM_GAME, evt.getClass());
+			}
+			break;
+		case GAME_LEFT:
+			if (evt instanceof GameLeftCrEvent)
+			{
+				handleGameLeftCrEvent((GameLeftCrEvent) evt);
+			}
+			else
+			{
+				throw new InconsistentEventTypeException(
+						GameCtrlEventType.GAME_LEFT, evt.getClass());
+			}
+			break;
+		case GAME_DESTROYED:
+			if (evt instanceof GameDestroyedCrEvent)
+			{
+				handleGameDestroyedCrEvent((GameDestroyedCrEvent) evt);
+			}
+			else
+			{
+				throw new InconsistentEventTypeException(
+						GameCtrlEventType.GAME_DESTROYED, evt.getClass());
+			}
+			break;
+		case GAME_FULL:
+			if (evt instanceof GameFullCrEvent)
+			{
+				handleGameFullCrEvent((GameFullCrEvent) evt);
+			}
+			else
+			{
+				throw new InconsistentEventTypeException(
+						GameCtrlEventType.GAME_FULL, evt.getClass());
+			}
+			break;
+		}
+	}
+
+	@Override
+	public void handleGameCreationEvent(IGameCreationEvent evt)
+			throws InconsistentEventTypeException
+	{
+		switch (evt.getType())
+		{
+		case CONFIGURATION_UPDATE:
+			if (evt instanceof ConfigurationUpdateCrEvent)
+			{
+				handleConfigurationUpdateCrEvent((ConfigurationUpdateCrEvent) evt);
+			}
+			else
+			{
+				throw new InconsistentEventTypeException(
+						GameCreationEventType.CONFIGURATION_UPDATE,
+						evt.getClass());
+			}
+			break;
+		case GAME_CREATED:
+			if (evt instanceof GameCreatedCrEvent)
+			{
+				handleGameCreatedCrEvent((GameCreatedCrEvent) evt);
+			}
+			else
+			{
+				throw new InconsistentEventTypeException(
+						GameCreationEventType.GAME_CREATED, evt.getClass());
+			}
+			break;
+
+		}
+	}
+
+	@Override
+	public void handleKickedFromGameCrEvent(KickedFromGameCrEvent evt)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleGameLeftCrEvent(GameLeftCrEvent evt)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleGameDestroyedCrEvent(GameDestroyedCrEvent evt)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleGameFullCrEvent(GameFullCrEvent evt)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handlePlayerListUpdateCrEvent(PlayerListUpdateCrEvent evt)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleConfigurationUpdateCrEvent(ConfigurationUpdateCrEvent evt)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleGameCreatedCrEvent(GameCreatedCrEvent evt)
+	{
+		// TODO Auto-generated method stub
+
+	}
 }
