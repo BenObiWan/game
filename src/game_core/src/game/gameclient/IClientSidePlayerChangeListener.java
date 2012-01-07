@@ -1,11 +1,16 @@
 package game.gameclient;
 
+import game.communication.event.IGameCreationEvent;
+import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.game.CantActCmnEvent;
 import game.communication.event.game.IGameEventHandler;
 import game.communication.event.game.TurnTimeoutCmnEvent;
 import game.communication.event.game.UnauthorizedActionCmnEvent;
 import game.communication.event.game.UnsupportedActionCmnEvent;
 import game.communication.event.game.YourTurnCmnEvent;
+import game.communication.event.gamecreation.ConfigurationUpdateCrEvent;
+import game.communication.event.gamecreation.GameCreatedCrEvent;
+import game.communication.event.gamecreation.IGameCreationEventHandler;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -17,7 +22,8 @@ import com.google.common.eventbus.Subscribe;
  * @author benobiwan
  * 
  */
-public interface IClientSidePlayerChangeListener extends IGameEventHandler
+public interface IClientSidePlayerChangeListener extends IGameEventHandler,
+		IGameCreationEventHandler
 {
 
 	@Override
@@ -39,4 +45,17 @@ public interface IClientSidePlayerChangeListener extends IGameEventHandler
 	@Override
 	@Subscribe
 	void handleUnsupportedActionCmnEvent(UnsupportedActionCmnEvent evt);
+
+	@Override
+	@Subscribe
+	void handleGameCreationEvent(final IGameCreationEvent evt)
+			throws InconsistentEventTypeException;
+
+	@Override
+	@Subscribe
+	void handleConfigurationUpdateCrEvent(final ConfigurationUpdateCrEvent evt);
+
+	@Override
+	@Subscribe
+	void handleGameCreatedCrEvent(final GameCreatedCrEvent evt);
 }
