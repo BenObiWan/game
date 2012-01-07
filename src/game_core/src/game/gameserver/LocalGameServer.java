@@ -136,6 +136,8 @@ public final class LocalGameServer implements IGameServer,
 			final IGameCreationAction action = (IGameCreationAction) act;
 			final IServerGameCreator<?, ?, ?, ?, ?> gameCreator = _gameInCreationList
 					.get(Integer.valueOf(action.getGameId()));
+			final IServerSidePlayer<?> player = client
+					.getServerSidePlayer(action.getPlayerId());
 			if (gameCreator == null)
 			{
 				LOGGER.error("Received a message from Client '"
@@ -144,9 +146,13 @@ public final class LocalGameServer implements IGameServer,
 						+ action.getGameId()
 						+ "' which doesn't exits or is no longer in creation.");
 			}
+			else if (player == null)
+			{
+				// TODO error in handleAction
+			}
 			else
 			{
-				gameCreator.handleGameCreationAction(client, action);
+				gameCreator.handleGameCreationAction(player, action);
 			}
 		}
 		else if (act instanceof IGameAction)
