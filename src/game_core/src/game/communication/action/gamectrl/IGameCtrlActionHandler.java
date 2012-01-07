@@ -1,5 +1,6 @@
 package game.communication.action.gamectrl;
 
+import game.common.IGameClient;
 import game.communication.action.IGameCreationAction;
 import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
@@ -15,6 +16,8 @@ public interface IGameCtrlActionHandler
 	/**
 	 * Handle an {@link IGameCtrlAction}.
 	 * 
+	 * @param client
+	 *            the player from which the game creation action is coming.
 	 * @param player
 	 *            the player doing the action.
 	 * @param act
@@ -23,8 +26,9 @@ public interface IGameCtrlActionHandler
 	 *             the type field of the {@link IGameCtrlAction} and it's class
 	 *             are inconsistent.
 	 */
-	void handleGameCtrlAction(final IServerSidePlayer<?> player,
-			final IGameCtrlAction act) throws InconsistentActionTypeException;
+	void handleGameCtrlAction(final IGameClient client,
+			final IServerSidePlayer<?> player, final IGameCtrlAction act)
+			throws InconsistentActionTypeException;
 
 	/**
 	 * Handle a {@link AddAICrAction}.
@@ -40,12 +44,12 @@ public interface IGameCtrlActionHandler
 	/**
 	 * Handle a {@link IGameCreationAction}.
 	 * 
-	 * @param player
+	 * @param client
 	 *            the player from which the game creation action is coming.
 	 * @param act
 	 *            the action to handle.
 	 */
-	void handleJoinGameCrAction(final IServerSidePlayer<?> player,
+	void handleJoinGameCrAction(final IGameClient client,
 			final JoinGameCrAction act);
 
 	/**

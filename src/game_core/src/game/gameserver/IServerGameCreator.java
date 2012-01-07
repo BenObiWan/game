@@ -4,8 +4,6 @@ import game.common.IGameClient;
 import game.common.IGameInstanceDescription;
 import game.common.IGameServer;
 import game.communication.action.IGameAction;
-import game.communication.action.IGameCtrlAction;
-import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.gamecreation.IGameCreationActionHandler;
 import game.communication.action.gamectrl.IGameCtrlActionHandler;
 import game.communication.event.gamecreation.ConfigurationUpdateCrEvent;
@@ -46,20 +44,6 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 * @return the local game server.
 	 */
 	IGameServer getGameServer();
-
-	/**
-	 * Handle a {@link IGameCtrlAction}.
-	 * 
-	 * @param client
-	 *            the client from which the game control action is coming.
-	 * @param act
-	 *            the action to handle.
-	 * @throws InconsistentActionTypeException
-	 *             the type field of the {@link IGameCtrlAction} and it's class
-	 *             are inconsistent.
-	 */
-	void handleGameCtrlAction(final IGameClient client,
-			final IGameCtrlAction act) throws InconsistentActionTypeException;
 
 	/**
 	 * Get the id of the game which will be created by this

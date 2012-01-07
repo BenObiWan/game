@@ -118,13 +118,16 @@ public final class LocalGameServer implements IGameServer,
 					.get(Integer.valueOf(action.getGameId()));
 			final IServerSideGame<?, ?, ?, ?> game = _gameList.get(Integer
 					.valueOf(action.getGameId()));
+			// don't check for null player because of join game action
+			final IServerSidePlayer<?> player = client
+					.getServerSidePlayer(action.getPlayerId());
 			if (gameCreator == null && game == null)
 			{
 				// TODO error in handleAction
 			}
 			else if (gameCreator != null)
 			{
-				gameCreator.handleGameCtrlAction(client, action);
+				gameCreator.handleGameCtrlAction(client, player, action);
 			}
 			else
 			{

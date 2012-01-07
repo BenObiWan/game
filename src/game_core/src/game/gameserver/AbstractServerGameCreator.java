@@ -255,7 +255,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	}
 
 	@Override
-	public void handleGameCreationAction(final IGameClient client,
+	public void handleGameCreationAction(final IServerSidePlayer<?> player,
 			final IGameCreationAction act)
 			throws InconsistentActionTypeException
 	{
@@ -264,7 +264,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		case UPDATE_STATUS:
 			if (act instanceof UpdateStatusCrAction)
 			{
-				handleUpdateStatusGameCrAction(client,
+				handleUpdateStatusGameCrAction(player,
 						(UpdateStatusCrAction) act);
 			}
 			else
@@ -276,7 +276,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		case START_GAME:
 			if (act instanceof StartGameCrAction)
 			{
-				handleStartGameCrAction(client, (StartGameCrAction) act);
+				handleStartGameCrAction(player, (StartGameCrAction) act);
 			}
 			else
 			{
@@ -287,7 +287,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		case SEND_PLAYER_CONF:
 			if (act instanceof SendPlayerConfigurationGameCrAction)
 			{
-				handleSendPlayerConfigurationGameCrAction(client,
+				handleSendPlayerConfigurationGameCrAction(player,
 						(SendPlayerConfigurationGameCrAction) act);
 			}
 			else
@@ -299,7 +299,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		case SEND_GAME_CONF:
 			if (act instanceof SendGameConfigurationGameCrAction)
 			{
-				handleSendGameConfigurationGameCrAction(client,
+				handleSendGameConfigurationGameCrAction(player,
 						(SendGameConfigurationGameCrAction) act);
 			}
 			else
@@ -313,11 +313,12 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 
 	@Override
 	public void handleGameCtrlAction(final IGameClient client,
-			final IGameCtrlAction act) throws InconsistentActionTypeException
+			final IServerSidePlayer<?> player, final IGameCtrlAction act)
+			throws InconsistentActionTypeException
 	{
-		switch (act.getType())
+		// JOIN_GAME doesn't need to check for null player
+		if (act.getType().equals(GameCtrlActionType.JOIN_GAME))
 		{
-		case JOIN_GAME:
 			if (act instanceof JoinGameCrAction)
 			{
 				handleJoinGameCrAction(client, (JoinGameCrAction) act);
@@ -327,38 +328,48 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 				throw new InconsistentActionTypeException(
 						GameCtrlActionType.JOIN_GAME, act.getClass());
 			}
-			break;
-		case LEAVE_GAME:
-			if (act instanceof LeaveGameCrAction)
+		}
+		else
+		{
+			// TODO check if player is null
+			switch (act.getType())
 			{
-				handleLeaveGameCrAction(client, (LeaveGameCrAction) act);
-			}
-			else
-			{
-				throw new InconsistentActionTypeException(
-						GameCtrlActionType.LEAVE_GAME, act.getClass());
-			}
-			break;
-		case KICK_PLAYER:
-			if (act instanceof KickPlayerCrAction)
-			{
-				handleKickPlayerGameCrAction(client, (KickPlayerCrAction) act);
-			}
-			else
-			{
-				throw new InconsistentActionTypeException(
-						GameCtrlActionType.KICK_PLAYER, act.getClass());
-			}
-			break;
-		case ADD_AI:
-			if (act instanceof AddAICrAction)
-			{
-				handleAddAIGameCrAction(client, (AddAICrAction) act);
-			}
-			else
-			{
-				throw new InconsistentActionTypeException(
-						GameCtrlActionType.ADD_AI, act.getClass());
+			case LEAVE_GAME:
+				if (act instanceof LeaveGameCrAction)
+				{
+					handleLeaveGameCrAction(player, (LeaveGameCrAction) act);
+				}
+				else
+				{
+					throw new InconsistentActionTypeException(
+							GameCtrlActionType.LEAVE_GAME, act.getClass());
+				}
+				break;
+			case KICK_PLAYER:
+				if (act instanceof KickPlayerCrAction)
+				{
+					handleKickPlayerGameCrAction(player,
+							(KickPlayerCrAction) act);
+				}
+				else
+				{
+					throw new InconsistentActionTypeException(
+							GameCtrlActionType.KICK_PLAYER, act.getClass());
+				}
+				break;
+			case ADD_AI:
+				if (act instanceof AddAICrAction)
+				{
+					handleAddAIGameCrAction(player, (AddAICrAction) act);
+				}
+				else
+				{
+					throw new InconsistentActionTypeException(
+							GameCtrlActionType.ADD_AI, act.getClass());
+				}
+				break;
+			case JOIN_GAME:
+				break;
 			}
 		}
 	}
@@ -395,30 +406,24 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	}
 
 	@Override
-	public void handleLeaveGameCrAction(final IGameClient client,
+	public void handleLeaveGameCrAction(final IServerSidePlayer<?> player,
 			final LeaveGameCrAction act)
 	{
 		IEvent evt = null;
+		final IGameClient client = player.getClient();
+
 		synchronized (_lock)
 		{
-			final IServerSidePlayer<?> player = client.getServerSidePlayer(act
-					.getPlayerId());
-			if (player != null)
+			removePlayer(player, client);
+			if (player.equals(_creatorPlayer))
 			{
-				removePlayer(player, client);
-				if (player.equals(_creatorPlayer))
-				{
-					// TODO destroy the game
-				}
-				evt = new GameLeftCrEvent(_iGameId, act.getPlayerId());
+				// TODO destroy the game
 			}
+			evt = new GameLeftCrEvent(_iGameId, act.getPlayerId());
 		}
 		try
 		{
-			if (evt != null)
-			{
-				client.handleEvent(getGameServer(), evt);
-			}
+			client.handleEvent(getGameServer(), evt);
 		}
 		catch (final InconsistentEventTypeException e)
 		{
@@ -427,60 +432,54 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	}
 
 	@Override
-	public void handleUpdateStatusGameCrAction(final IGameClient client,
-			final UpdateStatusCrAction act)
+	public void handleUpdateStatusGameCrAction(
+			final IServerSidePlayer<?> player, final UpdateStatusCrAction act)
 	{
 		synchronized (_lock)
 		{
-			for (final PLAYER_TYPE player : _playerList)
-			{
-				if (client.containServerSidePlayer(player))
-				{
-					player.setReady(act.isReady());
-				}
-			}
+			player.setReady(act.isReady());
 		}
 		sendPlayerListUpdate();
 	}
 
 	@Override
-	public void handleStartGameCrAction(final IGameClient client,
+	public void handleStartGameCrAction(final IServerSidePlayer<?> player,
 			final StartGameCrAction act)
 	{
 		synchronized (_lock)
 		{
 			// check if the client is the creator
-			if (_creatorPlayer.equals(client.getServerSidePlayer(_creatorPlayer
-					.getId())))
+			if (_creatorPlayer.equals(player))
 			{
 				// set the creator player ready
 				_creatorPlayer.setReady(true);
 				// check if every player is ready
 				boolean bReady = true;
-				for (final PLAYER_TYPE player : _playerList)
+				for (final PLAYER_TYPE playerList : _playerList)
 				{
-					bReady &= player.isReady();
+					bReady &= playerList.isReady();
 				}
 				if (bReady)
 				{
-
+					// TODO start game
 				}
 			}
 		}
 	}
 
 	@Override
-	public void handleKickPlayerGameCrAction(final IGameClient client,
+	public void handleKickPlayerGameCrAction(final IServerSidePlayer<?> player,
 			final KickPlayerCrAction act)
 	{
 		// TODO handleKickPlayerGameCrAction
 	}
 
 	@Override
-	public void handleAddAIGameCrAction(final IGameClient client,
+	public void handleAddAIGameCrAction(final IServerSidePlayer<?> player,
 			final AddAICrAction act)
 	{
 		IEvent evt = null;
+		final IGameClient client = player.getClient();
 		synchronized (_lock)
 		{
 			if (isFull())
@@ -490,9 +489,9 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			// TODO check if the client has the right to create an AI.
 			else
 			{
-				final PLAYER_TYPE player = createAI(client, act.getAIId(),
+				final PLAYER_TYPE aiPlayer = createAI(client, act.getAIId(),
 						act.getName());
-				addPlayer(player, client);
+				addPlayer(aiPlayer, client);
 				evt = new GameJoinedCtrlEvent(_iGameId, act.getAIId(),
 						getClientGameCreator());
 			}
@@ -509,31 +508,25 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 
 	@Override
 	public void handleSendPlayerConfigurationGameCrAction(
-			final IGameClient client,
+			final IServerSidePlayer<?> player,
 			final SendPlayerConfigurationGameCrAction act)
 	{
 		synchronized (_lock)
 		{
-			final IServerSidePlayer<?> player = client.getServerSidePlayer(act
-					.getPlayerId());
-			if (player != null)
-			{
-				player.setPlayerConfiguration(act.getPlayerConfiguration());
-			}
+			player.setPlayerConfiguration(act.getPlayerConfiguration());
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void handleSendGameConfigurationGameCrAction(
-			final IGameClient client,
+			final IServerSidePlayer<?> player,
 			final SendGameConfigurationGameCrAction act)
 	{
 		synchronized (_lock)
 		{
 			// check if the client is the creator
-			if (_creatorPlayer.equals(client.getServerSidePlayer(_creatorPlayer
-					.getId())))
+			if (_creatorPlayer.equals(player))
 			{
 				final IGameConfiguration<?> conf = act.getGameConfiguration();
 				if (conf != null)
