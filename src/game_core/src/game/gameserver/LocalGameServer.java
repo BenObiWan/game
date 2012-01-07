@@ -151,7 +151,11 @@ public final class LocalGameServer implements IGameServer,
 			}
 			else if (player == null)
 			{
-				// TODO error in handleAction
+				LOGGER.error("Received a message from Client '"
+						+ client.getName()
+						+ "' concerning a game in creation id '"
+						+ action.getGameId() + "' and the player id '"
+						+ action.getPlayerId() + "' which doesn't exists.");
 			}
 			else
 			{
@@ -343,7 +347,6 @@ public final class LocalGameServer implements IGameServer,
 			try
 			{
 				client.handleEvent(this, event);
-				gameCreator.sendPlayerListUpdate();
 			}
 			catch (final InconsistentEventTypeException e)
 			{
