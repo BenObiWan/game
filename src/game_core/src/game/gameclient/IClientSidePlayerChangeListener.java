@@ -25,7 +25,6 @@ import com.google.common.eventbus.Subscribe;
 public interface IClientSidePlayerChangeListener extends IGameEventHandler,
 		IGameCreationEventHandler
 {
-
 	@Override
 	@Subscribe
 	void handleYourTurnCmnEvent(final YourTurnCmnEvent evt);

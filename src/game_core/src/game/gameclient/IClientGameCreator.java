@@ -2,9 +2,9 @@ package game.gameclient;
 
 import game.common.IGameServer;
 import game.common.IPlayerDescription;
-import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameEvent;
-import game.communication.event.InconsistentEventTypeException;
+import game.communication.event.gamecreation.IGameCreationEventHandler;
+import game.communication.event.gamectrl.IGameCtrlEventHandler;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
@@ -30,6 +30,7 @@ import java.util.Set;
  *            player.
  */
 public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
+		extends IGameCreationEventHandler, IGameCtrlEventHandler
 {
 	/**
 	 * Create a game of the specified type and the specified server.
@@ -44,18 +45,6 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return true if the local client is the creator of this game.
 	 */
 	boolean isCreator();
-
-	/**
-	 * Handle a {@link IGameCreationEvent}.
-	 * 
-	 * @param evt
-	 *            the event to handle.
-	 * @throws InconsistentEventTypeException
-	 *             the type field of the {@link IGameCreationEvent} and it's
-	 *             class are inconsistent.
-	 */
-	void handleGameCreationEvent(final IGameCreationEvent evt)
-			throws InconsistentEventTypeException;
 
 	/**
 	 * Get the game server hosting this game.
