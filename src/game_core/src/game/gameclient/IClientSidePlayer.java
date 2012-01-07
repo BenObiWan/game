@@ -4,7 +4,9 @@ import game.common.IGameServer;
 import game.common.IPlayer;
 import game.communication.event.IGameEvent;
 import game.communication.event.InconsistentEventTypeException;
+import game.communication.event.game.IGameEventHandler;
 import game.communication.event.gamecreation.IGameCreationEventHandler;
+import game.communication.event.gamectrl.IGameCtrlEventHandler;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
@@ -23,7 +25,8 @@ import game.config.IPlayerConfiguration;
  *            the type of player configuration.
  */
 public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_OBSERVER extends IClientSidePlayerObserver>
-		extends IPlayer<PLAYER_CONF>, IGameCreationEventHandler
+		extends IPlayer<PLAYER_CONF>, IGameCreationEventHandler,
+		IGameEventHandler, IGameCtrlEventHandler
 {
 	/**
 	 * Get the {@link IClientSideGame} where this {@link IClientSidePlayer} is
