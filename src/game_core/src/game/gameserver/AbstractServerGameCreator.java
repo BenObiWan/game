@@ -516,6 +516,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		{
 			player.setPlayerConfiguration(act.getPlayerConfiguration());
 		}
+		sendPlayerListUpdate();
 	}
 
 	@SuppressWarnings("unchecked")
