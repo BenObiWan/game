@@ -23,8 +23,11 @@ import game.config.IPlayerConfiguration;
  *            the type of {@link IGameEvent} handled by the game.
  * @param <PLAYER_CONF>
  *            the type of player configuration.
+ * @param <CLIENT_CHANGE_LISTENER>
+ *            the type of {@link IClientSidePlayerChangeListener} for this
+ *            player.
  */
-public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_OBSERVER extends IClientSidePlayerObserver>
+public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
 		extends IPlayer<PLAYER_CONF>, IGameCreationEventHandler,
 		IGameEventHandler, IGameCtrlEventHandler
 {
@@ -79,5 +82,5 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 */
 	IGameServer getServer();
 
-	void addObserver(CLIENT_OBSERVER o);
+	void registerClientChangeListener(CLIENT_CHANGE_LISTENER o);
 }

@@ -11,11 +11,12 @@ import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
 import java.util.Collections;
-import java.util.Observable;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.eventbus.EventBus;
 
 /**
  * Abstract implementation of the {@link IClientGameCreator} interface. Used on
@@ -33,11 +34,13 @@ import org.slf4j.LoggerFactory;
  *            the type of {@link IClientSidePlayer} playing this game.
  * @param <PLAYER_CONF>
  *            the type of player configuration.
+ * @param <CLIENT_CHANGE_LISTENER>
+ *            the type of {@link IClientSidePlayerChangeListener} for this game
+ *            creator.
  */
-public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>, CLIENT_OBSERVER extends IClientSidePlayerObserver>
-		extends Observable
+public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
 		implements
-		IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, PLAYER_TYPE, CLIENT_OBSERVER>
+		IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, PLAYER_TYPE, CLIENT_CHANGE_LISTENER>
 {
 	/**
 	 * Logger object.
@@ -89,6 +92,12 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	 * Boolean telling whether of not this player is ready.
 	 */
 	protected transient boolean _bReady;
+
+	/**
+	 * {@link EventBus} used to propagates events to all change listener of this
+	 * game creator.
+	 */
+	protected final EventBus _eventBus = new EventBus();
 
 	@Override
 	public boolean isCreator()
@@ -163,8 +172,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		synchronized (_lock)
 		{
 			_conf = gameConfiguration;
-			setChanged();
-			notifyObservers();
+			// _eventBus.
 		}
 	}
 
@@ -174,8 +182,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		synchronized (_lock)
 		{
 			_playerList = playerList;
-			setChanged();
-			notifyObservers();
+			// _eventBus.
 		}
 	}
 
@@ -209,4 +216,12 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 			}
 		}
 	}
+
+	@Override
+	public void registerGameCreatorChangeListener(
+			final IGameCreatorChangeListener o)
+	{
+		_eventBus.register(o);
+	}
+
 }

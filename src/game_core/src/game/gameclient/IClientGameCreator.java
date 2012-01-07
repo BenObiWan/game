@@ -8,7 +8,6 @@ import game.communication.event.InconsistentEventTypeException;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
-import java.util.Observer;
 import java.util.Set;
 
 /**
@@ -26,8 +25,11 @@ import java.util.Set;
  *            the type of {@link IClientSidePlayer} playing this game.
  * @param <PLAYER_CONF>
  *            the type of player {@link IPlayerConfiguration}.
+ * @param <CLIENT_CHANGE_LISTENER>
+ *            the type of {@link IClientSidePlayerChangeListener} for this
+ *            player.
  */
-public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>, CLIENT_OBSERVER extends IClientSidePlayerObserver>
+public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
 {
 	/**
 	 * Create a game of the specified type and the specified server.
@@ -119,7 +121,7 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 */
 	PLAYER_TYPE createPlayer(LocalGameClient _locGameClient, int iPlayerId);
 
-	void addObserver(Observer o);
+	void registerGameCreatorChangeListener(IGameCreatorChangeListener o);
 
 	/**
 	 * Creates a new {@link IPlayerConfiguration} for one of the player of this

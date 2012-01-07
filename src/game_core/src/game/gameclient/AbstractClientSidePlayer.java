@@ -17,8 +17,7 @@ import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.google.common.eventbus.EventBus;
 
 /**
  * Abstract implementation of the {@link IClientSidePlayer} interface.
@@ -36,10 +35,13 @@ import java.util.List;
  *            the type of client.
  * @param <PLAYER_CONF>
  *            the type of {@link IPlayerConfiguration}.
+ * @param <CLIENT_CHANGE_LISTENER>
+ *            the type of {@link IClientSidePlayerChangeListener} for this
+ *            player.
  */
-public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_OBSERVER extends IClientSidePlayerObserver>
+public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
 		implements
-		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>
+		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>
 {
 	/**
 	 * Id of the player.
@@ -59,7 +61,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	/**
 	 * The game in creation the client joined.
 	 */
-	protected final IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_OBSERVER> _gameCreator;
+	protected final IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_CHANGE_LISTENER> _gameCreator;
 
 	/**
 	 * The configuration of the game.
@@ -88,9 +90,10 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	protected final LocalGameClient _localGameClient;
 
 	/**
-	 * List of {@link IClientSidePlayerObserver}.
+	 * {@link EventBus} used to propagates events to all change listener of this
+	 * player.
 	 */
-	protected final List<CLIENT_OBSERVER> _observerList = new LinkedList<CLIENT_OBSERVER>();
+	protected final EventBus _eventBus = new EventBus();
 
 	/**
 	 * Creates a new AbstractClientSidePlayer.
@@ -111,7 +114,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 			final String strName,
 			final IGameServer server,
 			final LocalGameClient localGameClient,
-			final IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_OBSERVER> gameCreator)
+			final IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_TYPE, CLIENT_CHANGE_LISTENER> gameCreator)
 	{
 		_iPlayerId = iPlayerId;
 		_strName = strName;
@@ -348,9 +351,9 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	}
 
 	@Override
-	public void addObserver(final CLIENT_OBSERVER o)
+	public void registerClientChangeListener(final CLIENT_CHANGE_LISTENER o)
 	{
-		_observerList.add(o);
+		_eventBus.register(o);
 	}
 
 	@SuppressWarnings("unchecked")

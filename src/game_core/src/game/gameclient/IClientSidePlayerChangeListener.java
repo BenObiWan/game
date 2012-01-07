@@ -6,7 +6,17 @@ import game.communication.event.game.UnauthorizedActionCmnEvent;
 import game.communication.event.game.UnsupportedActionCmnEvent;
 import game.communication.event.game.YourTurnCmnEvent;
 
-public interface IClientSidePlayerObserver
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+
+/**
+ * Interface describing a change listener of client side event. Uses
+ * {@link EventBus}.
+ * 
+ * @author benobiwan
+ * 
+ */
+public interface IClientSidePlayerChangeListener
 {
 	/**
 	 * Handle a {@link YourTurnCmnEvent}.
@@ -14,6 +24,7 @@ public interface IClientSidePlayerObserver
 	 * @param evt
 	 *            the {@link YourTurnCmnEvent} to handle.
 	 */
+	@Subscribe
 	void handleYourTurnCmnEvent(final YourTurnCmnEvent evt);
 
 	/**
@@ -22,6 +33,7 @@ public interface IClientSidePlayerObserver
 	 * @param evt
 	 *            the {@link TurnTimeoutCmnEvent} to handle.
 	 */
+	@Subscribe
 	void handleTurnTimeoutCmnEvent(TurnTimeoutCmnEvent evt);
 
 	/**
@@ -30,6 +42,7 @@ public interface IClientSidePlayerObserver
 	 * @param evt
 	 *            the {@link UnauthorizedActionCmnEvent} to handle.
 	 */
+	@Subscribe
 	void handleUnauthorizedActionCmnEvent(UnauthorizedActionCmnEvent evt);
 
 	/**
@@ -38,6 +51,7 @@ public interface IClientSidePlayerObserver
 	 * @param evt
 	 *            the {@link CantActCmnEvent} to handle.
 	 */
+	@Subscribe
 	void handleCanActCmnEvent(CantActCmnEvent evt);
 
 	/**
@@ -46,5 +60,6 @@ public interface IClientSidePlayerObserver
 	 * @param evt
 	 *            the {@link UnsupportedActionCmnEvent} to handle.
 	 */
+	@Subscribe
 	void handleUnsupportedActionCmnEvent(UnsupportedActionCmnEvent evt);
 }

@@ -1,13 +1,15 @@
 package game.core.swing;
 
+import game.common.IPlayerDescription;
+import game.config.IGameConfiguration;
 import game.gameclient.IClientGameCreator;
+import game.gameclient.IGameCreatorChangeListener;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,7 +22,8 @@ import common.config.swing.ConfigurationPanel;
  * @author benobiwan
  * 
  */
-public final class GameCreationPanel extends JPanel implements Observer
+public final class GameCreationPanel extends JPanel implements
+		IGameCreatorChangeListener
 {
 	/**
 	 * serialVersionUID for Serialization.
@@ -64,7 +67,7 @@ public final class GameCreationPanel extends JPanel implements Observer
 		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration(),
 				false);
 		_playerListPanel = new PlayerListPanel();
-		_gameCreator.addObserver(this);
+		_gameCreator.registerGameCreatorChangeListener(this);
 		_bCreator = _gameCreator.isCreator();
 		String strCreate, strLeave;
 
@@ -92,13 +95,15 @@ public final class GameCreationPanel extends JPanel implements Observer
 	}
 
 	@Override
-	public void update(final Observable o, final Object arg)
+	public void setConfiguration(final IGameConfiguration<?> gameConfiguration)
 	{
-		if (_gameCreator.equals(o))
-		{
-			_playerListPanel.updatePlayerList(_gameCreator
-					.getClientSidePlayerList());
-		}
+		_confPanel.setConfiguration(gameConfiguration);
+	}
+
+	@Override
+	public void setClientSidePlayerList(final Set<IPlayerDescription> playerList)
+	{
+		_playerListPanel.updatePlayerList(playerList);
 	}
 
 	/**
