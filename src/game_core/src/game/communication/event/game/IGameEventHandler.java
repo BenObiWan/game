@@ -32,7 +32,7 @@ public interface IGameEventHandler
 	 * @param evt
 	 *            the {@link UnauthorizedActionCmnEvent} to handle.
 	 */
-	void handleTurnTimeoutCmnEvent(final UnauthorizedActionCmnEvent evt);
+	void handleUnauthorizedActionCmnEvent(final UnauthorizedActionCmnEvent evt);
 
 	/**
 	 * Handle a {@link CantActCmnEvent}.
