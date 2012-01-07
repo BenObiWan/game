@@ -110,8 +110,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			_gameServer = gameServer;
 			_iGameId = iGameId;
 			_creatorPlayer = createPlayer(creatorClient, iCreatorPlayerId);
-			_playerList.add(_creatorPlayer);
-			_clientList.add(creatorClient);
+			addPlayer(_creatorPlayer, creatorClient);
 			_gameDescription = createGameDescription();
 		}
 	}
@@ -210,7 +209,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		client.addServerSidePlayer(player);
 		_playerList.add(player);
 		_clientList.add(client);
-		_gameDescription.setNumberOfPlayer(_playerList.size());
+		client.addServerSidePlayer(player);
 	}
 
 	@Override
@@ -390,6 +389,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 				final PLAYER_TYPE player = createPlayer(client,
 						act.getPlayerId());
 				addPlayer(player, client);
+				_gameDescription.setNumberOfPlayer(_playerList.size());
 				evt = new GameJoinedCtrlEvent(_iGameId, act.getPlayerId(),
 						getClientGameCreator());
 			}
@@ -492,6 +492,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 				final PLAYER_TYPE aiPlayer = createAI(client, act.getAIId(),
 						act.getName());
 				addPlayer(aiPlayer, client);
+				_gameDescription.setNumberOfPlayer(_playerList.size());
 				evt = new GameJoinedCtrlEvent(_iGameId, act.getAIId(),
 						getClientGameCreator());
 			}
