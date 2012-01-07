@@ -1,6 +1,7 @@
 package game.gameclient;
 
 import game.communication.event.game.CantActCmnEvent;
+import game.communication.event.game.IGameEventHandler;
 import game.communication.event.game.TurnTimeoutCmnEvent;
 import game.communication.event.game.UnauthorizedActionCmnEvent;
 import game.communication.event.game.UnsupportedActionCmnEvent;
@@ -16,50 +17,26 @@ import com.google.common.eventbus.Subscribe;
  * @author benobiwan
  * 
  */
-public interface IClientSidePlayerChangeListener
+public interface IClientSidePlayerChangeListener extends IGameEventHandler
 {
-	/**
-	 * Handle a {@link YourTurnCmnEvent}.
-	 * 
-	 * @param evt
-	 *            the {@link YourTurnCmnEvent} to handle.
-	 */
+
+	@Override
 	@Subscribe
 	void handleYourTurnCmnEvent(final YourTurnCmnEvent evt);
 
-	/**
-	 * Handle a {@link TurnTimeoutCmnEvent}.
-	 * 
-	 * @param evt
-	 *            the {@link TurnTimeoutCmnEvent} to handle.
-	 */
+	@Override
 	@Subscribe
 	void handleTurnTimeoutCmnEvent(TurnTimeoutCmnEvent evt);
 
-	/**
-	 * Handle a {@link UnauthorizedActionCmnEvent}.
-	 * 
-	 * @param evt
-	 *            the {@link UnauthorizedActionCmnEvent} to handle.
-	 */
+	@Override
 	@Subscribe
 	void handleUnauthorizedActionCmnEvent(UnauthorizedActionCmnEvent evt);
 
-	/**
-	 * Handle a {@link CantActCmnEvent}.
-	 * 
-	 * @param evt
-	 *            the {@link CantActCmnEvent} to handle.
-	 */
+	@Override
 	@Subscribe
 	void handleCanActCmnEvent(CantActCmnEvent evt);
 
-	/**
-	 * Handle a {@link UnsupportedActionCmnEvent}.
-	 * 
-	 * @param evt
-	 *            the {@link UnsupportedActionCmnEvent} to handle.
-	 */
+	@Override
 	@Subscribe
 	void handleUnsupportedActionCmnEvent(UnsupportedActionCmnEvent evt);
 }
