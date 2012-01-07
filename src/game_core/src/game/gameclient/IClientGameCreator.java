@@ -121,6 +121,12 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 */
 	PLAYER_TYPE createPlayer(LocalGameClient _locGameClient, int iPlayerId);
 
+	/**
+	 * Register a new {@link IGameCreatorChangeListener}.
+	 * 
+	 * @param o
+	 *            the {@link IGameCreatorChangeListener} to register.
+	 */
 	void registerGameCreatorChangeListener(IGameCreatorChangeListener o);
 
 	/**

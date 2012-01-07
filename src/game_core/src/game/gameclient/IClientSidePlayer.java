@@ -82,5 +82,11 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 */
 	IGameServer getServer();
 
+	/**
+	 * register a new {@link IClientSidePlayerChangeListener}.
+	 * 
+	 * @param o
+	 *            the new new {@link IClientSidePlayerChangeListener}.
+	 */
 	void registerClientChangeListener(CLIENT_CHANGE_LISTENER o);
 }
