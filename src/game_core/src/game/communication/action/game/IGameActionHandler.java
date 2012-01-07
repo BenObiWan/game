@@ -25,4 +25,15 @@ public interface IGameActionHandler
 	 */
 	void handleCommonGameAction(final IServerSidePlayer<?> player,
 			final ICommonGameAction act) throws InconsistentActionTypeException;
+
+	/**
+	 * Handle a {@link EndTurnCmnAction}.
+	 * 
+	 * @param player
+	 *            the player doing the action.
+	 * @param act
+	 *            the action to handle.
+	 */
+	void handleEndTurnCmnAction(final IServerSidePlayer<?> player,
+			final EndTurnCmnAction act);
 }

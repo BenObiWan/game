@@ -1,11 +1,18 @@
 package game.gameserver;
 
+import game.common.IGameClient;
 import game.common.IGameServer;
 import game.communication.action.CommonGameActionType;
+import game.communication.action.GameCtrlActionType;
 import game.communication.action.ICommonGameAction;
 import game.communication.action.IGameAction;
+import game.communication.action.IGameCtrlAction;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.game.EndTurnCmnAction;
+import game.communication.action.gamectrl.AddAICrAction;
+import game.communication.action.gamectrl.JoinGameCrAction;
+import game.communication.action.gamectrl.KickPlayerCrAction;
+import game.communication.action.gamectrl.LeaveGameCrAction;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
@@ -119,7 +126,7 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 		case END_TURN:
 			if (act instanceof EndTurnCmnAction)
 			{
-				handleAction(player, (EndTurnCmnAction) act);
+				handleEndTurnCmnAction(player, (EndTurnCmnAction) act);
 			}
 			else
 			{
@@ -146,20 +153,72 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 		// TODO AbstractServerSideGame handleUnsupportedCommonAction
 	}
 
-	/**
-	 * Handle a {@link EndTurnCmnAction}.
-	 * 
-	 * @param player
-	 *            the player doing the action.
-	 * @param act
-	 *            the action to handle.
-	 */
-	public abstract void handleAction(final IServerSidePlayer<?> player,
-			final EndTurnCmnAction act);
-
 	@Override
 	public boolean isInThisGame(final IServerSidePlayer<?> player)
 	{
 		return _playerList.contains(player);
+	}
+
+	@Override
+	public void handleGameCtrlAction(final IGameClient client,
+			final IServerSidePlayer<?> player, final IGameCtrlAction act)
+			throws InconsistentActionTypeException
+	{
+		// JOIN_GAME doesn't need to check for null player
+		if (act.getType().equals(GameCtrlActionType.JOIN_GAME))
+		{
+			if (act instanceof JoinGameCrAction)
+			{
+				handleJoinGameCrAction(client, (JoinGameCrAction) act);
+			}
+			else
+			{
+				throw new InconsistentActionTypeException(
+						GameCtrlActionType.JOIN_GAME, act.getClass());
+			}
+		}
+		else
+		{
+			// TODO check if player is null
+			switch (act.getType())
+			{
+			case LEAVE_GAME:
+				if (act instanceof LeaveGameCrAction)
+				{
+					handleLeaveGameCrAction(player, (LeaveGameCrAction) act);
+				}
+				else
+				{
+					throw new InconsistentActionTypeException(
+							GameCtrlActionType.LEAVE_GAME, act.getClass());
+				}
+				break;
+			case KICK_PLAYER:
+				if (act instanceof KickPlayerCrAction)
+				{
+					handleKickPlayerGameCrAction(player,
+							(KickPlayerCrAction) act);
+				}
+				else
+				{
+					throw new InconsistentActionTypeException(
+							GameCtrlActionType.KICK_PLAYER, act.getClass());
+				}
+				break;
+			case ADD_AI:
+				if (act instanceof AddAICrAction)
+				{
+					handleAddAIGameCrAction(player, (AddAICrAction) act);
+				}
+				else
+				{
+					throw new InconsistentActionTypeException(
+							GameCtrlActionType.ADD_AI, act.getClass());
+				}
+				break;
+			case JOIN_GAME:
+				break;
+			}
+		}
 	}
 }
