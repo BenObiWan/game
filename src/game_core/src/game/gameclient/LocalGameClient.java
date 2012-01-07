@@ -157,8 +157,7 @@ public final class LocalGameClient extends Observable implements IGameClient,
 			}
 			else
 			{
-				player.handleG)
-				ameCtrlEvent(event);
+				player.handleGameCtrlEvent(event);
 			}
 		}
 		else if (evt instanceof IGameEvent)
@@ -386,16 +385,19 @@ public final class LocalGameClient extends Observable implements IGameClient,
 	 *            the {@link IGameServer} on which to join a game.
 	 * @param iGameId
 	 *            the id of the game to join.
+	 * @param iPlayerId
+	 *            the id of the player sending the message.
 	 * @param strAIName
 	 *            the name of the AI which want to join.
 	 */
 	public void sendAddAI(final IGameServer server, final int iGameId,
-			final String strAIName)
+			final int iPlayerId, final String strAIName)
 	{
 		final int iAIID = getNextPlayerId();
 		// TODO stock ai name and ai id
 
-		final AddAICrAction act = new AddAICrAction(iGameId, iAIID, strAIName);
+		final AddAICrAction act = new AddAICrAction(iGameId, iPlayerId, iAIID,
+				strAIName);
 		try
 		{
 			server.handleAction(this, act);
@@ -526,7 +528,7 @@ public final class LocalGameClient extends Observable implements IGameClient,
 	 *            the id of the AI.
 	 * @return the name of the AI.
 	 */
-	public String getAIName(final int iAIId)
+	public String getAIName(@SuppressWarnings("unused") final int iAIId)
 	{
 		return null;
 	}
