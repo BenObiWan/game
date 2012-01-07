@@ -61,7 +61,8 @@ public final class GameCreationPanel extends JPanel implements Observer
 	{
 		super(new BorderLayout());
 		_gameCreator = gameCreator;
-		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration());
+		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration(),
+				false);
 		_playerListPanel = new PlayerListPanel();
 		_gameCreator.addObserver(this);
 		_bCreator = _gameCreator.isCreator();

@@ -384,7 +384,8 @@ public final class CoreUI extends JFrame implements ActionListener,
 					ManagementFactory.getPlatformMBeanServer());
 			final INetworkServerConfiguration srvConf = confLoader
 					.getNetworkServerConfiguration();
-			final ConfigurationPanel confPane = new ConfigurationPanel(srvConf);
+			final ConfigurationPanel confPane = new ConfigurationPanel(srvConf,
+					true);
 			final JInternalFrame intFrame = new JInternalFrame("conf", true,
 					true, true, true);
 			intFrame.setContentPane(confPane);
