@@ -26,19 +26,27 @@ public abstract class AbstractGameCtrlAction extends AbstractAction implements
 	protected final GameCtrlActionType _type;
 
 	/**
+	 * Id of the player doing the action.
+	 */
+	protected final int _iPlayerId;
+
+	/**
 	 * Creates a new AbstractGameCtrlAction.
 	 * 
 	 * @param iGameId
 	 *            id of the game concerned with the action.
+	 * @param iPlayerId
+	 *            id of the player doing the action.
 	 * @param type
 	 *            type of this game control action.
 	 */
-	protected AbstractGameCtrlAction(final int iGameId,
+	protected AbstractGameCtrlAction(final int iGameId, final int iPlayerId,
 			final GameCtrlActionType type)
 	{
 		super();
 		_iGameId = iGameId;
 		_type = type;
+		_iPlayerId = iPlayerId;
 	}
 
 	@Override
@@ -51,5 +59,11 @@ public abstract class AbstractGameCtrlAction extends AbstractAction implements
 	public final GameCtrlActionType getType()
 	{
 		return _type;
+	}
+
+	@Override
+	public int getPlayerId()
+	{
+		return _iPlayerId;
 	}
 }

@@ -17,11 +17,6 @@ public final class JoinGameCrAction extends AbstractGameCtrlAction
 	private static final long serialVersionUID = -3135036353906290460L;
 
 	/**
-	 * Id of the player joining the game. The id is given by the client.
-	 */
-	private final int _iPlayerId;
-
-	/**
 	 * Creates a new JoinGameCrAction.
 	 * 
 	 * @param iGameId
@@ -31,17 +26,6 @@ public final class JoinGameCrAction extends AbstractGameCtrlAction
 	 */
 	public JoinGameCrAction(final int iGameId, final int iPlayerId)
 	{
-		super(iGameId, GameCtrlActionType.JOIN_GAME);
-		_iPlayerId = iPlayerId;
-	}
-
-	/**
-	 * Get the id of the player joining the game.
-	 * 
-	 * @return the id of the player joining the game.
-	 */
-	public int getPlayerId()
-	{
-		return _iPlayerId;
+		super(iGameId, iPlayerId, GameCtrlActionType.JOIN_GAME);
 	}
 }

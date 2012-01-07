@@ -33,13 +33,15 @@ public final class AddAICrAction extends AbstractGameCtrlAction
 	 *            the id of the game concerned by the action.
 	 * @param iAIId
 	 *            the id of the AI joining the game.
+	 * @param iPlayerId
+	 *            id of the player doing the action.
 	 * @param strName
 	 *            the name of the AI.
 	 */
-	public AddAICrAction(final int iGameId, final int iAIId,
-			final String strName)
+	public AddAICrAction(final int iGameId, final int iPlayerId,
+			final int iAIId, final String strName)
 	{
-		super(iGameId, GameCtrlActionType.ADD_AI);
+		super(iGameId, iPlayerId, GameCtrlActionType.ADD_AI);
 		_iAIId = iAIId;
 		_strName = strName;
 	}
