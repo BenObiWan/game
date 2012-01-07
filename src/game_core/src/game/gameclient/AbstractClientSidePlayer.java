@@ -12,7 +12,6 @@ import game.communication.event.gamecreation.GameCreatedCrEvent;
 import game.communication.event.gamectrl.GameDestroyedCrEvent;
 import game.communication.event.gamectrl.GameFullCrEvent;
 import game.communication.event.gamectrl.GameLeftCrEvent;
-import game.communication.event.gamectrl.IGameCtrlEventHandler;
 import game.communication.event.gamectrl.KickedFromGameCrEvent;
 import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
@@ -40,8 +39,7 @@ import java.util.List;
  */
 public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, CLIENT_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_OBSERVER extends IClientSidePlayerObserver>
 		implements
-		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>,
-		IGameCtrlEventHandler
+		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_OBSERVER>
 {
 	/**
 	 * Id of the player.
