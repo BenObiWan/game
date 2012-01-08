@@ -366,6 +366,10 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	@Override
 	public void handlePlayerListUpdateCrEvent(final PlayerListUpdateCrEvent evt)
 	{
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("setClientSidePlayerList");
+		}
 		setClientSidePlayerList(evt.getPlayerList());
 	}
 
@@ -376,6 +380,10 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	{
 		try
 		{
+			if (LOGGER.isDebugEnabled())
+			{
+				LOGGER.debug("setConfiguration");
+			}
 			setConfiguration((CONF_TYPE) evt.getGameConfiguration());
 		}
 		catch (final ClassCastException e)
