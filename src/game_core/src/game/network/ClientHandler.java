@@ -114,7 +114,7 @@ public final class ClientHandler extends NetworkHandler
 						}
 						break;
 					case WRONG_AUTHENTICATION:
-						if (message instanceof RequestAuthenticationMessage)
+						if (message instanceof WrongAuthenticationMessage)
 						{
 							handleMessage(session, server,
 									(WrongAuthenticationMessage) message);
@@ -127,10 +127,10 @@ public final class ClientHandler extends NetworkHandler
 						}
 						break;
 					case REGISTRATION_ERROR:
-						if (message instanceof RequestAuthenticationMessage)
+						if (message instanceof RegistrationErrorMessage)
 						{
 							handleMessage(session, server,
-									(RequestAuthenticationMessage) message);
+									(RegistrationErrorMessage) message);
 						}
 						else
 						{
