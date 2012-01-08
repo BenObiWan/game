@@ -175,8 +175,12 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		synchronized (_lock)
 		{
 			_conf = gameConfiguration;
-			// _eventBus.
 		}
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("setConfiguration");
+		}
+		_eventBus.post(gameConfiguration);
 	}
 
 	@Override
@@ -185,8 +189,12 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		synchronized (_lock)
 		{
 			_playerList = playerList;
-			// _eventBus.
 		}
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("setClientSidePlayerList");
+		}
+		_eventBus.post(playerList);
 	}
 
 	@Override
@@ -224,11 +232,15 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	public void registerGameCreatorChangeListener(
 			final IGameCreatorChangeListener o)
 	{
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("registerGameCreatorChangeListener");
+		}
 		_eventBus.register(o);
 	}
 
 	@Override
-	public void handleGameCtrlEvent(IGameCtrlEvent evt)
+	public void handleGameCtrlEvent(final IGameCtrlEvent evt)
 			throws InconsistentEventTypeException
 	{
 		switch (evt.getType())
@@ -292,7 +304,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	}
 
 	@Override
-	public void handleGameCreationEvent(IGameCreationEvent evt)
+	public void handleGameCreationEvent(final IGameCreationEvent evt)
 			throws InconsistentEventTypeException
 	{
 		switch (evt.getType())
@@ -320,54 +332,60 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 						GameCreationEventType.GAME_CREATED, evt.getClass());
 			}
 			break;
-
 		}
 	}
 
 	@Override
-	public void handleKickedFromGameCrEvent(KickedFromGameCrEvent evt)
+	public void handleKickedFromGameCrEvent(final KickedFromGameCrEvent evt)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void handleGameLeftCrEvent(GameLeftCrEvent evt)
+	public void handleGameLeftCrEvent(final GameLeftCrEvent evt)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void handleGameDestroyedCrEvent(GameDestroyedCrEvent evt)
+	public void handleGameDestroyedCrEvent(final GameDestroyedCrEvent evt)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void handleGameFullCrEvent(GameFullCrEvent evt)
+	public void handleGameFullCrEvent(final GameFullCrEvent evt)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void handlePlayerListUpdateCrEvent(PlayerListUpdateCrEvent evt)
+	public void handlePlayerListUpdateCrEvent(final PlayerListUpdateCrEvent evt)
 	{
-		// TODO Auto-generated method stub
+		setClientSidePlayerList(evt.getPlayerList());
+	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public void handleConfigurationUpdateCrEvent(
+			final ConfigurationUpdateCrEvent evt)
+	{
+		try
+		{
+			setConfiguration((CONF_TYPE) evt.getGameConfiguration());
+		}
+		catch (final ClassCastException e)
+		{
+			// TODO add error message
+		}
 	}
 
 	@Override
-	public void handleConfigurationUpdateCrEvent(ConfigurationUpdateCrEvent evt)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void handleGameCreatedCrEvent(GameCreatedCrEvent evt)
+	public void handleGameCreatedCrEvent(final GameCreatedCrEvent evt)
 	{
 		// TODO Auto-generated method stub
 
