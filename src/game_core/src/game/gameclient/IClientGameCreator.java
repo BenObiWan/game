@@ -169,4 +169,9 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return true if this game can be launched.
 	 */
 	boolean isGameReady();
+
+	/**
+	 * Exit the creation of this game. Cancels it if the player is creator.
+	 */
+	void leaveGameCreation();
 }

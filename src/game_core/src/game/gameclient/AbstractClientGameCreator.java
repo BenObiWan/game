@@ -4,6 +4,7 @@ import game.common.IGameServer;
 import game.common.IPlayerDescription;
 import game.communication.action.InconsistentActionTypeException;
 import game.communication.action.gamecreation.UpdateStatusCrAction;
+import game.communication.action.gamectrl.LeaveGameCrAction;
 import game.communication.event.GameCreationEventType;
 import game.communication.event.GameCtrlEventType;
 import game.communication.event.IGameCreationEvent;
@@ -422,7 +423,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 			return false;
 		}
 		// check if each player is ready
-		for (IPlayerDescription desc : _playerList)
+		for (final IPlayerDescription desc : _playerList)
 		{
 			if (!desc.isReady())
 			{
@@ -430,5 +431,19 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public void leaveGameCreation()
+	{
+		final LeaveGameCrAction act = new LeaveGameCrAction(_iGameId, _iGameId);
+		try
+		{
+			_gameServer.handleAction(_gameClient, act);
+		}
+		catch (final InconsistentActionTypeException e)
+		{
+			LOGGER.error(e.getLocalizedMessage(), e);
+		}
 	}
 }
