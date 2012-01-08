@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -62,6 +64,11 @@ public final class GameCreationPanel extends JPanel implements
 	private final IDisposableFrame _parentFrame;
 
 	/**
+	 * Check box for the ready status.
+	 */
+	private final JCheckBox _readyCheckBox;
+
+	/**
 	 * Creates a new GameCreationPanel.
 	 * 
 	 * @param parentFrame
@@ -79,28 +86,31 @@ public final class GameCreationPanel extends JPanel implements
 				false);
 		_playerListPanel = new PlayerListPanel();
 		_bCreator = _gameCreator.isCreator();
-		String strCreate, strLeave;
+		String strLeave;
 
+		JComponent compStart;
 		if (_bCreator)
 		{
-			strCreate = "Start Game";
 			strLeave = "Cancel Game";
+			_readyCheckBox = null;
+			final JButton buttonCreateGame = new JButton("Start Game");
+			buttonCreateGame
+					.addActionListener(new ReadyOrStartGameActionListener());
+			compStart = buttonCreateGame;
 		}
 		else
 		{
-			strCreate = "Ready";
 			strLeave = "Leave Game";
+			_readyCheckBox = new JCheckBox("Ready");
+			// TODO add control for the ready/not ready status
+			compStart = _readyCheckBox;
 		}
-
-		final JButton buttonCreateGame = new JButton(strCreate);
-		buttonCreateGame
-				.addActionListener(new ReadyOrStartGameActionListener());
 		final JButton buttonLeaveGame = new JButton(strLeave);
 		buttonLeaveGame
 				.addActionListener(new LeaveOrCancelGameActionListener());
 		final JPanel buttonPane = new JPanel(new GridLayout(1, 0, 10, 10));
 		buttonPane.add(buttonLeaveGame);
-		buttonPane.add(buttonCreateGame);
+		buttonPane.add(compStart);
 		add(_confPanel, BorderLayout.CENTER);
 		add(_playerListPanel, BorderLayout.LINE_START);
 		add(buttonPane, BorderLayout.PAGE_END);
@@ -112,6 +122,7 @@ public final class GameCreationPanel extends JPanel implements
 	public void setConfiguration(final IGameConfiguration<?> gameConfiguration)
 	{
 		_confPanel.setConfiguration(gameConfiguration);
+		changeReadyStatus(false);
 	}
 
 	@Override
@@ -119,6 +130,7 @@ public final class GameCreationPanel extends JPanel implements
 	public void setClientSidePlayerList(final Set<IPlayerDescription> playerList)
 	{
 		_playerListPanel.updatePlayerList(playerList);
+		changeReadyStatus(false);
 	}
 
 	/**
@@ -203,6 +215,23 @@ public final class GameCreationPanel extends JPanel implements
 		public void actionPerformed(final ActionEvent e)
 		{
 			askQuitGameCreation();
+		}
+	}
+
+	/**
+	 * Change the ready status of the player.
+	 * 
+	 * @param bReadyStatus
+	 *            the new ready status.
+	 */
+	private void changeReadyStatus(boolean bReadyStatus)
+	{
+		if (_readyCheckBox != null)
+		{
+			if (bReadyStatus != _readyCheckBox.isSelected())
+			{
+				_readyCheckBox.setSelected(bReadyStatus);
+			}
 		}
 	}
 }

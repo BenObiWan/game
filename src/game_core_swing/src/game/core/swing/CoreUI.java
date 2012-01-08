@@ -577,7 +577,6 @@ public final class CoreUI extends JFrame implements ActionListener,
 			{
 				// nothing to do
 			}
-
 		});
 		intFrame.pack();
 		showInternalFrame(intFrame, true);
