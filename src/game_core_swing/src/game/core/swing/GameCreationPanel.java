@@ -14,6 +14,7 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.google.common.eventbus.Subscribe;
 import common.config.swing.ConfigurationPanel;
 
 /**
@@ -67,7 +68,6 @@ public final class GameCreationPanel extends JPanel implements
 		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration(),
 				false);
 		_playerListPanel = new PlayerListPanel();
-		_gameCreator.registerGameCreatorChangeListener(this);
 		_bCreator = _gameCreator.isCreator();
 		String strCreate, strLeave;
 
@@ -83,41 +83,47 @@ public final class GameCreationPanel extends JPanel implements
 		}
 
 		final JButton buttonCreateGame = new JButton(strCreate);
-		buttonCreateGame.addActionListener(new StartGameActionListener());
+		buttonCreateGame
+				.addActionListener(new ReadyOrStartGameActionListener());
 		final JButton buttonLeaveGame = new JButton(strLeave);
-		buttonLeaveGame.addActionListener(new CancelGameActionListener());
+		buttonLeaveGame
+				.addActionListener(new LeaveOrCancelGameActionListener());
 		final JPanel buttonPane = new JPanel(new GridLayout(1, 0, 10, 10));
 		buttonPane.add(buttonLeaveGame);
 		buttonPane.add(buttonCreateGame);
 		add(_confPanel, BorderLayout.CENTER);
 		add(_playerListPanel, BorderLayout.LINE_START);
 		add(buttonPane, BorderLayout.PAGE_END);
+		_gameCreator.registerGameCreatorChangeListener(this);
 	}
 
 	@Override
+	@Subscribe
 	public void setConfiguration(final IGameConfiguration<?> gameConfiguration)
 	{
 		_confPanel.setConfiguration(gameConfiguration);
 	}
 
 	@Override
+	@Subscribe
 	public void setClientSidePlayerList(final Set<IPlayerDescription> playerList)
 	{
 		_playerListPanel.updatePlayerList(playerList);
 	}
 
 	/**
-	 * {@link ActionListener} for the start game {@link JButton}.
+	 * {@link ActionListener} for the ready/start game {@link JButton}.
 	 * 
 	 * @author benobiwan
 	 * 
 	 */
-	private final class StartGameActionListener implements ActionListener
+	private final class ReadyOrStartGameActionListener implements
+			ActionListener
 	{
 		/**
 		 * Creates a new StartGameActionListener.
 		 */
-		public StartGameActionListener()
+		public ReadyOrStartGameActionListener()
 		{
 			super();
 		}
@@ -137,17 +143,18 @@ public final class GameCreationPanel extends JPanel implements
 	}
 
 	/**
-	 * {@link ActionListener} for the cancel game {@link JButton}.
+	 * {@link ActionListener} for the leave/cancel game {@link JButton}.
 	 * 
 	 * @author benobiwan
 	 * 
 	 */
-	private final class CancelGameActionListener implements ActionListener
+	private final class LeaveOrCancelGameActionListener implements
+			ActionListener
 	{
 		/**
 		 * Creates a new CancelGameActionListener.
 		 */
-		public CancelGameActionListener()
+		public LeaveOrCancelGameActionListener()
 		{
 			super();
 		}
