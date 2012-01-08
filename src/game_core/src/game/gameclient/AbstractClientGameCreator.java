@@ -388,7 +388,9 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		}
 		catch (final ClassCastException e)
 		{
-			// TODO add error message
+			LOGGER.error("Error casting "
+					+ evt.getGameConfiguration().getClass() + " into "
+					+ _conf.getClass());
 		}
 	}
 
@@ -397,5 +399,12 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean tryLaunchGame()
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

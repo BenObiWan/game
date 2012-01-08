@@ -155,4 +155,11 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 *            the new ready status of this player.
 	 */
 	void updateReadyStatus(boolean bReadyStatus);
+
+	/**
+	 * Try launching the game.
+	 * 
+	 * @return true if the game has been launched.
+	 */
+	boolean tryLaunchGame();
 }
