@@ -78,7 +78,7 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	int getGameId();
 
 	/**
-	 * Get the player id.
+	 * Get the if of the player playing this game locally.
 	 * 
 	 * @return the player id.
 	 */
@@ -100,7 +100,7 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	public CONF_TYPE getConfiguration();
 
 	/**
-	 * Creates the player playing at this game.
+	 * Creates the local player playing at this game.
 	 * 
 	 * @param _locGameClient
 	 *            the local game client.
@@ -162,4 +162,11 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * @return true if the game has been launched.
 	 */
 	boolean tryLaunchGame();
+
+	/**
+	 * Check whether this game can be launched or not.
+	 * 
+	 * @return true if this game can be launched.
+	 */
+	boolean isGameReady();
 }

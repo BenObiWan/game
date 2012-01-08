@@ -407,4 +407,28 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isGameReady()
+	{
+		// check game configuration
+		if (_conf == null)
+		{
+			return false;
+		}
+		// check if there are enough player
+		if (_playerList.size() < _conf.getMinNumberOfPlayers())
+		{
+			return false;
+		}
+		// check if each player is ready
+		for (IPlayerDescription desc : _playerList)
+		{
+			if (!desc.isReady())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }
