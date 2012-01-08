@@ -215,63 +215,71 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	public void handleGameCtrlEvent(final IGameCtrlEvent evt)
 			throws InconsistentEventTypeException
 	{
-		switch (evt.getType())
+		if (isGameInCreation())
 		{
-		case PLAYER_LIST_UPDATE:
-			if (evt instanceof PlayerListUpdateCrEvent)
+			_gameCreator.handleGameCtrlEvent(evt);
+		}
+		else
+		{
+			switch (evt.getType())
 			{
-				handlePlayerListUpdateCrEvent((PlayerListUpdateCrEvent) evt);
+			case PLAYER_LIST_UPDATE:
+				if (evt instanceof PlayerListUpdateCrEvent)
+				{
+					handlePlayerListUpdateCrEvent((PlayerListUpdateCrEvent) evt);
+				}
+				else
+				{
+					throw new InconsistentEventTypeException(
+							GameCtrlEventType.PLAYER_LIST_UPDATE,
+							evt.getClass());
+				}
+				break;
+			case KICKED_FROM_GAME:
+				if (evt instanceof KickedFromGameCrEvent)
+				{
+					handleKickedFromGameCrEvent((KickedFromGameCrEvent) evt);
+				}
+				else
+				{
+					throw new InconsistentEventTypeException(
+							GameCtrlEventType.KICKED_FROM_GAME, evt.getClass());
+				}
+				break;
+			case GAME_LEFT:
+				if (evt instanceof GameLeftCrEvent)
+				{
+					handleGameLeftCrEvent((GameLeftCrEvent) evt);
+				}
+				else
+				{
+					throw new InconsistentEventTypeException(
+							GameCtrlEventType.GAME_LEFT, evt.getClass());
+				}
+				break;
+			case GAME_DESTROYED:
+				if (evt instanceof GameDestroyedCrEvent)
+				{
+					handleGameDestroyedCrEvent((GameDestroyedCrEvent) evt);
+				}
+				else
+				{
+					throw new InconsistentEventTypeException(
+							GameCtrlEventType.GAME_DESTROYED, evt.getClass());
+				}
+				break;
+			case GAME_FULL:
+				if (evt instanceof GameFullCrEvent)
+				{
+					handleGameFullCrEvent((GameFullCrEvent) evt);
+				}
+				else
+				{
+					throw new InconsistentEventTypeException(
+							GameCtrlEventType.GAME_FULL, evt.getClass());
+				}
+				break;
 			}
-			else
-			{
-				throw new InconsistentEventTypeException(
-						GameCtrlEventType.PLAYER_LIST_UPDATE, evt.getClass());
-			}
-			break;
-		case KICKED_FROM_GAME:
-			if (evt instanceof KickedFromGameCrEvent)
-			{
-				handleKickedFromGameCrEvent((KickedFromGameCrEvent) evt);
-			}
-			else
-			{
-				throw new InconsistentEventTypeException(
-						GameCtrlEventType.KICKED_FROM_GAME, evt.getClass());
-			}
-			break;
-		case GAME_LEFT:
-			if (evt instanceof GameLeftCrEvent)
-			{
-				handleGameLeftCrEvent((GameLeftCrEvent) evt);
-			}
-			else
-			{
-				throw new InconsistentEventTypeException(
-						GameCtrlEventType.GAME_LEFT, evt.getClass());
-			}
-			break;
-		case GAME_DESTROYED:
-			if (evt instanceof GameDestroyedCrEvent)
-			{
-				handleGameDestroyedCrEvent((GameDestroyedCrEvent) evt);
-			}
-			else
-			{
-				throw new InconsistentEventTypeException(
-						GameCtrlEventType.GAME_DESTROYED, evt.getClass());
-			}
-			break;
-		case GAME_FULL:
-			if (evt instanceof GameFullCrEvent)
-			{
-				handleGameFullCrEvent((GameFullCrEvent) evt);
-			}
-			else
-			{
-				throw new InconsistentEventTypeException(
-						GameCtrlEventType.GAME_FULL, evt.getClass());
-			}
-			break;
 		}
 	}
 
