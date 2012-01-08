@@ -154,6 +154,10 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	@Override
 	public boolean isFull()
 	{
+		if (_conf == null)
+		{
+			return true;
+		}
 		if (_playerList.size() >= _conf.getMaxNumberOfPlayers())
 		{
 			return true;
@@ -484,7 +488,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 		{
 			if (isFull())
 			{
-				evt = new GameFullCrEvent(_iGameId, act.getAIId());
+				evt = new GameFullCrEvent(_iGameId, act.getPlayerId());
 			}
 			// TODO check if the client has the right to create an AI.
 			else
@@ -539,7 +543,9 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 					}
 					catch (final ClassCastException e)
 					{
-						// TODO class error
+						LOGGER.error("Error casting "
+								+ act.getGameConfiguration().getClass()
+								+ " into " + _conf.getClass());
 					}
 				}
 			}

@@ -174,4 +174,12 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * Exit the creation of this game. Cancels it if the player is creator.
 	 */
 	void leaveGameCreation();
+
+	/**
+	 * Add an AI to the game.
+	 * 
+	 * @param strAIName
+	 *            the name of the AI.
+	 */
+	void addAI(String strAIName);
 }

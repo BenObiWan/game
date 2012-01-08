@@ -446,4 +446,10 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 			LOGGER.error(e.getLocalizedMessage(), e);
 		}
 	}
+
+	@Override
+	public void addAI(final String strAIName)
+	{
+		_gameClient.sendAddAI(_gameServer, _iGameId, _iPlayerId, strAIName);
+	}
 }

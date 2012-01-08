@@ -5,6 +5,9 @@ import game.common.IPlayerDescription;
 import game.common.PlayerDescriptionImpl;
 import game.config.IPlayerConfiguration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Abstract implementation of the {@link IServerSidePlayer} interface.
  * Description of a player on the server side.
@@ -17,6 +20,12 @@ import game.config.IPlayerConfiguration;
 public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfiguration>
 		implements IServerSidePlayer<PLAYER_CONF>
 {
+	/**
+	 * Logger object.
+	 */
+	private static transient final Logger LOGGER = LoggerFactory
+			.getLogger(AbstractServerSidePlayer.class);
+
 	/**
 	 * The hosting client.
 	 */
@@ -175,7 +184,8 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 		}
 		catch (final ClassCastException e)
 		{
-			// TODO class error
+			LOGGER.error("Error casting " + conf.getClass() + " into "
+					+ _playerConf.getClass());
 		}
 	}
 }

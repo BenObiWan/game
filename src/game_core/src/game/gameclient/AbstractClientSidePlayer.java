@@ -17,6 +17,9 @@ import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
 import game.config.IGameConfiguration;
 import game.config.IPlayerConfiguration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.eventbus.EventBus;
 
 /**
@@ -43,6 +46,12 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 		implements
 		IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>
 {
+	/**
+	 * Logger object.
+	 */
+	private static transient final Logger LOGGER = LoggerFactory
+			.getLogger(AbstractClientSidePlayer.class);
+
 	/**
 	 * Id of the player.
 	 */
@@ -298,7 +307,9 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 		}
 		catch (final ClassCastException e)
 		{
-			// TODO class error
+			LOGGER.error("Error casting "
+					+ evt.getGameConfiguration().getClass() + " into "
+					+ _conf.getClass());
 		}
 	}
 
@@ -377,7 +388,8 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 		}
 		catch (final ClassCastException e)
 		{
-			// TODO class error
+			LOGGER.error("Error casting " + conf + " into "
+					+ _playerConf.getClass());
 		}
 	}
 }

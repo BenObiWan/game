@@ -261,7 +261,8 @@ public final class GameCreationPanel extends JPanel implements
 		@Override
 		public void actionPerformed(final ActionEvent e)
 		{
-			// TODO add an AI
+			// TODO ask for AI name
+			_gameCreator.addAI("AI");
 		}
 	}
 }
