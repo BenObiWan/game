@@ -46,7 +46,7 @@ public final class GameCreationPanel extends JPanel implements
 	/**
 	 * The {@link IClientGameCreator} of this game.
 	 */
-	private final IClientGameCreator<?, ?, ?, ?, ?, ?> _gameCreator;
+	protected final IClientGameCreator<?, ?, ?, ?, ?, ?> _gameCreator;
 
 	/**
 	 * Boolean showing whether the local client is the creator of this game or
@@ -137,7 +137,7 @@ public final class GameCreationPanel extends JPanel implements
 			}
 			else
 			{
-				// Ready
+				_gameCreator.updateReadyStatus(true);
 			}
 		}
 	}
