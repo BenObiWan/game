@@ -4,14 +4,10 @@ import game.common.IPlayerDescription;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Set;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,12 +44,6 @@ public final class PlayerListPanel extends JPanel
 		super(new BorderLayout());
 		final JScrollPane scrollPaneList = new JScrollPane(_listPanel);
 		add(scrollPaneList, BorderLayout.CENTER);
-		final JButton buttonAddAI = new JButton("Add AI");
-		buttonAddAI.addActionListener(new AddAIActionListener());
-		final JPanel panelButton = new JPanel(new BorderLayout());
-		panelButton.add(buttonAddAI, BorderLayout.CENTER);
-		panelButton.setBorder(new EmptyBorder(5, 15, 5, 15));
-		add(panelButton, BorderLayout.PAGE_END);
 	}
 
 	/**
@@ -72,29 +62,6 @@ public final class PlayerListPanel extends JPanel
 		for (final IPlayerDescription desc : playerList)
 		{
 			_listPanel.add(new PlayerDescriptionPanel(desc));
-		}
-	}
-
-	/**
-	 * {@link ActionListener} for the Add AI {@link JButton}.
-	 * 
-	 * @author benobiwan
-	 * 
-	 */
-	private final class AddAIActionListener implements ActionListener
-	{
-		/**
-		 * Creates a new AddAIActionListener.
-		 */
-		public AddAIActionListener()
-		{
-			super();
-		}
-
-		@Override
-		public void actionPerformed(final ActionEvent e)
-		{
-			// TODO add an AI
 		}
 	}
 }

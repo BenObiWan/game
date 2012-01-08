@@ -16,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import com.google.common.eventbus.Subscribe;
 import common.config.swing.ConfigurationPanel;
@@ -105,12 +106,18 @@ public final class GameCreationPanel extends JPanel implements
 			// TODO add control for the ready/not ready status
 			compStart = _readyCheckBox;
 		}
+
+		final JButton buttonAddAI = new JButton("Add AI");
+		buttonAddAI.addActionListener(new AddAIActionListener());
+
 		final JButton buttonLeaveGame = new JButton(strLeave);
 		buttonLeaveGame
 				.addActionListener(new LeaveOrCancelGameActionListener());
 		final JPanel buttonPane = new JPanel(new GridLayout(1, 0, 10, 10));
+		buttonPane.add(buttonAddAI);
 		buttonPane.add(buttonLeaveGame);
 		buttonPane.add(compStart);
+		buttonPane.setBorder(new EmptyBorder(5, 15, 5, 15));
 		add(_confPanel, BorderLayout.CENTER);
 		add(_playerListPanel, BorderLayout.LINE_START);
 		add(buttonPane, BorderLayout.PAGE_END);
@@ -160,6 +167,23 @@ public final class GameCreationPanel extends JPanel implements
 		case JOptionPane.CLOSED_OPTION:
 		default:
 			break;
+		}
+	}
+
+	/**
+	 * Change the ready status of the player.
+	 * 
+	 * @param bReadyStatus
+	 *            the new ready status.
+	 */
+	private void changeReadyStatus(final boolean bReadyStatus)
+	{
+		if (_readyCheckBox != null)
+		{
+			if (bReadyStatus != _readyCheckBox.isSelected())
+			{
+				_readyCheckBox.setSelected(bReadyStatus);
+			}
 		}
 	}
 
@@ -219,19 +243,25 @@ public final class GameCreationPanel extends JPanel implements
 	}
 
 	/**
-	 * Change the ready status of the player.
+	 * {@link ActionListener} for the Add AI {@link JButton}.
 	 * 
-	 * @param bReadyStatus
-	 *            the new ready status.
+	 * @author benobiwan
+	 * 
 	 */
-	private void changeReadyStatus(boolean bReadyStatus)
+	private final class AddAIActionListener implements ActionListener
 	{
-		if (_readyCheckBox != null)
+		/**
+		 * Creates a new AddAIActionListener.
+		 */
+		public AddAIActionListener()
 		{
-			if (bReadyStatus != _readyCheckBox.isSelected())
-			{
-				_readyCheckBox.setSelected(bReadyStatus);
-			}
+			super();
+		}
+
+		@Override
+		public void actionPerformed(final ActionEvent e)
+		{
+			// TODO add an AI
 		}
 	}
 }
