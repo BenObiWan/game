@@ -117,20 +117,39 @@ public final class LocalGameClient extends Observable implements IGameClient,
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)
 			{
-				// TODO player is null
+				LOGGER.error("Received an IGameCreationEvent type '"
+						+ event.getType() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId() + "' which doesn't exits.");
 			}
 			else if (!player.isGameInCreation())
 			{
-				// TODO game is not in creation
+				LOGGER.error("Received an IGameCreationEvent type '"
+						+ event.getType() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId() + "' but game isn't in creation.");
 			}
 			else if (event.getGameId() != player.getGameId())
 			{
-				// TODO game id is different
+				LOGGER.error("Received an IGameCreationEvent type '"
+						+ event.getType() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId()
+						+ "' but the game id associated with the player is '"
+						+ player.getGameId() + "'.");
 			}
 			else if (server.equals(player.getServer()))
 			{
-				// TODO the server from which the message is coming is not the
-				// good one.
+				LOGGER.error("Received an IGameCreationEvent type '"
+						+ event.getType() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId()
+						+ "' but the server associated with the player is '"
+						+ player.getServer().getName() + "'.");
 			}
 			else
 			{
@@ -144,16 +163,31 @@ public final class LocalGameClient extends Observable implements IGameClient,
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)
 			{
-				// TODO player is null
+				LOGGER.error("Received an IGameCtrlEvent type '"
+						+ event.getType() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId() + "' which doesn't exits.");
 			}
 			else if (event.getGameId() != player.getGameId())
 			{
-				// TODO game id is different
+				LOGGER.error("Received an IGameCtrlEvent type '"
+						+ event.getType() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId()
+						+ "' but the game id associated with the player is '"
+						+ player.getGameId() + "'.");
 			}
 			else if (server.equals(player.getServer()))
 			{
-				// TODO the server from which the message is coming is not the
-				// good one.
+				LOGGER.error("Received an IGameCtrlEvent type '"
+						+ event.getType() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId()
+						+ "' but the server associated with the player is '"
+						+ player.getServer().getName() + "'.");
 			}
 			else
 			{
@@ -167,20 +201,39 @@ public final class LocalGameClient extends Observable implements IGameClient,
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)
 			{
-				// TODO player is null
+				LOGGER.error("Received an IGameEvent class '"
+						+ event.getClass() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId() + "' which doesn't exits.");
 			}
 			else if (player.isGameInCreation())
 			{
-				// TODO game is in creation
+				LOGGER.error("Received an IGameEvent class '"
+						+ event.getClass() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId()
+						+ "' but the game is in creation.");
 			}
 			else if (event.getGameId() != player.getGameId())
 			{
-				// TODO game id is different
+				LOGGER.error("Received an IGameEvent class '"
+						+ event.getClass() + "' from Server '"
+						+ server.getName() + "' concerning game id '"
+						+ event.getGameId() + "' concerning player id '"
+						+ event.getPlayerId()
+						+ "' but the game id associated with the player is '"
+						+ player.getGameId() + "'.");
 			}
 			else if (server.equals(player.getServer()))
 			{
-				// TODO the server from which the message is coming is not the
-				// good one.
+				LOGGER.error("Received an '" + event.getClass()
+						+ "' event from Server '" + server.getName()
+						+ "' concerning game id '" + event.getGameId()
+						+ "' concerning player id '" + event.getPlayerId()
+						+ "' but the server associated with the player is '"
+						+ player.getServer().getName() + "'.");
 			}
 			else
 			{
