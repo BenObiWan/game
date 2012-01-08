@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Panel used to display the list of players in the {@link GameCreationPanel}.
  * 
@@ -25,6 +28,12 @@ public final class PlayerListPanel extends JPanel
 	 * serialVersionUID for Serialization.
 	 */
 	private static final long serialVersionUID = 3227916860832967756L;
+
+	/**
+	 * Logger object.
+	 */
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(PlayerListPanel.class);
 
 	/**
 	 * Panel which is actually displaying the list of players.
@@ -55,6 +64,10 @@ public final class PlayerListPanel extends JPanel
 	 */
 	public void updatePlayerList(final Set<IPlayerDescription> playerList)
 	{
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("updatePlayerList");
+		}
 		_listPanel.removeAll();
 		for (final IPlayerDescription desc : playerList)
 		{
