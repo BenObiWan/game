@@ -243,19 +243,19 @@ public final class LocalGameServer implements IGameServer,
 		{
 			return false;
 		}
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof IGameServer))
 		{
 			return false;
 		}
-		final LocalGameServer other = (LocalGameServer) obj;
+		final IGameServer other = (IGameServer) obj;
 		if (_strName == null)
 		{
-			if (other._strName != null)
+			if (other.getName() != null)
 			{
 				return false;
 			}
 		}
-		else if (!_strName.equals(other._strName))
+		else if (!_strName.equals(other.getName()))
 		{
 			return false;
 		}
