@@ -12,10 +12,12 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.google.common.eventbus.Subscribe;
 import common.config.swing.ConfigurationPanel;
+import common.swing.IDisposableFrame;
 
 /**
  * Panel used to create a game.
@@ -55,15 +57,23 @@ public final class GameCreationPanel extends JPanel implements
 	protected final boolean _bCreator;
 
 	/**
+	 * Frame containing this panel.
+	 */
+	private final IDisposableFrame _parentFrame;
+
+	/**
 	 * Creates a new GameCreationPanel.
 	 * 
+	 * @param parentFrame
+	 *            the frame containing this panel.
 	 * @param gameCreator
 	 *            the {IClientGameCreator} to display.
 	 */
-	public GameCreationPanel(
+	public GameCreationPanel(final IDisposableFrame parentFrame,
 			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
 	{
 		super(new BorderLayout());
+		_parentFrame = parentFrame;
 		_gameCreator = gameCreator;
 		_confPanel = new ConfigurationPanel(_gameCreator.getConfiguration(),
 				false);
@@ -109,6 +119,36 @@ public final class GameCreationPanel extends JPanel implements
 	public void setClientSidePlayerList(final Set<IPlayerDescription> playerList)
 	{
 		_playerListPanel.updatePlayerList(playerList);
+	}
+
+	/**
+	 * Asks whether the player want to exit the creation of this game. Cancels
+	 * it if the player is creator.
+	 */
+	public void askQuitGameCreation()
+	{
+		String strQuestion;
+		if (_bCreator)
+		{
+			strQuestion = "Do you really want to destroy this game?";
+		}
+		else
+		{
+			strQuestion = "Do you really want to leave this game?";
+		}
+		final int iAnswer = JOptionPane.showConfirmDialog(this, strQuestion,
+				"Exit", JOptionPane.YES_NO_OPTION);
+		switch (iAnswer)
+		{
+		case JOptionPane.YES_OPTION:
+			_gameCreator.leaveGameCreation();
+			_parentFrame.dispose();
+			break;
+		case JOptionPane.NO_OPTION:
+		case JOptionPane.CLOSED_OPTION:
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -162,14 +202,7 @@ public final class GameCreationPanel extends JPanel implements
 		@Override
 		public void actionPerformed(final ActionEvent e)
 		{
-			if (_bCreator)
-			{
-				// Cancel Game
-			}
-			else
-			{
-				// Leave Game
-			}
+			askQuitGameCreation();
 		}
 	}
 }
