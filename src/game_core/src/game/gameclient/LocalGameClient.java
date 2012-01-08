@@ -141,7 +141,7 @@ public final class LocalGameClient extends Observable implements IGameClient,
 						+ "' but the game id associated with the player is '"
 						+ player.getGameId() + "'.");
 			}
-			else if (server.equals(player.getServer()))
+			else if (!server.equals(player.getServer()))
 			{
 				LOGGER.error("Received an IGameCreationEvent type '"
 						+ event.getType() + "' from Server '"
@@ -179,7 +179,7 @@ public final class LocalGameClient extends Observable implements IGameClient,
 						+ "' but the game id associated with the player is '"
 						+ player.getGameId() + "'.");
 			}
-			else if (server.equals(player.getServer()))
+			else if (!server.equals(player.getServer()))
 			{
 				LOGGER.error("Received an IGameCtrlEvent type '"
 						+ event.getType() + "' from Server '"
@@ -226,7 +226,7 @@ public final class LocalGameClient extends Observable implements IGameClient,
 						+ "' but the game id associated with the player is '"
 						+ player.getGameId() + "'.");
 			}
-			else if (server.equals(player.getServer()))
+			else if (!server.equals(player.getServer()))
 			{
 				LOGGER.error("Received an '" + event.getClass()
 						+ "' event from Server '" + server.getName()
