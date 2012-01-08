@@ -32,6 +32,8 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PatternLayout;
@@ -527,7 +529,56 @@ public final class CoreUI extends JFrame implements ActionListener,
 	{
 		final DisposableInternalFrame intFrame = new DisposableInternalFrame(
 				"Game creation", true, true, true, true);
-		intFrame.setContentPane(new GameCreationPanel(intFrame, gameCreator));
+		final GameCreationPanel panel = new GameCreationPanel(intFrame,
+				gameCreator);
+		intFrame.setContentPane(panel);
+		intFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		intFrame.addInternalFrameListener(new InternalFrameListener()
+		{
+
+			@Override
+			public void internalFrameActivated(final InternalFrameEvent arg0)
+			{
+				// nothing to do
+			}
+
+			@Override
+			public void internalFrameClosed(final InternalFrameEvent arg0)
+			{
+				// nothing to do
+			}
+
+			@Override
+			public void internalFrameClosing(final InternalFrameEvent arg0)
+			{
+				panel.askQuitGameCreation();
+			}
+
+			@Override
+			public void internalFrameDeactivated(final InternalFrameEvent arg0)
+			{
+				// nothing to do
+			}
+
+			@Override
+			public void internalFrameDeiconified(final InternalFrameEvent arg0)
+			{
+				// nothing to do
+			}
+
+			@Override
+			public void internalFrameIconified(final InternalFrameEvent arg0)
+			{
+				// nothing to do
+			}
+
+			@Override
+			public void internalFrameOpened(final InternalFrameEvent arg0)
+			{
+				// nothing to do
+			}
+
+		});
 		intFrame.pack();
 		showInternalFrame(intFrame, true);
 	}
