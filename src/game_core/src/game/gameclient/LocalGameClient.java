@@ -82,6 +82,11 @@ public final class LocalGameClient extends Observable implements IGameClient,
 	private final ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?, ?>> _clientSidePlayerList = new ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?, ?>>();
 
 	/**
+	 * List of AI on this client.
+	 */
+	private final ConcurrentSkipListMap<Integer, String> _aiPlayerList = new ConcurrentSkipListMap<Integer, String>();
+
+	/**
 	 * Creates a new LocalGameClient.
 	 * 
 	 * @param strLocalName
@@ -447,8 +452,11 @@ public final class LocalGameClient extends Observable implements IGameClient,
 			final int iPlayerId, final String strAIName)
 	{
 		final int iAIID = getNextPlayerId();
-		// TODO stock ai name and ai id
-
+		_aiPlayerList.put(Integer.valueOf(iAIID), strAIName);
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("Added AI : " + iAIID);
+		}
 		final AddAICrAction act = new AddAICrAction(iGameId, iPlayerId, iAIID,
 				strAIName);
 		try
@@ -581,9 +589,21 @@ public final class LocalGameClient extends Observable implements IGameClient,
 	 *            the id of the AI.
 	 * @return the name of the AI.
 	 */
-	public String getAIName(@SuppressWarnings("unused") final int iAIId)
+	public String getAIName(final int iAIId)
 	{
-		return null;
+		return _aiPlayerList.get(Integer.valueOf(iAIId));
+	}
+
+	/**
+	 * Check if the give player is an AI.
+	 * 
+	 * @param iPlayerId
+	 *            the id of the player to test.
+	 * @return true if the player is an AI.
+	 */
+	private boolean isAI(final int iPlayerId)
+	{
+		return _aiPlayerList.containsKey(Integer.valueOf(iPlayerId));
 	}
 
 	/**
@@ -623,11 +643,18 @@ public final class LocalGameClient extends Observable implements IGameClient,
 		final IClientSidePlayer<?, ?, ?, ?, ?> player = gameCreator
 				.createPlayer(this, iPlayerId);
 		_clientSidePlayerList.put(Integer.valueOf(iPlayerId), player);
-		synchronized (_lockUI)
+		if (LOGGER.isDebugEnabled())
 		{
-			if (_clientUI != null)
+			LOGGER.debug("Player joined, id : " + iPlayerId);
+		}
+		if (!isAI(iPlayerId))
+		{
+			synchronized (_lockUI)
 			{
-				_clientUI.createGameCreationUI(gameCreator);
+				if (_clientUI != null)
+				{
+					_clientUI.createGameCreationUI(gameCreator);
+				}
 			}
 		}
 	}
