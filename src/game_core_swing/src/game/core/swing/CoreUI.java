@@ -368,55 +368,48 @@ public final class CoreUI extends JFrame implements ActionListener,
 	@Override
 	public void actionPerformed(final ActionEvent ae)
 	{
-		if (SHOW_LOG_ACTION_COMMAND.equals(ae.getActionCommand()))
+		switch (ae.getActionCommand())
 		{
+		case SHOW_LOG_ACTION_COMMAND:
 			showLogWindow();
-		}
-		else if (QUIT_ACTION_COMMAND.equals(ae.getActionCommand()))
-		{
+			break;
+		case QUIT_ACTION_COMMAND:
 			stop();
-		}
-		else if (LOG_TEST_ACTION_COMMAND.equals(ae.getActionCommand()))
-		{
+			break;
+		case LOG_TEST_ACTION_COMMAND:
 			LOGGER.info("Action command Test");
-		}
-		else if (TEST_CONF_ACTION_COMMAND.equals(ae.getActionCommand()))
-		{
+			break;
+		case TEST_CONF_ACTION_COMMAND:
 			final NetworkXMLFileConfigurationLoader confLoader = new NetworkXMLFileConfigurationLoader(
 					ManagementFactory.getPlatformMBeanServer());
 			final INetworkServerConfiguration srvConf = confLoader
 					.getNetworkServerConfiguration();
 			final ConfigurationPanel confPane = new ConfigurationPanel(srvConf,
 					true);
-			final JInternalFrame intFrame = new JInternalFrame("conf", true,
-					true, true, true);
-			intFrame.setContentPane(confPane);
-			intFrame.pack();
-			showInternalFrame(intFrame, true);
-		}
-		else if (TEST_SERVER_LIST_ACTION_COMMAND.equals(ae.getActionCommand()))
-		{
-			showServerListWindow();
-		}
-		else if (TEST_GAME_LIST_ACTION_COMMAND.equals(ae.getActionCommand()))
-		{
-			final GameListPanel gamePanel = new GameListPanel();
-			final JInternalFrame intFrame = new JInternalFrame("Game list",
+			final JInternalFrame confIntFrame = new JInternalFrame("conf",
 					true, true, true, true);
-			intFrame.setContentPane(gamePanel);
-			intFrame.pack();
-			showInternalFrame(intFrame, true);
-		}
-		else if (TEST_GAME_CREATION_ACTION_COMMAND
-				.equals(ae.getActionCommand()))
-		{
+			confIntFrame.setContentPane(confPane);
+			confIntFrame.pack();
+			showInternalFrame(confIntFrame, true);
+			break;
+		case TEST_SERVER_LIST_ACTION_COMMAND:
+			showServerListWindow();
+			break;
+		case TEST_GAME_LIST_ACTION_COMMAND:
+			final GameListPanel gamePanel = new GameListPanel();
+			final JInternalFrame gameListIntFrame = new JInternalFrame(
+					"Game list", true, true, true, true);
+			gameListIntFrame.setContentPane(gamePanel);
+			gameListIntFrame.pack();
+			showInternalFrame(gameListIntFrame, true);
+			break;
+		case TEST_GAME_CREATION_ACTION_COMMAND:
 			showCreateGameWindow();
-		}
-
-		else
-		{
+			break;
+		default:
 			LOGGER.error("Action command " + ae.getActionCommand()
 					+ " unknown.");
+			break;
 		}
 	}
 
