@@ -56,7 +56,7 @@ public abstract class AbstractServerSideGame<ACTION_TYPE extends IGameAction, CO
 	/**
 	 * List of players in this game.
 	 */
-	protected transient final ConcurrentSkipListSet<PLAYER_TYPE> _playerList = new ConcurrentSkipListSet<PLAYER_TYPE>();
+	protected transient final ConcurrentSkipListSet<PLAYER_TYPE> _playerList = new ConcurrentSkipListSet<>();
 
 	/**
 	 * Creates a new AbstractServerSideGame.

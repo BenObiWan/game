@@ -97,12 +97,12 @@ public final class Launcher
 	/**
 	 * Set of {@link IGameDescription} loaded.
 	 */
-	private final Set<IGameDescription> _gameDescriptionSet = new TreeSet<IGameDescription>();
+	private final Set<IGameDescription> _gameDescriptionSet = new TreeSet<>();
 
 	/**
 	 * Set of {@link IGameSwingLauncher} loaded.
 	 */
-	private final Set<IGameSwingLauncher> _gameLauncherSet = new TreeSet<IGameSwingLauncher>();
+	private final Set<IGameSwingLauncher> _gameLauncherSet = new TreeSet<>();
 
 	/**
 	 * Creates a new Launcher.

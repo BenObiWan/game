@@ -36,34 +36,34 @@ public final class ConnectionList extends Observable
 	/**
 	 * Map containing all session ordered by there id.
 	 */
-	private final ConcurrentSkipListMap<Long, IoSession> _ioSessionListById = new ConcurrentSkipListMap<Long, IoSession>();
+	private final ConcurrentSkipListMap<Long, IoSession> _ioSessionListById = new ConcurrentSkipListMap<>();
 
 	/**
 	 * List of all {@link IoSession} in the order they where added to this list.
 	 */
-	private final Vector<IoSession> _ioSessionListByIndex = new Vector<IoSession>();
+	private final Vector<IoSession> _ioSessionListByIndex = new Vector<>();
 
 	/**
 	 * A map containing all current servers.
 	 */
-	private final ConcurrentSkipListMap<String, DistantGameServer> _distantServerList = new ConcurrentSkipListMap<String, DistantGameServer>();
+	private final ConcurrentSkipListMap<String, DistantGameServer> _distantServerList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * List of all {@link IGameServer} in the order they where added to this
 	 * list.
 	 */
-	private final Vector<IGameServer> _gameServerListByIndex = new Vector<IGameServer>();
+	private final Vector<IGameServer> _gameServerListByIndex = new Vector<>();
 
 	/**
 	 * A map containing all current clients.
 	 */
-	private final ConcurrentSkipListMap<String, DistantGameClient> _connectedClientList = new ConcurrentSkipListMap<String, DistantGameClient>();
+	private final ConcurrentSkipListMap<String, DistantGameClient> _connectedClientList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * A map containing all current unregistered clients using their connection
 	 * id as a key.
 	 */
-	private final ConcurrentSkipListMap<Long, DistantGameClient> _notRegisteredClientIdList = new ConcurrentSkipListMap<Long, DistantGameClient>();
+	private final ConcurrentSkipListMap<Long, DistantGameClient> _notRegisteredClientIdList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * Object used to assure the thread safety during client addition and
@@ -75,7 +75,7 @@ public final class ConnectionList extends Observable
 	 * List of all currently disconnected clients, the informations are kept
 	 * during a certain amount of time.
 	 */
-	protected final ConcurrentSkipListSet<DistantGameClient> _disconnectedClientList = new ConcurrentSkipListSet<DistantGameClient>();
+	protected final ConcurrentSkipListSet<DistantGameClient> _disconnectedClientList = new ConcurrentSkipListSet<>();
 
 	/**
 	 * A TimerTask used to check whether a disconnected client has reached is

@@ -60,7 +60,7 @@ public class NetworkConfigurationImpl extends AbstractConfigurationBranch
 				"Invalid KeepAlive request timeout", true,
 				IntegerDisplayType.SPINNER, Integer.valueOf(10),
 				Integer.valueOf(120), Integer.valueOf(30));
-		_leafRegistrationType = new ConfigurationEnum<RegistrationType>(this,
+		_leafRegistrationType = new ConfigurationEnum<>(this,
 				REGISTRATION_TYPE_TAG, "Registration type",
 				"Registration type available to the clients.",
 				"Invalid Registration type", true, EnumDisplayType.COMBOBOX,
@@ -111,7 +111,7 @@ public class NetworkConfigurationImpl extends AbstractConfigurationBranch
 				IntegerDisplayType.SPINNER, Integer.valueOf(10),
 				Integer.valueOf(120), Integer.valueOf(30),
 				iCommandLineKeepAliveRequestTimeout);
-		_leafRegistrationType = new ConfigurationEnum<RegistrationType>(this,
+		_leafRegistrationType = new ConfigurationEnum<>(this,
 				REGISTRATION_TYPE_TAG, "Registration type",
 				"Registration type available to the clients.",
 				"Invalid Registration type", true, EnumDisplayType.COMBOBOX,

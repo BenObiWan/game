@@ -74,17 +74,17 @@ public final class LocalGameClient extends Observable implements IGameClient,
 	/**
 	 * List of server side player on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, IServerSidePlayer<?>> _serverSidePlayerList = new ConcurrentSkipListMap<Integer, IServerSidePlayer<?>>();
+	private final ConcurrentSkipListMap<Integer, IServerSidePlayer<?>> _serverSidePlayerList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * List of client side player on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?, ?>> _clientSidePlayerList = new ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?, ?>>();
+	private final ConcurrentSkipListMap<Integer, IClientSidePlayer<?, ?, ?, ?, ?>> _clientSidePlayerList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * List of AI on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, String> _aiPlayerList = new ConcurrentSkipListMap<Integer, String>();
+	private final ConcurrentSkipListMap<Integer, String> _aiPlayerList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * Creates a new LocalGameClient.

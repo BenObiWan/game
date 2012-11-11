@@ -69,12 +69,12 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	/**
 	 * List of players in this game.
 	 */
-	protected transient final ConcurrentSkipListSet<PLAYER_TYPE> _playerList = new ConcurrentSkipListSet<PLAYER_TYPE>();
+	protected transient final ConcurrentSkipListSet<PLAYER_TYPE> _playerList = new ConcurrentSkipListSet<>();
 
 	/**
 	 * List of clients in this game.
 	 */
-	protected transient final ConcurrentSkipListSet<IGameClient> _clientList = new ConcurrentSkipListSet<IGameClient>();
+	protected transient final ConcurrentSkipListSet<IGameClient> _clientList = new ConcurrentSkipListSet<>();
 
 	/**
 	 * Id of the game.
@@ -237,7 +237,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	@Override
 	public void sendPlayerListUpdate()
 	{
-		final SortedSet<IPlayerDescription> playerList = new TreeSet<IPlayerDescription>();
+		final SortedSet<IPlayerDescription> playerList = new TreeSet<>();
 		for (final PLAYER_TYPE player : _playerList)
 		{
 			playerList.add(player.getDescription());

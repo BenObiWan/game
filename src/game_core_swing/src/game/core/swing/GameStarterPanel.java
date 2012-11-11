@@ -38,12 +38,12 @@ public final class GameStarterPanel extends JPanel
 	/**
 	 * Combo box for choosing the server.
 	 */
-	private final JComboBox<IGameServer> _comboServer = new JComboBox<IGameServer>();
+	private final JComboBox<IGameServer> _comboServer = new JComboBox<>();
 
 	/**
 	 * Combo box for choosing the type of game.
 	 */
-	private final JComboBox<IGameSwingLauncher> _comboGameType = new JComboBox<IGameSwingLauncher>();
+	private final JComboBox<IGameSwingLauncher> _comboGameType = new JComboBox<>();
 
 	/**
 	 * List of all connections.
@@ -59,13 +59,13 @@ public final class GameStarterPanel extends JPanel
 	 * Map of all registered {@link IGameSwingLauncher} using the relevant
 	 * {@link IGameDescription} has a key.
 	 */
-	private final ConcurrentMap<IGameDescription, IGameSwingLauncher> _launcherMapByDesc = new ConcurrentSkipListMap<IGameDescription, IGameSwingLauncher>();
+	private final ConcurrentMap<IGameDescription, IGameSwingLauncher> _launcherMapByDesc = new ConcurrentSkipListMap<>();
 
 	/**
 	 * Map of all registered {@link IGameSwingLauncher} using the relevant
 	 * {@link IClientGameCreator} class has a key.
 	 */
-	private final ConcurrentMap<String, IGameSwingLauncher> _launcherMapByCreatorClass = new ConcurrentSkipListMap<String, IGameSwingLauncher>();
+	private final ConcurrentMap<String, IGameSwingLauncher> _launcherMapByCreatorClass = new ConcurrentSkipListMap<>();
 
 	/**
 	 * The parent frame.

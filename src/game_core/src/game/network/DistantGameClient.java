@@ -39,7 +39,7 @@ public final class DistantGameClient extends DistantPeer implements IGameClient
 	/**
 	 * List of server side player on this client.
 	 */
-	private final ConcurrentSkipListMap<Integer, IServerSidePlayer<?>> _serverSidePlayerList = new ConcurrentSkipListMap<Integer, IServerSidePlayer<?>>();
+	private final ConcurrentSkipListMap<Integer, IServerSidePlayer<?>> _serverSidePlayerList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * Create a new unregistered client.

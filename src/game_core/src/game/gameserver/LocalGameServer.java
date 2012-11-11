@@ -50,12 +50,12 @@ public final class LocalGameServer implements IGameServer,
 	/**
 	 * Map off all current games.
 	 */
-	private final ConcurrentSkipListMap<Integer, IServerSideGame<?, ?, ?, ?>> _gameList = new ConcurrentSkipListMap<Integer, IServerSideGame<?, ?, ?, ?>>();
+	private final ConcurrentSkipListMap<Integer, IServerSideGame<?, ?, ?, ?>> _gameList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * Map off all game currently in creation.
 	 */
-	private final ConcurrentSkipListMap<Integer, IServerGameCreator<?, ?, ?, ?, ?>> _gameInCreationList = new ConcurrentSkipListMap<Integer, IServerGameCreator<?, ?, ?, ?, ?>>();
+	private final ConcurrentSkipListMap<Integer, IServerGameCreator<?, ?, ?, ?, ?>> _gameInCreationList = new ConcurrentSkipListMap<>();
 
 	/**
 	 * Name of the local server, always equal to "local".
@@ -360,7 +360,7 @@ public final class LocalGameServer implements IGameServer,
 			final AskServerStateCtrlAction act)
 	{
 		// listing the game as asked
-		final TreeSet<IGameInstanceDescription> setDescription = new TreeSet<IGameInstanceDescription>();
+		final TreeSet<IGameInstanceDescription> setDescription = new TreeSet<>();
 		if (act.isOnlyJoinableGames())
 		{
 			for (final IServerSideGame<?, ?, ?, ?> game : _gameList.values())
