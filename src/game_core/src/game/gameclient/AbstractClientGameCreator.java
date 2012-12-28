@@ -166,6 +166,10 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	{
 		synchronized (_lock)
 		{
+			if (_conf == null && isCreator())
+			{
+				_conf = createGameConfiguration();
+			}
 			return _conf;
 		}
 	}

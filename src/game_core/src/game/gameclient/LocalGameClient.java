@@ -372,7 +372,7 @@ public final class LocalGameClient extends Observable implements IGameClient,
 		sendPlayerConf(server, evt.getGameId(), evt.getPlayerId(), playerConf);
 		// send game configuration
 		final IGameConfiguration<?> gameConf = evt.getClientGameCreator()
-				.createGameConfiguration();
+				.getConfiguration();
 		sendGameConf(server, evt.getGameId(), evt.getPlayerId(), gameConf);
 		setChanged();
 		notifyObservers();
