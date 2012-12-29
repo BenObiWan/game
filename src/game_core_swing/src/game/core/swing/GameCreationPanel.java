@@ -18,6 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.eventbus.Subscribe;
 import common.config.swing.ConfigurationPanel;
 import common.swing.IDisposableFrame;
@@ -35,6 +38,12 @@ public final class GameCreationPanel extends JPanel implements
 	 * serialVersionUID for Serialization.
 	 */
 	private static final long serialVersionUID = -8995089599592601506L;
+
+	/**
+	 * Logger object.
+	 */
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(GameCreationPanel.class);
 
 	/**
 	 * Action command for the create AI action.
@@ -218,7 +227,18 @@ public final class GameCreationPanel extends JPanel implements
 		case START_GAME_ACTION_COMMAND:
 			if (_bCreator)
 			{
-				// TODO Start Game
+				if (_gameCreator.isGameReady())
+				{
+					_parentFrame.dispose();
+					if (_gameCreator.tryLaunchGame())
+					{
+						LOGGER.error("Couldn't load game.");
+					}
+				}
+				else
+				{
+					LOGGER.info("Game isn't ready");
+				}
 			}
 			else
 			{

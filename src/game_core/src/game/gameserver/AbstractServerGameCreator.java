@@ -72,6 +72,11 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	protected transient final ConcurrentSkipListSet<PLAYER_TYPE> _playerList = new ConcurrentSkipListSet<>();
 
 	/**
+	 * List of AI players in this game.
+	 */
+	protected transient final ConcurrentSkipListSet<PLAYER_TYPE> _aiPlayerList = new ConcurrentSkipListSet<>();
+
+	/**
 	 * List of clients in this game.
 	 */
 	protected transient final ConcurrentSkipListSet<IGameClient> _clientList = new ConcurrentSkipListSet<>();
@@ -110,6 +115,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			_gameServer = gameServer;
 			_iGameId = iGameId;
 			_creatorPlayer = createPlayer(creatorClient, iCreatorPlayerId);
+			_creatorPlayer.setReady(true);
 			addPlayer(_creatorPlayer, creatorClient);
 			_gameDescription = createGameDescription();
 		}
@@ -188,6 +194,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	{
 		boolean bKeepClient = false;
 		_playerList.remove(player);
+		_aiPlayerList.remove(player);
 		client.removeServerSidePlayer(player);
 		for (final IServerSidePlayer<?> pList : _playerList)
 		{
@@ -210,10 +217,24 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	 */
 	private void addPlayer(final PLAYER_TYPE player, final IGameClient client)
 	{
-		client.addServerSidePlayer(player);
+		// client.addServerSidePlayer(player);
 		_playerList.add(player);
 		_clientList.add(client);
 		client.addServerSidePlayer(player);
+	}
+
+	/**
+	 * Add an AI player to this game. Also add the client.
+	 * 
+	 * @param player
+	 *            the AI player to add to this game.
+	 * @param client
+	 *            the client on which the player is created.
+	 */
+	private void addAIPlayer(final PLAYER_TYPE player, final IGameClient client)
+	{
+		_aiPlayerList.add(player);
+		addPlayer(player, client);
 	}
 
 	@Override
@@ -495,7 +516,8 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 			{
 				final PLAYER_TYPE aiPlayer = createAI(client, act.getAIId(),
 						act.getName());
-				addPlayer(aiPlayer, client);
+				aiPlayer.setReady(true);
+				addAIPlayer(aiPlayer, client);
 				_gameDescription.setNumberOfPlayer(_playerList.size());
 				evt = new GameJoinedCtrlEvent(_iGameId, act.getAIId(),
 						getClientGameCreator());
