@@ -29,12 +29,27 @@ import common.swing.IDisposableFrame;
  * 
  */
 public final class GameCreationPanel extends JPanel implements
-		IGameCreatorChangeListener
+		IGameCreatorChangeListener, ActionListener
 {
 	/**
 	 * serialVersionUID for Serialization.
 	 */
 	private static final long serialVersionUID = -8995089599592601506L;
+
+	/**
+	 * Action command for the create AI action.
+	 */
+	private static final String ADD_AI_ACTION_COMMAND = "add";
+
+	/**
+	 * Action command for the leave game action.
+	 */
+	private static final String LEAVE_GAME_ACTION_COMMAND = "leave";
+
+	/**
+	 * Action command for the start game action.
+	 */
+	private static final String START_GAME_ACTION_COMMAND = "start";
 
 	/**
 	 * The {@link ConfigurationPanel} used to display the configuration of the
@@ -95,8 +110,8 @@ public final class GameCreationPanel extends JPanel implements
 			strLeave = "Cancel Game";
 			_readyCheckBox = null;
 			final JButton buttonCreateGame = new JButton("Start Game");
-			buttonCreateGame
-					.addActionListener(new ReadyOrStartGameActionListener());
+			buttonCreateGame.setActionCommand(START_GAME_ACTION_COMMAND);
+			buttonCreateGame.addActionListener(this);
 			compStart = buttonCreateGame;
 		}
 		else
@@ -108,11 +123,12 @@ public final class GameCreationPanel extends JPanel implements
 		}
 
 		final JButton buttonAddAI = new JButton("Add AI");
-		buttonAddAI.addActionListener(new AddAIActionListener());
+		buttonAddAI.setActionCommand(ADD_AI_ACTION_COMMAND);
+		buttonAddAI.addActionListener(this);
 
 		final JButton buttonLeaveGame = new JButton(strLeave);
-		buttonLeaveGame
-				.addActionListener(new LeaveOrCancelGameActionListener());
+		buttonLeaveGame.setActionCommand(LEAVE_GAME_ACTION_COMMAND);
+		buttonLeaveGame.addActionListener(this);
 		final JPanel buttonPane = new JPanel(new GridLayout(1, 0, 10, 10));
 		buttonPane.add(buttonAddAI);
 		buttonPane.add(buttonLeaveGame);
@@ -187,82 +203,28 @@ public final class GameCreationPanel extends JPanel implements
 		}
 	}
 
-	/**
-	 * {@link ActionListener} for the ready/start game {@link JButton}.
-	 * 
-	 * @author benobiwan
-	 * 
-	 */
-	private final class ReadyOrStartGameActionListener implements
-			ActionListener
+	@Override
+	public void actionPerformed(final ActionEvent e)
 	{
-		/**
-		 * Creates a new StartGameActionListener.
-		 */
-		public ReadyOrStartGameActionListener()
+		switch (e.getActionCommand())
 		{
-			super();
-		}
-
-		@Override
-		public void actionPerformed(final ActionEvent e)
-		{
+		case ADD_AI_ACTION_COMMAND:
+			// TODO ask for AI name
+			_gameCreator.addAI("AI");
+			break;
+		case LEAVE_GAME_ACTION_COMMAND:
+			askQuitGameCreation();
+			break;
+		case START_GAME_ACTION_COMMAND:
 			if (_bCreator)
 			{
-				// Start Game
+				// TODO Start Game
 			}
 			else
 			{
 				_gameCreator.updateReadyStatus(true);
 			}
-		}
-	}
-
-	/**
-	 * {@link ActionListener} for the leave/cancel game {@link JButton}.
-	 * 
-	 * @author benobiwan
-	 * 
-	 */
-	private final class LeaveOrCancelGameActionListener implements
-			ActionListener
-	{
-		/**
-		 * Creates a new CancelGameActionListener.
-		 */
-		public LeaveOrCancelGameActionListener()
-		{
-			super();
-		}
-
-		@Override
-		public void actionPerformed(final ActionEvent e)
-		{
-			askQuitGameCreation();
-		}
-	}
-
-	/**
-	 * {@link ActionListener} for the Add AI {@link JButton}.
-	 * 
-	 * @author benobiwan
-	 * 
-	 */
-	private final class AddAIActionListener implements ActionListener
-	{
-		/**
-		 * Creates a new AddAIActionListener.
-		 */
-		public AddAIActionListener()
-		{
-			super();
-		}
-
-		@Override
-		public void actionPerformed(final ActionEvent e)
-		{
-			// TODO ask for AI name
-			_gameCreator.addAI("AI");
+			break;
 		}
 	}
 }
