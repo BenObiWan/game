@@ -230,14 +230,14 @@ public final class GameCreationPanel extends JPanel implements
 				if (_gameCreator.isGameReady())
 				{
 					_parentFrame.dispose();
-					if (_gameCreator.tryLaunchGame())
+					if (!_gameCreator.tryLaunchGame())
 					{
 						LOGGER.error("Couldn't load game.");
 					}
 				}
 				else
 				{
-					LOGGER.info("Game isn't ready");
+					LOGGER.info("Game isn't ready.");
 				}
 			}
 			else
