@@ -96,7 +96,8 @@ public abstract class AbstractServerSidePlayer<PLAYER_CONF extends IPlayerConfig
 	@Override
 	public boolean isReady()
 	{
-		return isPlayerConfigurationSet() && _playerDescription.isReady();
+		// TODO rework the handling of player configuration.
+		return /* isPlayerConfigurationSet() && */_playerDescription.isReady();
 	}
 
 	@Override
