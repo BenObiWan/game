@@ -217,6 +217,11 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	 */
 	private void addPlayer(final PLAYER_TYPE player, final IGameClient client)
 	{
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("added  player, name '" + player.getName() + "' id '"
+					+ player.getId() + "'.");
+		}
 		// client.addServerSidePlayer(player);
 		_playerList.add(player);
 		_clientList.add(client);
@@ -233,6 +238,10 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	 */
 	private void addAIPlayer(final PLAYER_TYPE player, final IGameClient client)
 	{
+		if (LOGGER.isDebugEnabled())
+		{
+			LOGGER.debug("added AI player.");
+		}
 		_aiPlayerList.add(player);
 		addPlayer(player, client);
 	}
@@ -468,26 +477,62 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	}
 
 	@Override
-	public void handleStartGameCrAction(final IServerSidePlayer<?> player,
+	public void handleStartGameCrAction(
+			final IServerSidePlayer<?> starterPlayer,
 			final StartGameCrAction act)
 	{
 		synchronized (_lock)
 		{
 			// check if the client is the creator
-			if (_creatorPlayer.equals(player))
+			if (_creatorPlayer.equals(starterPlayer))
 			{
 				// set the creator player ready
+				// TODO redundant???
 				_creatorPlayer.setReady(true);
 				// check if every player is ready
 				boolean bReady = true;
-				for (final PLAYER_TYPE playerList : _playerList)
+				for (final PLAYER_TYPE player : _playerList)
 				{
-					bReady &= playerList.isReady();
+					if (LOGGER.isDebugEnabled())
+					{
+						if (player.isReady())
+						{
+							LOGGER.debug("The player '" + player.getName()
+									+ "' id : '" + player.getId()
+									+ "' is ready.");
+						}
+						else
+						{
+							LOGGER.debug("The player '" + player.getName()
+									+ "' id : '" + player.getId()
+									+ "' isn't ready.");
+						}
+					}
+					bReady &= player.isReady();
 				}
 				if (bReady)
 				{
 					// TODO start game
+					LOGGER.info("Received a 'start game' message from Player '"
+							+ starterPlayer.getName()
+							+ "' concerning the game, id '" + act.getGameId()
+							+ "' the game must be started.");
 				}
+				else
+				{
+					// TODO send an error message to the client
+					LOGGER.info("Received a 'start game' message from Player '"
+							+ starterPlayer.getName()
+							+ "' concerning the game, id '" + act.getGameId()
+							+ "' but everybody isn't ready.");
+				}
+			}
+			else
+			{
+				LOGGER.error("Received a 'start game' message from Player '"
+						+ starterPlayer.getName()
+						+ "' concerning the game, id '" + act.getGameId()
+						+ "' but he is not the creator of this game.");
 			}
 		}
 	}
