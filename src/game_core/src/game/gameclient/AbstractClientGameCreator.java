@@ -3,6 +3,7 @@ package game.gameclient;
 import game.common.IGameServer;
 import game.common.IPlayerDescription;
 import game.communication.action.InconsistentActionTypeException;
+import game.communication.action.gamecreation.StartGameCrAction;
 import game.communication.action.gamecreation.UpdateStatusCrAction;
 import game.communication.action.gamectrl.LeaveGameCrAction;
 import game.communication.event.GameCreationEventType;
@@ -409,7 +410,16 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	@Override
 	public boolean tryLaunchGame()
 	{
-		// TODO Auto-generated method stub
+		final StartGameCrAction act = new StartGameCrAction(_iGameId, _iGameId);
+		try
+		{
+			_gameServer.handleAction(_gameClient, act);
+			return true;
+		}
+		catch (final InconsistentActionTypeException e)
+		{
+			LOGGER.error(e.getLocalizedMessage(), e);
+		}
 		return false;
 	}
 
