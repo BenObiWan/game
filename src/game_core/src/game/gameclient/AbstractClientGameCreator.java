@@ -76,6 +76,11 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	protected transient boolean _bIsCreator;
 
 	/**
+	 * Boolean telling whether the local client is an AI.
+	 */
+	protected transient boolean _bIsAI;
+
+	/**
 	 * The local game client.
 	 */
 	protected transient LocalGameClient _gameClient;
@@ -121,6 +126,15 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	}
 
 	@Override
+	public boolean isAI()
+	{
+		synchronized (_lock)
+		{
+			return _bIsAI;
+		}
+	}
+
+	@Override
 	public IGameServer getGameServer()
 	{
 		synchronized (_lock)
@@ -132,7 +146,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	@Override
 	public void initialize(final boolean bCreator,
 			final LocalGameClient locGameClient, final IGameServer server,
-			final int iGameId, final int iPlayerId)
+			final int iGameId, final int iPlayerId, final boolean bIsAI)
 	{
 		synchronized (_lock)
 		{
@@ -141,6 +155,7 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 			_iGameId = iGameId;
 			_gameClient = locGameClient;
 			_iPlayerId = iPlayerId;
+			_bIsAI = bIsAI;
 		}
 	}
 
@@ -403,8 +418,16 @@ public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfigura
 	@Override
 	public void handleGameCreatedCrEvent(final GameCreatedCrEvent evt)
 	{
+		if (isAI())
+		{
+			LOGGER.info("game created. I'm an AI. id : '" + getPlayerId() + "'");
+		}
+		else
+		{
+			LOGGER.info("game created. I'm a human. id : '" + getPlayerId()
+					+ "'");
+		}
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
