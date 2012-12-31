@@ -213,7 +213,66 @@ public final class LocalGameServer implements IGameServer,
 	 */
 	public void unregisterGame(final IServerSideGame<?, ?, ?, ?> g)
 	{
+		// TODO unregister game in creation?
 		_gameList.remove(Integer.valueOf(g.getGameId()));
+	}
+
+	/**
+	 * Register the local {@link IServerSideGame} created by the local
+	 * {@link IServerGameCreator}.
+	 * 
+	 * @param gameCreator
+	 *            the local {@link IServerGameCreator} which was used to start
+	 *            the game.
+	 * @param game
+	 *            the local {@link IServerSideGame} to register.
+	 * @return True if the game was successfully registered.
+	 */
+	public boolean registerGame(
+			final IServerGameCreator<?, ?, ?, ?, ?> gameCreator,
+			final IServerSideGame<?, ?, ?, ?> game)
+	{
+		if (gameCreator != null)
+		{
+			if (game != null)
+			{
+				if (gameCreator.getGameId() == game.getGameId())
+				{
+					final Integer id = Integer.valueOf(gameCreator.getGameId());
+					if (gameCreator.equals(_gameInCreationList.get(id)))
+					{
+						if (_gameList.get(id) == null)
+						{
+							_gameInCreationList.remove(id);
+							_gameList.put(id, game);
+							return true;
+						}
+						LOGGER.error("the game has allready been started.");
+					}
+					else
+					{
+						LOGGER.error("the game isn't in the list of games in creation.");
+					}
+				}
+				else
+				{
+					LOGGER.error("Inconsitent ids in registerGame. gameCreator id : '"
+							+ gameCreator.getGameId()
+							+ "' game id : '"
+							+ game.getGameId() + "'");
+				}
+			}
+			else
+			{
+				LOGGER.error("game is null in registerGame. Game Creator type : "
+						+ gameCreator.getClass());
+			}
+		}
+		else
+		{
+			LOGGER.error("gameCreator is null in registerGame.");
+		}
+		return false;
 	}
 
 	@Override
