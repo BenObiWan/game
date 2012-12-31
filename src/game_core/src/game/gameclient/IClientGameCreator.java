@@ -66,9 +66,11 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 *            the id of the new game.
 	 * @param iPlayerId
 	 *            the local id of the player joining the game.
+	 * @param bIsAI
+	 *            true if the local client is an AI.
 	 */
 	void initialize(boolean bCreator, LocalGameClient locGameClient,
-			IGameServer server, int iGameId, int iPlayerId);
+			IGameServer server, int iGameId, int iPlayerId, boolean bIsAI);
 
 	/**
 	 * Get the game id.
@@ -174,6 +176,13 @@ public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_
 	 * Exit the creation of this game. Cancels it if the player is creator.
 	 */
 	void leaveGameCreation();
+
+	/**
+	 * Check whether the player is an AI.
+	 * 
+	 * @return true if the player is an AI.
+	 */
+	boolean isAI();
 
 	/**
 	 * Add an AI to the game.
