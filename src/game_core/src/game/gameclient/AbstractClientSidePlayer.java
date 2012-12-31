@@ -191,32 +191,31 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	public void handleGameCreationEvent(final IGameCreationEvent evt)
 			throws InconsistentEventTypeException
 	{
-		switch (evt.getType())
+		if (isGameInCreation())
 		{
-		case CONFIGURATION_UPDATE:
-			if (evt instanceof ConfigurationUpdateCrEvent)
+			_gameCreator.handleGameCreationEvent(evt);
+			switch (evt.getType())
 			{
-				handleConfigurationUpdateCrEvent((ConfigurationUpdateCrEvent) evt);
+			case CONFIGURATION_UPDATE:
+				// nothing to do there, will be handled by gameCreator.
+				break;
+			case GAME_CREATED:
+				if (evt instanceof GameCreatedCrEvent)
+				{
+					handleGameCreatedCrEvent((GameCreatedCrEvent) evt);
+				}
+				else
+				{
+					throw new InconsistentEventTypeException(
+							GameCreationEventType.GAME_CREATED, evt.getClass());
+				}
+				break;
 			}
-			else
-			{
-				throw new InconsistentEventTypeException(
-						GameCreationEventType.CONFIGURATION_UPDATE,
-						evt.getClass());
-			}
-			break;
-		case GAME_CREATED:
-			if (evt instanceof GameCreatedCrEvent)
-			{
-				handleGameCreatedCrEvent((GameCreatedCrEvent) evt);
-			}
-			else
-			{
-				throw new InconsistentEventTypeException(
-						GameCreationEventType.GAME_CREATED, evt.getClass());
-			}
-			break;
-
+		}
+		else
+		{
+			LOGGER.error("Received an IGameCreationEvent for the game id : "
+					+ getGameId() + " which is no longer in creation.");
 		}
 	}
 
@@ -293,24 +292,10 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void handleConfigurationUpdateCrEvent(
 			final ConfigurationUpdateCrEvent evt)
 	{
-		final IGameConfiguration<?> conf = evt.getGameConfiguration();
-		try
-		{
-			synchronized (_lock)
-			{
-				_conf = (CONF_TYPE) conf;
-			}
-		}
-		catch (final ClassCastException e)
-		{
-			LOGGER.error("Error casting "
-					+ evt.getGameConfiguration().getClass() + " into "
-					+ _conf.getClass());
-		}
+		// nothing to do there
 	}
 
 	@Override
@@ -324,6 +309,7 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 	{
 		synchronized (_lock)
 		{
+			_conf = _gameCreator.getConfiguration();
 			_game = _gameCreator.createGame();
 		}
 	}
