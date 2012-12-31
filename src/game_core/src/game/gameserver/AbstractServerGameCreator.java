@@ -22,6 +22,7 @@ import game.communication.event.IEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.control.GameJoinedCtrlEvent;
 import game.communication.event.gamecreation.ConfigurationUpdateCrEvent;
+import game.communication.event.gamecreation.GameCreatedCrEvent;
 import game.communication.event.gamectrl.GameFullCrEvent;
 import game.communication.event.gamectrl.GameLeftCrEvent;
 import game.communication.event.gamectrl.PlayerListUpdateCrEvent;
@@ -99,7 +100,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	/**
 	 * {@link IGameServer} hosting the game.
 	 */
-	protected transient IGameServer _gameServer;
+	protected transient LocalGameServer _gameServer;
 
 	/**
 	 * The {@link IGameInstanceDescription} of this game.
@@ -107,7 +108,7 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 	protected transient IGameInstanceDescription _gameDescription;
 
 	@Override
-	public void initialize(final IGameServer gameServer, final int iGameId,
+	public void initialize(final LocalGameServer gameServer, final int iGameId,
 			final IGameClient creatorClient, final int iCreatorPlayerId)
 	{
 		synchronized (_lock)
@@ -512,11 +513,27 @@ public abstract class AbstractServerGameCreator<PLAYER_CONF extends IPlayerConfi
 				}
 				if (bReady)
 				{
-					// TODO start game
-					LOGGER.info("Received a 'start game' message from Player '"
-							+ starterPlayer.getName()
-							+ "' concerning the game, id '" + act.getGameId()
-							+ "' the game must be started.");
+					if (_gameServer.registerGame(this, createGame()))
+					{
+						for (final PLAYER_TYPE player : _playerList)
+						{
+							final GameCreatedCrEvent event = new GameCreatedCrEvent(
+									_iGameId, player.getId());
+							try
+							{
+								player.getClient().handleEvent(_gameServer,
+										event);
+							}
+							catch (final InconsistentEventTypeException e)
+							{
+								LOGGER.error(e.getLocalizedMessage(), e);
+							}
+						}
+					}
+					else
+					{
+						// TODO error while creating game
+					}
 				}
 				else
 				{

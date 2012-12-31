@@ -135,7 +135,7 @@ public interface IServerGameCreator<PLAYER_CONF extends IPlayerConfiguration, AC
 	 * @param iCreatorPlayerId
 	 *            the id of the player who created the game.
 	 */
-	void initialize(IGameServer gameServer, int iGameId,
+	void initialize(LocalGameServer gameServer, int iGameId,
 			IGameClient creatorClient, int iCreatorPlayerId);
 
 	/**
