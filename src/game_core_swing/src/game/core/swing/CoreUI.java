@@ -2,6 +2,7 @@ package game.core.swing;
 
 import game.core.ApplicationCore;
 import game.gameclient.IClientGameCreator;
+import game.gameclient.IClientSidePlayer;
 import game.gameclient.ILocalClientUI;
 import game.network.config.INetworkServerConfiguration;
 import game.network.config.NetworkXMLFileConfigurationLoader;
@@ -576,8 +577,7 @@ public final class CoreUI extends JFrame implements ActionListener,
 	}
 
 	@Override
-	public void createGameUI(
-			final IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator)
+	public void createGameUI(final IClientSidePlayer<?, ?, ?, ?, ?> player)
 	{
 		// TODO Auto-generated method stub
 

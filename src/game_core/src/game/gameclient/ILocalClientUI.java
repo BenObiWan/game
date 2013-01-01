@@ -19,10 +19,10 @@ public interface ILocalClientUI
 
 	/**
 	 * Create and show the main game UI for the specified
-	 * {@link IClientGameCreator}.
+	 * {@link IClientSidePlayer}.
 	 * 
-	 * @param gameCreator
-	 *            the {@link IClientGameCreator} of the specified game.
+	 * @param player
+	 *            the {@link IClientSidePlayer} of the specified game.
 	 */
-	void createGameUI(IClientGameCreator<?, ?, ?, ?, ?, ?> gameCreator);
+	void createGameUI(final IClientSidePlayer<?, ?, ?, ?, ?> player);
 }
