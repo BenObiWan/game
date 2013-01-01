@@ -378,4 +378,13 @@ public abstract class AbstractClientSidePlayer<CONF_TYPE extends IGameConfigurat
 					+ _playerConf.getClass());
 		}
 	}
+
+	@Override
+	public CONF_TYPE getGameConfiguration()
+	{
+		synchronized (_lock)
+		{
+			return _conf;
+		}
+	}
 }

@@ -89,4 +89,13 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 *            the new new {@link IClientSidePlayerChangeListener}.
 	 */
 	void registerClientChangeListener(CLIENT_CHANGE_LISTENER o);
+
+	/**
+	 * Get the configuration of this game.
+	 * 
+	 * TODO see if this is useful.
+	 * 
+	 * @return the configuration of this game.
+	 */
+	CONF_TYPE getGameConfiguration();
 }
