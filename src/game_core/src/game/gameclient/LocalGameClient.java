@@ -659,4 +659,24 @@ public final class LocalGameClient extends Observable implements IGameClient,
 			}
 		}
 	}
+
+	/**
+	 * Create the Game UI for the specified player on the associated game.
+	 * 
+	 * @param player
+	 *            the player.
+	 */
+	public void createGameUI(final IClientSidePlayer<?, ?, ?, ?, ?> player)
+	{
+		if (!isAI(player.getId()))
+		{
+			synchronized (_lockUI)
+			{
+				if (_clientUI != null)
+				{
+					_clientUI.createGameUI(player);
+				}
+			}
+		}
+	}
 }
