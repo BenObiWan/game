@@ -1,14 +1,14 @@
 package game.communication.event;
 
 /**
- * Implementation of the {@link IUniCastGameEvent} interface describing all event
- * taking place during the course of a game.
+ * Implementation of the {@link IUniCastGameEvent} interface describing game
+ * events which are sent to only one player.
  * 
  * @author benobiwan
  * 
  */
-public abstract class AbstractUniCastGameEvent extends AbstractEvent implements
-		IUniCastGameEvent
+public abstract class AbstractUniCastGameEvent extends AbstractGameEvent
+		implements IUniCastGameEvent
 {
 	/**
 	 * serialVersionUID for Serialization.
@@ -16,17 +16,12 @@ public abstract class AbstractUniCastGameEvent extends AbstractEvent implements
 	private static final long serialVersionUID = 7917913225979551383L;
 
 	/**
-	 * Id of the game concerned with the event.
-	 */
-	protected final int _iGameId;
-
-	/**
 	 * Id of the player concerned by the event.
 	 */
 	protected final int _iPlayerId;
 
 	/**
-	 * Creates a new GameAction.
+	 * Creates a new AbstractUniCastGameEvent.
 	 * 
 	 * @param iGameId
 	 *            id of the game concerned by the event.
@@ -35,15 +30,8 @@ public abstract class AbstractUniCastGameEvent extends AbstractEvent implements
 	 */
 	protected AbstractUniCastGameEvent(final int iGameId, final int iPlayerId)
 	{
-		super();
-		_iGameId = iGameId;
+		super(iGameId);
 		_iPlayerId = iPlayerId;
-	}
-
-	@Override
-	public final int getGameId()
-	{
-		return _iGameId;
 	}
 
 	@Override
