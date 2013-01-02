@@ -1,8 +1,10 @@
 package game.communication.event;
 
 /**
- * Subclass of {@link IUniCastGameEvent} describing events related to an active game
- * and common to many games.
+ * Subclass of {@link IUniCastGameEvent} describing events related to an active
+ * game and common to many games.
+ * 
+ * All {@link ICommonGameEvent} are {@link IUniCastGameEvent}.
  * 
  * @author benobiwan
  * 

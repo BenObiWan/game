@@ -55,8 +55,8 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	 * @param evt
 	 *            the event to handle.
 	 * @throws InconsistentEventTypeException
-	 *             the type field of the {@link IUniCastGameEvent} and it's class are
-	 *             inconsistent.
+	 *             the type field of the {@link IUniCastGameEvent} and it's
+	 *             class are inconsistent.
 	 */
 	void handleGameEvent(final IUniCastGameEvent evt)
 			throws InconsistentEventTypeException;

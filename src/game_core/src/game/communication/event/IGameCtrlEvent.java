@@ -1,8 +1,10 @@
 package game.communication.event;
 
 /**
- * Subclass of {@link IUniCastGameEvent} describing events that can happened during the
- * creation and the course of games.
+ * Subclass of {@link IUniCastGameEvent} describing events that can happened
+ * during the creation and the course of games.
+ * 
+ * TODO should subclass GameEvent. Some are MultiCast, others are UniCast.
  * 
  * @author benobiwan
  * 

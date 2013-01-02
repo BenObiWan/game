@@ -4,6 +4,8 @@ package game.communication.event;
  * Subclass of {@link IEvent} describing events related to the creation of
  * games.
  * 
+ * TODO should subclass IMultiCastGameEvent.
+ * 
  * @author benobiwan
  * 
  */
