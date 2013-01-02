@@ -7,7 +7,7 @@ package game.communication.event;
  * @author benobiwan
  * 
  */
-public abstract class AbstractGameEvent extends AbstractEvent implements
+public abstract class AbstractUniCastGameEvent extends AbstractEvent implements
 		IUniCastGameEvent
 {
 	/**
@@ -33,7 +33,7 @@ public abstract class AbstractGameEvent extends AbstractEvent implements
 	 * @param iPlayerId
 	 *            id of the player concerned by the event.
 	 */
-	protected AbstractGameEvent(final int iGameId, final int iPlayerId)
+	protected AbstractUniCastGameEvent(final int iGameId, final int iPlayerId)
 	{
 		super();
 		_iGameId = iGameId;

@@ -7,7 +7,7 @@ package game.communication.event;
  * @author benobiwan
  * 
  */
-public abstract class AbstractCommonGameEvent extends AbstractGameEvent
+public abstract class AbstractCommonGameEvent extends AbstractUniCastGameEvent
 		implements ICommonGameEvent
 {
 	/**
