@@ -4,7 +4,7 @@ import game.common.IGameClient;
 import game.common.IGameServer;
 import game.communication.event.CommonGameEventType;
 import game.communication.event.ICommonGameEvent;
-import game.communication.event.IGameEvent;
+import game.communication.event.IUniCastGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.game.CantActCmnEvent;
 import game.communication.event.game.TurnTimeoutCmnEvent;
@@ -20,14 +20,14 @@ import game.config.IPlayerConfiguration;
  * @author benobiwan
  * 
  * @param <EVENT_TYPE>
- *            the type of {@link IGameEvent} handled by this game.
+ *            the type of {@link IUniCastGameEvent} handled by this game.
  * @param <CONF_TYPE>
  *            the type of {@link IGameConfiguration} used to configure this
  *            game.
  * @param <PLAYER_CONF>
  *            the type of {@link IPlayerConfiguration}.
  */
-public abstract class AbstractClientSideGame<EVENT_TYPE extends IGameEvent, PLAYER_CONF extends IPlayerConfiguration, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>>
+public abstract class AbstractClientSideGame<EVENT_TYPE extends IUniCastGameEvent, PLAYER_CONF extends IPlayerConfiguration, CONF_TYPE extends IGameConfiguration<PLAYER_CONF>>
 		implements IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>
 {
 	/**

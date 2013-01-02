@@ -13,7 +13,7 @@ import game.communication.event.IControlEvent;
 import game.communication.event.IEvent;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameCtrlEvent;
-import game.communication.event.IGameEvent;
+import game.communication.event.IUniCastGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.control.GameCreationStartedCtrlEvent;
 import game.communication.event.control.GameJoinedCtrlEvent;
@@ -199,9 +199,9 @@ public final class LocalGameClient extends Observable implements IGameClient,
 				player.handleGameCtrlEvent(event);
 			}
 		}
-		else if (evt instanceof IGameEvent)
+		else if (evt instanceof IUniCastGameEvent)
 		{
-			final IGameEvent event = (IGameEvent) evt;
+			final IUniCastGameEvent event = (IUniCastGameEvent) evt;
 			final IClientSidePlayer<?, ?, ?, ?, ?> player = _clientSidePlayerList
 					.get(Integer.valueOf(event.getPlayerId()));
 			if (player == null)

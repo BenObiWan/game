@@ -2,7 +2,7 @@ package game.gameclient;
 
 import game.common.IGameServer;
 import game.common.IPlayer;
-import game.communication.event.IGameEvent;
+import game.communication.event.IUniCastGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.game.IGameEventHandler;
 import game.communication.event.gamecreation.IGameCreationEventHandler;
@@ -20,14 +20,14 @@ import game.config.IPlayerConfiguration;
  * @param <CONF_TYPE>
  *            the type of {@link IGameConfiguration} used to configure the game.
  * @param <EVENT_TYPE>
- *            the type of {@link IGameEvent} handled by the game.
+ *            the type of {@link IUniCastGameEvent} handled by the game.
  * @param <PLAYER_CONF>
  *            the type of player configuration.
  * @param <CLIENT_CHANGE_LISTENER>
  *            the type of {@link IClientSidePlayerChangeListener} for this
  *            player.
  */
-public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
+public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IUniCastGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
 		extends IPlayer<PLAYER_CONF>, IGameCreationEventHandler,
 		IGameEventHandler, IGameCtrlEventHandler
 {
@@ -50,15 +50,15 @@ public interface IClientSidePlayer<CONF_TYPE extends IGameConfiguration<PLAYER_C
 	IClientGameCreator<?, ?, ?, ?, ?, ?> getGameCreator();
 
 	/**
-	 * Handle an {@link IGameEvent}.
+	 * Handle an {@link IUniCastGameEvent}.
 	 * 
 	 * @param evt
 	 *            the event to handle.
 	 * @throws InconsistentEventTypeException
-	 *             the type field of the {@link IGameEvent} and it's class are
+	 *             the type field of the {@link IUniCastGameEvent} and it's class are
 	 *             inconsistent.
 	 */
-	void handleGameEvent(final IGameEvent evt)
+	void handleGameEvent(final IUniCastGameEvent evt)
 			throws InconsistentEventTypeException;
 
 	/**

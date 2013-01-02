@@ -10,7 +10,7 @@ import game.communication.event.GameCreationEventType;
 import game.communication.event.GameCtrlEventType;
 import game.communication.event.IGameCreationEvent;
 import game.communication.event.IGameCtrlEvent;
-import game.communication.event.IGameEvent;
+import game.communication.event.IUniCastGameEvent;
 import game.communication.event.InconsistentEventTypeException;
 import game.communication.event.gamecreation.ConfigurationUpdateCrEvent;
 import game.communication.event.gamecreation.GameCreatedCrEvent;
@@ -41,7 +41,7 @@ import com.google.common.eventbus.EventBus;
  * @param <CONF_TYPE>
  *            the type of {@link IGameConfiguration} used to configure the game.
  * @param <EVENT_TYPE>
- *            the type of {@link IGameEvent} handled by the game.
+ *            the type of {@link IUniCastGameEvent} handled by the game.
  * @param <PLAYER_TYPE>
  *            the type of {@link IClientSidePlayer} playing this game.
  * @param <PLAYER_CONF>
@@ -50,7 +50,7 @@ import com.google.common.eventbus.EventBus;
  *            the type of {@link IClientSidePlayerChangeListener} for this game
  *            creator.
  */
-public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
+public abstract class AbstractClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IUniCastGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
 		implements
 		IClientGameCreator<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, PLAYER_TYPE, CLIENT_CHANGE_LISTENER>
 {

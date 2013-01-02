@@ -7,7 +7,7 @@ package game.communication.event;
  * @author benobiwan
  * 
  */
-public interface IGameEvent extends IEvent
+public interface IUniCastGameEvent extends IEvent
 {
 	/**
 	 * Get the id of the game concerned by the event.

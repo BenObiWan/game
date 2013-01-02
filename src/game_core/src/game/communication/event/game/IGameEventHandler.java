@@ -1,9 +1,9 @@
 package game.communication.event.game;
 
-import game.communication.event.IGameEvent;
+import game.communication.event.IUniCastGameEvent;
 
 /**
- * Handler of {@link IGameEvent}.
+ * Handler of {@link IUniCastGameEvent}.
  * 
  * @author benobiwan
  * 

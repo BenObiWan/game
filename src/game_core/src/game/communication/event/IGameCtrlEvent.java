@@ -1,7 +1,7 @@
 package game.communication.event;
 
 /**
- * Subclass of {@link IGameEvent} describing events that can happened during the
+ * Subclass of {@link IUniCastGameEvent} describing events that can happened during the
  * creation and the course of games.
  * 
  * @author benobiwan

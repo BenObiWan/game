@@ -1,14 +1,14 @@
 package game.communication.event;
 
 /**
- * Implementation of the {@link IGameEvent} interface describing all event
+ * Implementation of the {@link IUniCastGameEvent} interface describing all event
  * taking place during the course of a game.
  * 
  * @author benobiwan
  * 
  */
 public abstract class AbstractGameEvent extends AbstractEvent implements
-		IGameEvent
+		IUniCastGameEvent
 {
 	/**
 	 * serialVersionUID for Serialization.

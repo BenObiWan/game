@@ -2,7 +2,7 @@ package game.gameclient;
 
 import game.common.IGameServer;
 import game.common.IPlayerDescription;
-import game.communication.event.IGameEvent;
+import game.communication.event.IUniCastGameEvent;
 import game.communication.event.gamecreation.IGameCreationEventHandler;
 import game.communication.event.gamectrl.IGameCtrlEventHandler;
 import game.config.IGameConfiguration;
@@ -20,7 +20,7 @@ import java.util.Set;
  * @param <CONF_TYPE>
  *            the type of {@link IGameConfiguration} used to configure the game.
  * @param <EVENT_TYPE>
- *            the type of {@link IGameEvent} handled by the game.
+ *            the type of {@link IUniCastGameEvent} handled by the game.
  * @param <PLAYER_TYPE>
  *            the type of {@link IClientSidePlayer} playing this game.
  * @param <PLAYER_CONF>
@@ -29,7 +29,7 @@ import java.util.Set;
  *            the type of {@link IClientSidePlayerChangeListener} for this
  *            player.
  */
-public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
+public interface IClientGameCreator<CONF_TYPE extends IGameConfiguration<PLAYER_CONF>, EVENT_TYPE extends IUniCastGameEvent, CLIENT_GAME_TYPE extends IClientSideGame<EVENT_TYPE, PLAYER_CONF, CONF_TYPE>, PLAYER_CONF extends IPlayerConfiguration, PLAYER_TYPE extends IClientSidePlayer<CONF_TYPE, EVENT_TYPE, CLIENT_GAME_TYPE, PLAYER_CONF, CLIENT_CHANGE_LISTENER>, CLIENT_CHANGE_LISTENER extends IClientSidePlayerChangeListener>
 		extends IGameCreationEventHandler, IGameCtrlEventHandler
 {
 	/**
