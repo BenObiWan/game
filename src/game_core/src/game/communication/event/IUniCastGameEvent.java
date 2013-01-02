@@ -1,21 +1,14 @@
 package game.communication.event;
 
 /**
- * Subclass of {@link IEvent} describing all event taking place during the
- * course of a game.
+ * Subclass of {@link IGameEvent} describing game events which are sent to only
+ * one player.
  * 
  * @author benobiwan
  * 
  */
-public interface IUniCastGameEvent extends IEvent
+public interface IUniCastGameEvent extends IGameEvent
 {
-	/**
-	 * Get the id of the game concerned by the event.
-	 * 
-	 * @return the id of the game concerned by the event.
-	 */
-	int getGameId();
-
 	/**
 	 * Get the id of the player concerned by the event.
 	 * 
